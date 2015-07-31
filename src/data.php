@@ -125,7 +125,7 @@ class Data extends ArrayObject
      */
     public function __toString()
     {
-        return empty($this) ? '' : $this->_write($this->getArrayCopy());
+        return !$this ? '' : $this->write($this->getArrayCopy());
     }
 
     /**
@@ -133,7 +133,7 @@ class Data extends ArrayObject
      * @param mixed $data The data to serialize
      * @return string The serialized data
      */
-    protected function _write($data)
+    protected function write($data)
     {
         return serialize($data);
     }

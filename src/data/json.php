@@ -42,9 +42,9 @@ class JSONData extends Data
      * @param array|object $data The data to encode
      * @return string
      */
-    protected function _write($data)
+    protected function write($data)
     {
-        return $this->_jsonEncode($data);
+        return $this->jsonEncode($data);
     }
 
     /**
@@ -53,7 +53,7 @@ class JSONData extends Data
      * @param int          $indent The indentation level. Adds $indent tabs to the string
      * @return string
      */
-    public function _jsonEncode($in, $indent = 0)
+    public function jsonEncode($in, $indent = 0)
     {
         $out = '';
 
@@ -64,7 +64,7 @@ class JSONData extends Data
             $out .= json_encode((string)$key) . ': ';
 
             if (is_object($value) || is_array($value)) {
-                $out .= $this->_jsonEncode($value, $indent + 1);
+                $out .= $this->jsonEncode($value, $indent + 1);
             } else {
                 $out .= json_encode($value);
             }
@@ -77,7 +77,7 @@ class JSONData extends Data
         }
 
         $out = " {\n" . $out;
-        $out .= "\n" . str_repeat("\t", $indent) . "}";
+        $out .= "\n" . str_repeat("\t", $indent) . '}';
 
         return $out;
     }
