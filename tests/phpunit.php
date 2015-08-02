@@ -36,29 +36,6 @@ class PHPUnit extends \PHPUnit_Framework_TestCase
     );
 
     /**
-     * @param mixed $arg
-     * @return Money
-     */
-    public function val($arg = null)
-    {
-        Config::registerDefault('money', new ConfigMoney());
-
-        return new Money($arg);
-    }
-
-    /**
-     * @param $testList
-     */
-    public function batchEqualDumps($testList)
-    {
-        foreach ($testList as $test) {
-            $result = isset($test[0]) ? $test[0] : null;
-            $arg    = isset($test[1]) ? $test[1] : null;
-            $this->assertEquals($this->val($arg)->dump(false), $result);
-        }
-    }
-
-    /**
      * @param $testList
      */
     public function batchEquals($testList)
@@ -69,7 +46,7 @@ class PHPUnit extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *
+     * Start profiler
      */
     public function startProfiler()
     {

@@ -18,11 +18,7 @@ namespace SmetDenis\Data;
  */
 class JSONData extends Data
 {
-    /**
-     * If the returned object will be an associative array (default :true)
-     * @var boolean
-     */
-    protected $assoc = true;
+    const LE = "\n";
 
     /**
      * Class Constructor
@@ -32,8 +28,9 @@ class JSONData extends Data
     {
         // decode JSON string
         if (is_string($data)) {
-            $data = json_decode($data, $this->assoc);
+            $data = json_decode($data, true);
         }
+
         parent::__construct($data);
     }
 
@@ -49,17 +46,17 @@ class JSONData extends Data
 
     /**
      * Do the real json encoding adding human readability. Supports automatic indenting with tabs
-     * @param array|object $in     The array or object to encode in json
+     * @param array|object $data   The array or object to encode in json
      * @param int          $indent The indentation level. Adds $indent tabs to the string
      * @return string
      */
-    public function jsonEncode($in, $indent = 0)
+    public function jsonEncode($data, $indent = 0)
     {
         $out = '';
 
-        foreach ($in as $key => $value) {
+        foreach ($data as $key => $value) {
 
-            $out .= str_repeat("\t", $indent + 1);
+            $out .= str_repeat('    ', $indent + 1);
 
             $out .= json_encode((string)$key) . ': ';
 
@@ -69,15 +66,15 @@ class JSONData extends Data
                 $out .= json_encode($value);
             }
 
-            $out .= ",\n";
+            $out .= ',' . self::LE;
         }
 
         if (!empty($out)) {
             $out = substr($out, 0, -2);
         }
 
-        $out = " {\n" . $out;
-        $out .= "\n" . str_repeat("\t", $indent) . '}';
+        $out = '{' . self::LE . $out;
+        $out .= self::LE . str_repeat("\t", $indent) . '}';
 
         return $out;
     }

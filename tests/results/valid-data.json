@@ -1,0 +1,51 @@
+{
+    "string-empty": "",
+    "string-zero": "0",
+    "string": "qwerty",
+    "number-zero": 0,
+    "number": 10,
+    "bool-true": true,
+    "bool-false": false,
+    "null": null,
+    "array_empty": {
+
+	},
+    "array_not_empty": {
+        "123": "123321"
+	},
+    "objects": {
+        "prop-1": "prop-value-1",
+        "prop-2": "prop-value-2",
+        "sub": {
+            "prop-1": "sub-prop-value-1",
+            "prop-2": "sub-prop-value-2"
+		}
+	},
+    "sub": {
+        "sub": "sub-value",
+        "sub.sub": "sub-value-2"
+	},
+    "array": {
+        "sub": "array-value",
+        "sub-sub": {
+            "key-1": "deep-value",
+            "sub": {
+                "key-sub": "really-deep-value"
+			}
+		}
+	},
+    "data": {
+        "key-1": "data-value-1",
+        "key-2": "data-value-2"
+	},
+    "nested": {
+        "value-1": "val-1",
+        "value-2": "val-2",
+        "sub": {
+            "qwerty": "deep-value"
+		}
+	},
+    "nested.value-1": "wsxzaq",
+    "nested.value-2": "qazxsw",
+    "nested.sub.qwerty": "ytrewq"
+}

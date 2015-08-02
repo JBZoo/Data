@@ -49,9 +49,10 @@ class Data extends ArrayObject
      */
     public function get($key, $default = null)
     {
-        if ($this->offsetExists($key)) {
+        if ($this->has($key)) {
             return $this->offsetGet($key);
         }
+
         return $default;
     }
 
@@ -168,18 +169,12 @@ class Data extends ArrayObject
 
             // handle ArrayObject and Array
             if (($data instanceof ArrayObject || is_array($data)) && isset($data[$part])) {
-                if ($data[$part] === null) {
-                    return $default;
-                }
                 $data =& $data[$part];
                 continue;
             }
 
             // handle object
             if (is_object($data) && isset($data->$part)) {
-                if ($data->$part === null) {
-                    return $default;
-                }
                 $data =& $data->$part;
                 continue;
             }
@@ -196,16 +191,20 @@ class Data extends ArrayObject
      * @param mixed $needle The value to search for
      * @return string
      */
-    public function searchRecursive($needle)
+    public function search($needle)
     {
-        $aIt = new RecursiveArrayIterator($this);
-        $it  = new RecursiveIteratorIterator($aIt);
+        $aIterator = new RecursiveArrayIterator($this);
+        $iterator  = new RecursiveIteratorIterator($aIterator);
 
-        while ($it->valid()) {
-            if ($it->current() == $needle) {
-                return $aIt->key();
+        while ($iterator->valid()) {
+
+            $iterator->current();
+
+            if ($iterator->current() === $needle) {
+                return $aIterator->key();
             }
-            $it->next();
+
+            $iterator->next();
         }
 
         return false;
@@ -218,9 +217,11 @@ class Data extends ArrayObject
     public function flattenRecursive()
     {
         $flat = array();
+
         foreach (new RecursiveIteratorIterator(new RecursiveArrayIterator($this)) as $value) {
             $flat[] = $value;
         }
+
         return $flat;
     }
 }
