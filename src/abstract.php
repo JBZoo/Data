@@ -12,15 +12,11 @@
 
 namespace SmetDenis\Data;
 
-use ArrayObject,
-    RecursiveArrayIterator,
-    RecursiveIteratorIterator;
-
 /**
  * Class Data
  * @package SmetDenis\Data
  */
-class Data extends ArrayObject
+abstract class Base extends \ArrayObject
 {
     /**
      * Class constructor
@@ -134,10 +130,7 @@ class Data extends ArrayObject
      * @param mixed $data The data to serialize
      * @return string The serialized data
      */
-    protected function write($data)
-    {
-        return serialize($data);
-    }
+    abstract protected function write($data);
 
     /**
      * Find a key in the data recursively
@@ -166,9 +159,8 @@ class Data extends ArrayObject
         $data  = $this;
 
         foreach ($parts as $part) {
-
             // handle ArrayObject and Array
-            if (($data instanceof ArrayObject || is_array($data)) && isset($data[$part])) {
+            if (($data instanceof \ArrayObject || is_array($data)) && isset($data[$part])) {
                 $data =& $data[$part];
                 continue;
             }
@@ -193,11 +185,10 @@ class Data extends ArrayObject
      */
     public function search($needle)
     {
-        $aIterator = new RecursiveArrayIterator($this);
-        $iterator  = new RecursiveIteratorIterator($aIterator);
+        $aIterator = new \RecursiveArrayIterator($this);
+        $iterator  = new \RecursiveIteratorIterator($aIterator);
 
         while ($iterator->valid()) {
-
             $iterator->current();
 
             if ($iterator->current() === $needle) {
@@ -218,7 +209,7 @@ class Data extends ArrayObject
     {
         $flat = array();
 
-        foreach (new RecursiveIteratorIterator(new RecursiveArrayIterator($this)) as $value) {
+        foreach (new \RecursiveIteratorIterator(new \RecursiveArrayIterator($this)) as $value) {
             $flat[] = $value;
         }
 

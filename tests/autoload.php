@@ -1,13 +1,13 @@
 <?php
 /**
- * SimpleTypes
+ * Data
  *
  * Copyright (c) 2015, Denis Smetannikov <denis@jbzoo.com>.
  *
- * @package   SimpleTypes
+ * @package   Data
  * @author    Denis Smetannikov <denis@jbzoo.com>
  * @copyright 2015 Denis Smetannikov <denis@jbzoo.com>
- * @link      http://github.com/smetdenis/simpletypes
+ * @link      http://github.com/smetdenis/Data
  */
 
 // @codingStandardsIgnoreFile

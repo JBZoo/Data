@@ -4,7 +4,7 @@
  *
  * Copyright (c) 2015, Denis Smetannikov <denis@jbzoo.com>.
  *
- * @package   SimpleTypes
+ * @package   Data
  * @author    Denis Smetannikov <denis@jbzoo.com>
  * @copyright 2015 Denis Smetannikov <denis@jbzoo.com>
  * @link      http://github.com/SmetDenis/Data
@@ -89,7 +89,7 @@ class JsonDataTest extends PHPUnit
 
     public function testToString()
     {
-        $data = new JSONData($this->test);
+        $data = new JSON($this->test);
 
         $jsonTest  = (string)$data;
         $jsonValid = $this->openFile('./tests/results/valid-data.json');
@@ -100,7 +100,7 @@ class JsonDataTest extends PHPUnit
     public function testJson()
     {
         $jsonValid = $this->openFile('./tests/results/valid-data.json');
-        $data     = new JSONData($jsonValid);
+        $data     = new JSON($jsonValid);
         $jsonTest = (string)$data;
 
         self::assertEquals($jsonValid, $jsonTest);

@@ -13,10 +13,10 @@
 namespace SmetDenis\Data;
 
 /**
- * Class JSONData
+ * Class JSON
  * @package SmetDenis\Data
  */
-class JSONData extends Data
+class JSON extends Base
 {
     const LE = "\n";
 
@@ -55,17 +55,11 @@ class JSONData extends Data
         $out = '';
 
         foreach ($data as $key => $value) {
-
             $out .= str_repeat('    ', $indent + 1);
-
             $out .= json_encode((string)$key) . ': ';
 
-            if (is_object($value) || is_array($value)) {
-                $out .= $this->jsonEncode($value, $indent + 1);
-            } else {
-                $out .= json_encode($value);
-            }
-
+            $isComplex = is_object($value) || is_array($value);
+            $out .= $isComplex ? $this->jsonEncode($value, $indent + 1) : json_encode($value);
             $out .= ',' . self::LE;
         }
 
