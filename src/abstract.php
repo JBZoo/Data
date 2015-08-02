@@ -161,13 +161,13 @@ abstract class Base extends \ArrayObject
         foreach ($parts as $part) {
             // handle ArrayObject and Array
             if (($data instanceof \ArrayObject || is_array($data)) && isset($data[$part])) {
-                $data =& $data[$part];
+                $data = &$data[$part];
                 continue;
             }
 
             // handle object
             if (is_object($data) && isset($data->$part)) {
-                $data =& $data->$part;
+                $data = &$data->$part;
                 continue;
             }
 
@@ -181,7 +181,7 @@ abstract class Base extends \ArrayObject
     /**
      * Find a value also in nested arrays/objects
      * @param mixed $needle The value to search for
-     * @return string
+     * @return string|false
      */
     public function search($needle)
     {
