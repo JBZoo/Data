@@ -250,8 +250,8 @@ abstract class Base extends \ArrayObject
         $contents = null;
 
         if ($realPath = realpath($filePath)) {
-            $handle   = fopen($filePath, "rb");
-            $contents = fread($handle, filesize($filePath));
+            $handle   = fopen($realPath, "rb");
+            $contents = fread($handle, filesize($realPath));
             fclose($handle);
         }
 
