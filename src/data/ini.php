@@ -48,7 +48,6 @@ class Ini extends Base
 
         foreach ($data as $dataKey => $dataValue) {
             if (is_array($dataValue)) {
-
                 if ($this->isMulti($dataValue)) {
                     $sections = array_merge((array)$parent, (array)$dataKey);
                     $result[] = '';
