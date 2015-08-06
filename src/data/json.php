@@ -40,8 +40,8 @@ class JSON extends Base
 
     /**
      * Do the real json encoding adding human readability. Supports automatic indenting with tabs
-     * @param array $data   The array or object to encode in json
-     * @param int   $indent The indentation level. Adds $indent tabs to the string
+     * @param array|object $data   The array or object to encode in json
+     * @param int          $indent The indentation level. Adds $indent tabs to the string
      * @return string
      */
     protected function render($data, $indent = 0)
