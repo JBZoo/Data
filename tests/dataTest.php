@@ -87,6 +87,7 @@ class DataTest extends PHPUnit
         );
     }
 
+
     public function testCreate()
     {
         $data = new Data($this->test);
@@ -114,7 +115,13 @@ class DataTest extends PHPUnit
     public function testSerialize()
     {
         $data = new Data();
-        self::assertEquals('a:0:{}', '' . $data);
+        self::assertEquals('a:0:{}', (string)$data);
+    }
+
+    public function testUnSerialize()
+    {
+        $data = new Data(serialize(array()));
+        self::assertSame(serialize(array()), (string)$data);
     }
 
     public function testGet()
@@ -251,5 +258,4 @@ class DataTest extends PHPUnit
 
         self::assertSame(array(10, 'qwerty', 'sub-value', 'sub-sub-value'), $data->flattenRecursive());
     }
-
 }

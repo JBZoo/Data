@@ -92,17 +92,16 @@ class JsonDataTest extends PHPUnit
         $data = new JSON($this->test);
 
         $jsonTest  = (string)$data;
-        $jsonValid = $this->openFile('./tests/results/valid-data.json');
+        $jsonValid = $this->openFile('./tests/resource/data.json');
 
         self::assertEquals($jsonValid, $jsonTest);
     }
 
     public function testJson()
     {
-        $jsonValid = $this->openFile('./tests/results/valid-data.json');
-        $data     = new JSON($jsonValid);
-        $jsonTest = (string)$data;
+        $dataValid = $this->openFile('./tests/resource/data.json');
+        $data      = new JSON($dataValid);
 
-        self::assertEquals($jsonValid, $jsonTest);
+        self::assertEquals($dataValid, (string)$data);
     }
 }

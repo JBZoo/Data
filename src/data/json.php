@@ -18,58 +18,52 @@ namespace SmetDenis\Data;
  */
 class JSON extends Base
 {
-    const LE = "\n";
-
     /**
-     * Class Constructor
-     * @param string|array $data The data to read. Could be either an array or a json string
+     * Utility Method to unserialize the given data
+     * @param string $string
+     * @return mixed
      */
-    public function __construct($data = array())
+    protected function decode($string)
     {
-        // decode JSON string
-        if (is_string($data)) {
-            $data = json_decode($data, true);
-        }
-
-        parent::__construct($data);
+        return json_decode($string, true);
     }
 
     /**
-     * Encode an array or an object in JSON format
-     * @param array|object $data The data to encode
-     * @return string
+     * Utility Method to unserialize the given data
+     * @param $data
+     * @return mixed
      */
-    protected function write($data)
+    protected function encode($data)
     {
-        return $this->jsonEncode($data);
+        return $this->render($data);
     }
 
     /**
      * Do the real json encoding adding human readability. Supports automatic indenting with tabs
-     * @param array|object $data   The array or object to encode in json
-     * @param int          $indent The indentation level. Adds $indent tabs to the string
+     * @param array $data   The array or object to encode in json
+     * @param int   $indent The indentation level. Adds $indent tabs to the string
      * @return string
      */
-    public function jsonEncode($data, $indent = 0)
+    protected function render($data, $indent = 0)
     {
-        $out = '';
+        $result = '';
 
         foreach ($data as $key => $value) {
-            $out .= str_repeat('    ', $indent + 1);
-            $out .= json_encode((string)$key) . ': ';
+            $result .= str_repeat('    ', $indent + 1);
+            $result .= json_encode((string)$key) . ': ';
 
             $isComplex = is_object($value) || is_array($value);
-            $out .= $isComplex ? $this->jsonEncode($value, $indent + 1) : json_encode($value);
-            $out .= ',' . self::LE;
+            $result .= $isComplex ? $this->render($value, $indent + 1) : json_encode($value);
+            $result .= ',' . Base::LE;
         }
 
-        if (!empty($out)) {
-            $out = substr($out, 0, -2);
+        if (!empty($result)) {
+            $result = substr($result, 0, -2);
         }
 
-        $out = '{' . self::LE . $out;
-        $out .= self::LE . str_repeat("\t", $indent) . '}';
+        $result = '{' . Base::LE . $result;
+        $result .= Base::LE . str_repeat('    ', $indent) . '}';
 
-        return $out;
+        return $result;
     }
 }

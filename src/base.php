@@ -18,14 +18,38 @@ namespace SmetDenis\Data;
  */
 abstract class Base extends \ArrayObject
 {
+    const LE = "\n";
+
     /**
      * Class constructor
-     * @param array $data The data array
+     * @param array|string $data The data array
      */
     public function __construct($data = array())
     {
+        if ($data && is_string($data) && file_exists($data)) {
+            $data = $this->readFile($data);
+        }
+
+        if (is_string($data)) {
+            $data = $this->decode($data);
+        }
+
         parent::__construct($data ? (array)$data : array());
     }
+
+    /**
+     * Utility Method to unserialize the given data
+     * @param string $string
+     * @return mixed
+     */
+    abstract protected function decode($string);
+
+    /**
+     * Utility Method to serialize the given data
+     * @param mixed $data The data to serialize
+     * @return string The serialized data
+     */
+    abstract protected function encode($data);
 
     /**
      * Checks if the given key is present
@@ -122,38 +146,39 @@ abstract class Base extends \ArrayObject
      */
     public function __toString()
     {
-        return !$this ? '' : $this->write($this->getArrayCopy());
+        return $this->write();
     }
 
     /**
-     * Utility Method to serialize the given data
-     * @param mixed $data The data to serialize
-     * @return string The serialized data
+     * Encode an array or an object in INI format
+     * @return string
      */
-    abstract protected function write($data);
+    public function write()
+    {
+        return $this->encode($this->getArrayCopy());
+    }
 
     /**
      * Find a key in the data recursively
      * This method finds the given key, searching also in any array or
      * object that's nested under the current data object.
-     *
-     * Example:
-     * $data->find('parentkey.subkey.subsubkey');
+     * Example: $data->find('parentkey.subkey.subsubkey');
      *
      * @param string $key       The key to search for. Can be composed using $separator as the key/subkey separator
      * @param mixed  $default   The default value
      * @param string $separator The separator to use when searching for subkeys. Default is '.'
-     *
      * @return mixed
      */
     public function find($key, $default = null, $separator = '.')
     {
         $key   = (string)$key;
         $value = $this->get($key);
+
         // check if key exists in array
-        if ($value !== null) {
+        if (null !== $value) {
             return $value;
         }
+
         // explode search key and init search data
         $parts = explode($separator, $key);
         $data  = $this;
@@ -214,5 +239,37 @@ abstract class Base extends \ArrayObject
         }
 
         return $flat;
+    }
+
+    /**
+     * @param $filePath
+     * @return null|string
+     */
+    protected function readFile($filePath)
+    {
+        $contents = null;
+
+        if ($realPath = realpath($filePath)) {
+            $handle   = fopen($filePath, "rb");
+            $contents = fread($handle, filesize($filePath));
+            fclose($handle);
+        }
+
+        return $contents;
+    }
+
+    /**
+     * Check is array is nested
+     * @param $array
+     * @return bool
+     */
+    protected function isMulti($array)
+    {
+        $arrayCount = array_filter($array, 'is_array');
+        if (count($arrayCount) > 0) {
+            return true;
+        }
+
+        return false;
     }
 }
