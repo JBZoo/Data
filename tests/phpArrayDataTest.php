@@ -23,7 +23,7 @@ class phpArrayDataTest extends PHPUnit
 
     public function testFile()
     {
-        $data      = new phpArray($this->testFile);
+        $data      = new PhpArray($this->testFile);
         $dataValid = $this->openFile($this->testFile);
 
         self::assertEquals($dataValid, (string)$data);
