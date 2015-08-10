@@ -26,9 +26,20 @@
     </filter>
 
     <logging>
+        <!-- main -->
         <log type="coverage-clover" target="build/logs/clover.xml"/>
-        <log type="coverage-html" target="build/html" lowUpperBound="80" highLowerBound="95"/>
-        <log type="coverage-text" target="php://stdout" showUncoveredFiles="false" showOnlySummary="true"/>
+
+        <!-- for human -->
+        <log type="coverage-html"   target="build/phpunit" lowUpperBound="80" highLowerBound="95"/>
+        <log type="coverage-text"   target="php://stdout" showUncoveredFiles="false" showOnlySummary="true"/>
+
+        <!-- additionals -->
+        <log type="json"            target="build/logs/json.json"/>
+        <log type="tap"             target="build/logs/tap.tap"/>
+        <log type="junit"           target="build/logs/junit.xml" logIncompleteSkipped="true"/>
+        <log type="testdox-html"    target="build/logs/testdox.html"/>
+        <log type="testdox-text"    target="build/logs/testdox.txt"/>
+        <log type="coverage-php"    target="build/logs/coverage.php"/>
     </logging>
 
 </phpunit>
