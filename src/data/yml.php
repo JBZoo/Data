@@ -12,6 +12,8 @@
 
 namespace SmetDenis\Data;
 
+use Symfony\Component\Yaml\Yaml;
+
 /**
  * Class Yml
  * @package SmetDenis\Data
@@ -25,7 +27,7 @@ class Yml extends Base
      */
     protected function encode($data)
     {
-        return \Symfony\Component\Yaml\Yaml::dump($data);
+        return Yaml::dump($data);
     }
 
     /**
@@ -35,6 +37,6 @@ class Yml extends Base
      */
     protected function decode($string)
     {
-        return \Symfony\Component\Yaml\Yaml::parse($string);
+        return Yaml::parse($string);
     }
 }
