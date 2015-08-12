@@ -242,7 +242,7 @@ abstract class Base extends \ArrayObject
     }
 
     /**
-     * @param $filePath
+     * @param string $filePath
      * @return null|string
      */
     protected function readFile($filePath)
