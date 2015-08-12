@@ -31,7 +31,7 @@ class JSON extends Base
     /**
      * Utility Method to unserialize the given data
      * @param $data
-     * @return mixed
+     * @return string
      */
     protected function encode($data)
     {
