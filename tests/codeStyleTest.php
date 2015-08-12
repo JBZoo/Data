@@ -53,6 +53,7 @@ class CodeStyleTest extends PHPUnit
     {
         $this->excludeList[] = 'autoload.php';
         $this->excludeList[] = 'demo.php';
+        $this->excludeList[] = 'yml.php';
 
         $files = $this->getFileList(ROOT_PATH, '#\.php$#i');
         $valid = implode($this->validHeader, $this->le);
