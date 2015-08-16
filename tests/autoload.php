@@ -20,7 +20,9 @@ if ($autoload = realpath('./vendor/autoload.php')) {
     die('execute "composer install"');
 }
 
-define('ROOT_PATH', realpath('.'));
+if (!defined('ROOT_PATH')) {
+    define('ROOT_PATH', realpath('.'));
+}
 
 // test tools
 require_once 'phpunit.php';
