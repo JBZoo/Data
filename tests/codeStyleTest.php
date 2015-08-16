@@ -10,8 +10,6 @@
  * @link      http://github.com/SmetDenis/Data
  */
 
-namespace SmetDenis\Data;
-
 /**
  * Class Exception
  * @package SmetDenis\Data
@@ -34,9 +32,9 @@ class CodeStyleTest extends PHPUnit
         ' * @link      http://github.com/SmetDenis/Data',
         ' */',
         '',
-        'namespace SmetDenis\Data;',
-        '',
-        '/**',
+        //'namespace SmetDenis\Data;',
+        //'',
+        //'/**',
     );
 
     public function testLineEndings()

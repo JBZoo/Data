@@ -10,7 +10,7 @@
  * @link      http://github.com/SmetDenis/Data
  */
 
-namespace SmetDenis\Data;
+use SmetDenis\Data\Ini;
 
 /**
  * Class iniDataTest

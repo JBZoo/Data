@@ -10,8 +10,6 @@
  * @link      http://github.com/SmetDenis/Data
  */
 
-namespace SmetDenis\Data;
-
 /**
  * Class PHPUnit
  * @package SmetDenis\Data

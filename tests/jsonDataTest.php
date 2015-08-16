@@ -10,7 +10,8 @@
  * @link      http://github.com/SmetDenis/Data
  */
 
-namespace SmetDenis\Data;
+use SmetDenis\Data\Data;
+use SmetDenis\Data\JSON;
 
 /**
  * Class JsonDataTest

@@ -10,7 +10,7 @@
  * @link      http://github.com/SmetDenis/Data
  */
 
-namespace SmetDenis\Data;
+use SmetDenis\Data\Data;
 
 /**
  * Class DataTest
@@ -90,7 +90,7 @@ class DataTest extends PHPUnit
 
     public function testCreate()
     {
-        $data = new Data($this->test);
+        $data = new SmetDenis\Data\Data($this->test);
 
         self::assertInstanceOf('\IteratorAggregate', $data);
         self::assertInstanceOf('\ArrayAccess', $data);
