@@ -1,22 +1,27 @@
 <?php
 /**
- * Data
+ * JBZoo Data
  *
- * Copyright (c) 2015, Denis Smetannikov <denis@jbzoo.com>.
+ * This file is part of the JBZoo CCK package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  *
  * @package   Data
+ * @license   MIT
+ * @copyright Copyright (C) JBZoo.com,  All rights reserved.
+ * @link      https://github.com/JBZoo/Data
  * @author    Denis Smetannikov <denis@jbzoo.com>
- * @copyright 2015 Denis Smetannikov <denis@jbzoo.com>
- * @link      http://github.com/SmetDenis/Data
  */
+
+namespace JBZoo\Data;
 
 /**
  * Class PHPUnit
- * @package SmetDenis\Data
+ * @package JBZoo\Data
  */
 class PHPUnit extends \PHPUnit_Framework_TestCase
 {
-    protected $namespace = '\\SmetDenis\\Data\\';
+    protected $namespace = '\\JBZoo\\Data\\';
 
     protected static $times = array();
     protected static $memories = array();
@@ -98,7 +103,7 @@ class PHPUnit extends \PHPUnit_Framework_TestCase
             if (!is_dir($path) && !in_array($value, $this->excludeList, true)) {
 
                 if ($filter) {
-                    if (preg_match($filter, $path)) {
+                    if (preg_match('#' . $filter . '#iu', $path)) {
                         $results[] = $path;
                     }
                 } else {

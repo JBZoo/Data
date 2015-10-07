@@ -1,20 +1,23 @@
 <?php
 /**
- * Data
+ * JBZoo Data
  *
- * Copyright (c) 2015, Denis Smetannikov <denis@jbzoo.com>.
+ * This file is part of the JBZoo CCK package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  *
  * @package   Data
+ * @license   MIT
+ * @copyright Copyright (C) JBZoo.com,  All rights reserved.
+ * @link      https://github.com/JBZoo/Data
  * @author    Denis Smetannikov <denis@jbzoo.com>
- * @copyright 2015 Denis Smetannikov <denis@jbzoo.com>
- * @link      http://github.com/SmetDenis/Data
  */
 
-use SmetDenis\Data\Data;
+namespace JBZoo\Data;
 
 /**
  * Class DataTest
- * @package SmetDenis\Data
+ * @package JBZoo\Data
  */
 class DataTest extends PHPUnit
 {
@@ -90,7 +93,7 @@ class DataTest extends PHPUnit
 
     public function testCreate()
     {
-        $data = new SmetDenis\Data\Data($this->test);
+        $data = new Data($this->test);
 
         self::assertInstanceOf('\IteratorAggregate', $data);
         self::assertInstanceOf('\ArrayAccess', $data);

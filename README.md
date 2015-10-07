@@ -1,4 +1,10 @@
-# Data [![Build Status](https://travis-ci.org/JBZoo/Data.svg)](https://travis-ci.org/JBZoo/Data)
-[![License](https://poser.pugx.org/smetdenis/data/license)](https://packagist.org/packages/smetdenis/data)  [![Latest Stable Version](https://poser.pugx.org/smetdenis/data/v/stable)](https://packagist.org/packages/smetdenis/data)  [![Coverage Status](https://coveralls.io/repos/SmetDenis/Data/badge.svg?branch=master&service=github)](https://coveralls.io/github/SmetDenis/Data?branch=master)  [![Code Climate](https://codeclimate.com/github/SmetDenis/Data/badges/gpa.svg)](https://codeclimate.com/github/SmetDenis/Data)  [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/SmetDenis/Data/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/SmetDenis/Data/?branch=master)  [![Dependency Status](https://www.versioneye.com/user/projects/55baf21f653762001700197f/badge.svg?style=flat)](https://www.versioneye.com/user/projects/55baf21f653762001700197f)  [![HHVM Status](http://hhvm.h4cc.de/badge/SmetDenis/Data.svg)](http://hhvm.h4cc.de/package/SmetDenis/Data)
+# JBZoo Data  [![Build Status](https://travis-ci.org/JBZoo/Data.svg?branch=master)](https://travis-ci.org/JBZoo/Data)
 
-Extended implementation of ArrayObject
+#### Extended implementation of ArrayObject
+
+[![License](https://poser.pugx.org/JBZoo/Data/license)](https://packagist.org/packages/JBZoo/Data)
+[![Latest Stable Version](https://poser.pugx.org/JBZoo/Data/v/stable)](https://packagist.org/packages/JBZoo/Data)
+
+### License
+
+MIT

@@ -6,21 +6,33 @@ php:
   - 5.5
   - 5.6
   - 7.0
-  - hhvm
+  - hhvm  
 
 matrix:
   fast_finish: true
   allow_failures:
-    - php: hhvm
     - php: 7.0
+    - php: hhvm
 
 before_script:
   # Composer
   - composer self-update
   - composer install --no-interaction
+  - composer validate
+
+  # install testing tools
+  - composer require phpunit/phpunit:"^4.8"
+  - composer require satooshi/php-coveralls:"dev-master"
+  - composer require squizlabs/php_codesniffer:"*"
+  - composer require sebastian/phpcpd:"*"
+  - composer require phploc/phploc:"*"
+  - composer require phpmd/phpmd:"^2.2"
+  - composer require pdepend/pdepend:"^2.1"
 
   # Dirs
-  - mkdir -p build/logs
+  - mkdir -p build/cov
+  - mkdir -p build/logs  
+  - mkdir -p build/phpunit
   - mkdir -p build/pdepend
 
   # Update env
@@ -28,14 +40,14 @@ before_script:
 
 script:
   # PHPUnit tests
-  - php vendor/bin/phpunit --configuration phpunit.xml.dist --verbose;
+  - php vendor/bin/phpunit --configuration phpunit.xml.dist;
 
 after_script:
   # Send to coveralls
   - sh -c 'if [ "$TRAVIS_PHP_VERSION" = "5.5" ]; then
         php vendor/bin/coveralls --verbose;
     fi;'
-
+      
   # Check PSR1,2 src and tests (NOT FOR HipHop !!!)
   - sh -c 'if [ "$TRAVIS_PHP_VERSION" = "5.5" ]; then
         php vendor/bin/phpcs ./src --standard=PSR1,PSR2 --encoding=utf-8 --report=summary -vp | grep "TOTAL\sOF";
@@ -66,8 +78,8 @@ after_script:
         php vendor/bin/pdepend
           --summary-xml=build/pdepend/summary.xml
           --jdepend-chart=build/pdepend/jdepend.svg
-          --overview-pyramid=build/pdepend/pyramid.svg ./src;
+          --overview-pyramid=build/pdepend/pyramid.svg ./src --verbose;
     fi;'
 
 notifications:
-  email: false
+  email: github@jbzoo.com
