@@ -48,7 +48,7 @@ after_script:
         php vendor/bin/coveralls --verbose;
     fi;'
       
-  # Check PSR1,2 src and tests (NOT FOR HipHop !!!)
+  # Check PSR1,2 src and tests
   - sh -c 'if [ "$TRAVIS_PHP_VERSION" = "5.5" ]; then
         php vendor/bin/phpcs ./src --standard=PSR1,PSR2 --encoding=utf-8 --report=summary -vp | grep "TOTAL\sOF";
     fi;'
@@ -78,7 +78,7 @@ after_script:
         php vendor/bin/pdepend
           --summary-xml=build/pdepend/summary.xml
           --jdepend-chart=build/pdepend/jdepend.svg
-          --overview-pyramid=build/pdepend/pyramid.svg ./src --verbose;
+          --overview-pyramid=build/pdepend/pyramid.svg ./src;
     fi;'
 
 notifications:
