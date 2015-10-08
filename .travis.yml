@@ -21,13 +21,17 @@ before_script:
   - composer validate
 
   # install testing tools
-  - composer require phpunit/phpunit:"^4.8"
-  - composer require satooshi/php-coveralls:"dev-master"
-  - composer require squizlabs/php_codesniffer:"*"
-  - composer require sebastian/phpcpd:"*"
-  - composer require phploc/phploc:"*"
-  - composer require phpmd/phpmd:"^2.2"
-  - composer require pdepend/pdepend:"^2.1"
+  - composer require phpunit/phpunit:^4.8
+
+  # install report tools
+  - sh -c 'if [ "$TRAVIS_PHP_VERSION" = "5.5" ]; then
+    composer require satooshi/php-coveralls:dev-master;
+    composer require squizlabs/php_codesniffer:*;
+    composer require sebastian/phpcpd:*;
+    composer require phploc/phploc:*;
+    composer require phpmd/phpmd:^2.2;
+    composer require pdepend/pdepend:^2.1;
+  fi;'
 
   # Dirs
   - mkdir -p build/cov
@@ -50,7 +54,7 @@ after_script:
       
   # Check PSR1,2 src and tests
   - sh -c 'if [ "$TRAVIS_PHP_VERSION" = "5.5" ]; then
-        php vendor/bin/phpcs ./src --standard=PSR1,PSR2 --encoding=utf-8 --report=summary -vp | grep "TOTAL\sOF";
+        php vendor/bin/phpcs ./src --standard=PSR1,PSR2 --encoding=utf-8 --report-width=160 --tab-width=4 --report=checkstyle;
     fi;'
   
   # Try to find copy-paste
