@@ -1,6 +1,6 @@
 build/*
 vendor/*
-tests/reports/*
+phpunit.xml
 composer.phar
 composer.lock
 
