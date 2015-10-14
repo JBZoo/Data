@@ -54,7 +54,7 @@ after_script:
       
   # Check PSR1,2 src and tests
   - sh -c 'if [ "$TRAVIS_PHP_VERSION" = "5.5" ]; then
-        php vendor/bin/phpcs ./src --standard=PSR1,PSR2 --encoding=utf-8 --report-width=160 --tab-width=4 --report=checkstyle;
+        php vendor/bin/phpcs ./src --standard=PSR1,PSR2 --encoding=utf-8 --report-width=160 --tab-width=4 --report=full;
     fi;'
   
   # Try to find copy-paste
