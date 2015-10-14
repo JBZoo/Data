@@ -25,13 +25,13 @@ before_script:
 
   # install report tools
   - sh -c 'if [ "$TRAVIS_PHP_VERSION" = "5.5" ]; then
-    composer require satooshi/php-coveralls:dev-master;
-    composer require squizlabs/php_codesniffer:*;
-    composer require sebastian/phpcpd:*;
-    composer require phploc/phploc:*;
-    composer require phpmd/phpmd:^2.2;
-    composer require pdepend/pdepend:^2.1;
-  fi;'
+        composer require satooshi/php-coveralls:dev-master;
+        composer require squizlabs/php_codesniffer:*;
+        composer require sebastian/phpcpd:*;
+        composer require phploc/phploc:*;
+        composer require phpmd/phpmd:^2.2;
+        composer require pdepend/pdepend:^2.1;
+    fi;'
 
   # Dirs
   - mkdir -p build/cov
