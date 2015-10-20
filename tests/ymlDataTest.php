@@ -13,7 +13,9 @@
  * @author    Denis Smetannikov <denis@jbzoo.com>
  */
 
-namespace JBZoo\Data;
+namespace JBZoo\PHPUnit;
+
+use JBZoo\Data\Yml;
 
 /**
  * Class YmlDataTest
@@ -29,7 +31,7 @@ class YmlDataTest extends PHPUnit
         $data      = new Yml($this->testFile);
         $dataValid = $this->openFile($this->testFile);
 
-        self::assertEquals($dataValid, (string)$data);
+        is($dataValid, (string)$data);
     }
 
     public function testString()
@@ -37,6 +39,6 @@ class YmlDataTest extends PHPUnit
         $data      = new Yml($this->openFile($this->testFile));
         $dataValid = $this->openFile($this->testFile);
 
-        self::assertEquals($dataValid, (string)$data);
+        is($dataValid, (string)$data);
     }
 }

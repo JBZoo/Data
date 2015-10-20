@@ -13,7 +13,9 @@
  * @author    Denis Smetannikov <denis@jbzoo.com>
  */
 
-namespace JBZoo\Data;
+namespace JBZoo\PHPunit;
+
+use JBZoo\Data\Data;
 
 /**
  * Class DataTest
@@ -21,12 +23,11 @@ namespace JBZoo\Data;
  */
 class DataTest extends PHPUnit
 {
-
-    protected $test = array();
+    protected $_test = array();
 
     public function setUp()
     {
-        $this->test = array(
+        $this->_test = array(
             // simular
             'string-empty'      => '',
             'string-zero'       => '0',
@@ -90,159 +91,158 @@ class DataTest extends PHPUnit
         );
     }
 
-
     public function testCreate()
     {
-        $data = new Data($this->test);
+        $data = new Data($this->_test);
 
-        self::assertInstanceOf('\IteratorAggregate', $data);
-        self::assertInstanceOf('\ArrayAccess', $data);
-        self::assertInstanceOf('\Serializable', $data);
-        self::assertInstanceOf('\Countable', $data);
-        self::assertTrue(is_object($data));
+        isClass('\IteratorAggregate', $data);
+        isClass('\ArrayAccess', $data);
+        isClass('\Serializable', $data);
+        isClass('\Countable', $data);
+        isTrue(is_object($data));
     }
 
     public function testHas()
     {
-        $data = new Data($this->test);
+        $data = new Data($this->_test);
 
-        self::assertFalse($data->has('undefined'));
-        self::assertTrue($data->has('null'));
-        self::assertTrue($data->has('string-empty'));
-        self::assertTrue($data->has('string-zero'));
-        self::assertTrue($data->has('number-zero'));
-        self::assertTrue($data->has('array_empty'));
-        self::assertTrue($data->has('array_not_empty'));
+        isFalse($data->has('undefined'));
+        isTrue($data->has('null'));
+        isTrue($data->has('string-empty'));
+        isTrue($data->has('string-zero'));
+        isTrue($data->has('number-zero'));
+        isTrue($data->has('array_empty'));
+        isTrue($data->has('array_not_empty'));
     }
 
     public function testSerialize()
     {
         $data = new Data();
-        self::assertEquals('a:0:{}', (string)$data);
+        is('a:0:{}', (string)$data);
     }
 
     public function testUnSerialize()
     {
         $data = new Data(serialize(array()));
-        self::assertSame(serialize(array()), (string)$data);
+        same(serialize(array()), (string)$data);
     }
 
     public function testGet()
     {
-        $data = new Data($this->test);
+        $data = new Data($this->_test);
 
-        self::assertEquals(10, $data->get('number'));
-        self::assertEquals('qwerty', $data->get('string'));
-        self::assertTrue($data->get('bool-true'));
-        self::assertFalse($data->get('bool-false'));
-        self::assertTrue(is_array($data->get('nested')));
-        self::assertEquals('wsxzaq', $data->get('nested.value-1'));
-        self::assertEquals('ytrewq', $data->get('nested.sub.qwerty'));
+        is(10, $data->get('number'));
+        is('qwerty', $data->get('string'));
+        isTrue($data->get('bool-true'));
+        isFalse($data->get('bool-false'));
+        isTrue(is_array($data->get('nested')));
+        is('wsxzaq', $data->get('nested.value-1'));
+        is('ytrewq', $data->get('nested.sub.qwerty'));
 
         // undefined
-        self::assertNull($data->get('undefined'));
-        self::assertEquals('some-value', $data->get('undefined', 'some-value'));
-        self::assertNull($data->get('undefined', null));
+        isNull($data->get('undefined'));
+        is('some-value', $data->get('undefined', 'some-value'));
+        isNull($data->get('undefined', null));
     }
 
     public function testSet()
     {
         // methods
-        $data = new Data($this->test);
-        self::assertEquals(10, $data->get('number'));
+        $data = new Data($this->_test);
+        is(10, $data->get('number'));
         $data->set('number', 'qqq');
-        self::assertEquals('qqq', $data->get('number'));
+        is('qqq', $data->get('number'));
 
         // like array
-        $data = new Data($this->test);
-        self::assertEquals(10, $data['number']);
+        $data = new Data($this->_test);
+        is(10, $data['number']);
         $data['number'] = 'qqq';
-        self::assertEquals('qqq', $data['number']);
+        is('qqq', $data['number']);
 
         // like object
-        $data = new Data($this->test);
-        self::assertEquals(10, $data->number);
+        $data = new Data($this->_test);
+        is(10, $data->number);
         $data->number = 'qqq';
-        self::assertEquals('qqq', $data->number);
+        is('qqq', $data->number);
     }
 
     public function testFind()
     {
-        $data = new Data($this->test);
-        self::assertSame(array('sub' => 'sub-value', 'sub.sub' => 'sub-value-2'), $data->get('sub'));
-        self::assertSame(array('sub' => 'sub-value', 'sub.sub' => 'sub-value-2'), $data->find('sub'));
-        self::assertNull($data->find('sub.sub.sub'));
-        self::assertEquals('sub-value', $data->find('sub.sub'));
-        self::assertEquals(array(
+        $data = new Data($this->_test);
+        same(array('sub' => 'sub-value', 'sub.sub' => 'sub-value-2'), $data->get('sub'));
+        same(array('sub' => 'sub-value', 'sub.sub' => 'sub-value-2'), $data->find('sub'));
+        isNull($data->find('sub.sub.sub'));
+        is('sub-value', $data->find('sub.sub'));
+        is(array(
             'key-1' => 'deep-value',
             'sub'   => array(
                 'key-sub' => 'really-deep-value',
             ),
         ), $data->find('array.sub-sub'));
-        self::assertEquals('sub-prop-value-2', $data->find('objects.sub.prop-2'));
+        is('sub-prop-value-2', $data->find('objects.sub.prop-2'));
 
-        self::assertSame(array(
+        same(array(
             'prop-1' => 'sub-prop-value-1',
             'prop-2' => 'sub-prop-value-2',
         ), (array)$data->find('objects.sub'));
 
-        self::assertEquals('tttttt', $data->find('undefined', 'tttttt'));
-        self::assertEquals('ffffff', $data->find('undefined.key', 'ffffff'));
+        is('tttttt', $data->find('undefined', 'tttttt'));
+        is('ffffff', $data->find('undefined.key', 'ffffff'));
 
-        self::assertEquals('gggggg', $data->find('data.key-3', 'gggggg'));
-        self::assertEquals('data-value-2', $data->find('data.key-2'));
+        is('gggggg', $data->find('data.key-3', 'gggggg'));
+        is('data-value-2', $data->find('data.key-2'));
     }
 
     public function testRemove()
     {
-        $data = new Data($this->test);
-        self::assertEquals('qwerty', $data->get('string'));
+        $data = new Data($this->_test);
+        is('qwerty', $data->get('string'));
         $data->remove('string');
-        self::assertFalse($data->has('string'));
-        self::assertNull($data->get('string'));
+        isFalse($data->has('string'));
+        isNull($data->get('string'));
     }
 
     public function testIsset()
     {
-        $data = new Data($this->test);
-        self::assertTrue(isset($data['string']));
-        self::assertFalse(isset($data['undefined']));
+        $data = new Data($this->_test);
+        isTrue(isset($data['string']));
+        isFalse(isset($data['undefined']));
 
-        self::assertTrue(isset($data->string));
-        self::assertFalse(isset($data->undefined));
+        isTrue(isset($data->string));
+        isFalse(isset($data->undefined));
     }
 
     public function testEmpty()
     {
-        $data = new Data($this->test);
-        self::assertFalse(empty($data['string']));
-        self::assertTrue(empty($data['undefined']));
+        $data = new Data($this->_test);
+        isFalse(empty($data['string']));
+        isTrue(empty($data['undefined']));
 
-        self::assertFalse(empty($data->string));
-        self::assertTrue(empty($data->undefined));
+        isFalse(empty($data->string));
+        isTrue(empty($data->undefined));
     }
 
     public function testUnset()
     {
         // like object
-        $data = new Data($this->test);
-        self::assertEquals('qwerty', $data->get('string'));
+        $data = new Data($this->_test);
+        is('qwerty', $data->get('string'));
         unset($data->string);
-        self::assertFalse($data->has('string'));
+        isFalse($data->has('string'));
 
         // like array
-        $data = new Data($this->test);
-        self::assertEquals('qwerty', $data['string']);
+        $data = new Data($this->_test);
+        is('qwerty', $data['string']);
         unset($data['string']);
-        self::assertFalse($data->has('string'));
+        isFalse($data->has('string'));
     }
 
     public function testSearch()
     {
         // like object
-        $data = new Data($this->test);
-        self::assertFalse($data->search('q1w2e3'));
-        self::assertEquals('nested.sub.qwerty', $data->search('ytrewq'));
+        $data = new Data($this->_test);
+        isFalse($data->search('q1w2e3'));
+        is('nested.sub.qwerty', $data->search('ytrewq'));
     }
 
     public function testFlattenRecursive()
@@ -259,6 +259,6 @@ class DataTest extends PHPUnit
             ),
         ));
 
-        self::assertSame(array(10, 'qwerty', 'sub-value', 'sub-sub-value'), $data->flattenRecursive());
+        same(array(10, 'qwerty', 'sub-value', 'sub-sub-value'), $data->flattenRecursive());
     }
 }

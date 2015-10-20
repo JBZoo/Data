@@ -15,18 +15,11 @@
 
 namespace JBZoo\PHPUnit;
 
-// @codingStandardsIgnoreFile
-// @codeCoverageIgnoreStart
-if (!defined('ROOT_PATH')) { // for PHPUnit process isolation
-    define('ROOT_PATH', realpath('.'));
-}
+/**
+ * Class CodeStyleTest
+ * @package JBZoo\PHPUnit
+ */
+class CodeStyleTest extends Codestyle
+{
 
-// main autoload
-if ($autoload = realpath(ROOT_PATH . '/vendor/autoload.php')) {
-    require_once $autoload;
-} else {
-    echo 'Please execute "composer update" !' . PHP_EOL;
-    exit(1);
 }
-
-// @codeCoverageIgnoreEnd

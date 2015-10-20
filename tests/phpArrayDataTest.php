@@ -13,7 +13,9 @@
  * @author    Denis Smetannikov <denis@jbzoo.com>
  */
 
-namespace JBZoo\Data;
+namespace JBZoo\PHPUnit;
+
+use JBZoo\Data\PhpArray;
 
 /**
  * Class phpArrayDataTest
@@ -29,6 +31,6 @@ class phpArrayDataTest extends PHPUnit
         $data      = new PhpArray($this->testFile);
         $dataValid = $this->openFile($this->testFile);
 
-        self::assertEquals($dataValid, (string)$data);
+        is($dataValid, (string)$data);
     }
 }

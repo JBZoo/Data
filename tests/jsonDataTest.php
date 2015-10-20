@@ -13,7 +13,10 @@
  * @author    Denis Smetannikov <denis@jbzoo.com>
  */
 
-namespace JBZoo\Data;
+namespace JBZoo\PHPUnit;
+
+use JBZoo\Data\Data;
+use JBZoo\Data\JSON;
 
 /**
  * Class JsonDataTest
@@ -97,7 +100,7 @@ class JsonDataTest extends PHPUnit
         $jsonTest  = (string)$data;
         $jsonValid = $this->openFile('./tests/resource/data.json');
 
-        self::assertEquals($jsonValid, $jsonTest);
+        is($jsonValid, $jsonTest);
     }
 
     public function testJson()
@@ -105,6 +108,6 @@ class JsonDataTest extends PHPUnit
         $dataValid = $this->openFile('./tests/resource/data.json');
         $data      = new JSON($dataValid);
 
-        self::assertEquals($dataValid, (string)$data);
+        is($dataValid, (string)$data);
     }
 }
