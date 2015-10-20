@@ -4,17 +4,23 @@
          convertErrorsToExceptions="true"
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
-         forceCoversAnnotation="false"
          processIsolation="false"
-         stopOnError="false"
-         stopOnFailure="false"
-         stopOnIncomplete="false"
+         syntaxCheck="true"
+         stopOnFailures="true"
+         stopOnError="true"
+         stopOnFailure="true"
+         stopOnIncomplete="true"
          stopOnSkipped="false"
-         verbose="false"
+         verbose="true"
         >
 
+    <php>
+        <env name="PACKAGE_NAME" value="Data"/>
+        <env name="PACKAGE_AUTHOR" value="Denis Smetannikov &lt;denis@jbzoo.com&gt;"/>
+    </php>
+
     <testsuites>
-        <testsuite name="Tests suite">
+        <testsuite name="Tests Data suite">
             <directory suffix="Test.php">./tests</directory>
         </testsuite>
     </testsuites>
@@ -26,20 +32,9 @@
     </filter>
 
     <logging>
-        <!-- main -->
         <log type="coverage-clover" target="build/logs/clover.xml"/>
-
-        <!-- for human -->
-        <log type="coverage-html"   target="build/phpunit" lowUpperBound="80" highLowerBound="95"/>
-        <log type="coverage-text"   target="php://stdout" showUncoveredFiles="false" showOnlySummary="true"/>
-
-        <!-- additionals -->
-        <log type="json"            target="build/logs/json.json"/>
-        <log type="tap"             target="build/logs/tap.tap"/>
-        <log type="junit"           target="build/logs/junit.xml" logIncompleteSkipped="true"/>
-        <log type="testdox-html"    target="build/logs/testdox.html"/>
-        <log type="testdox-text"    target="build/logs/testdox.txt"/>
-        <log type="coverage-php"    target="build/logs/coverage.php"/>
+        <log type="coverage-html" target="build/phpunit" lowUpperBound="80" highLowerBound="95"/>
+        <log type="coverage-text" target="php://stdout" showUncoveredFiles="false" showOnlySummary="true"/>
     </logging>
 
 </phpunit>
