@@ -26,7 +26,7 @@ class Ini extends Base
      * @param string $string
      * @return mixed
      */
-    protected function decode($string)
+    protected function _decode($string)
     {
         return parse_ini_string($string, true, INI_SCANNER_NORMAL);
     }
@@ -35,9 +35,9 @@ class Ini extends Base
      * @param mixed $data
      * @return string
      */
-    protected function encode($data)
+    protected function _encode($data)
     {
-        return $this->render($data, array());
+        return $this->_render($data, array());
     }
 
     /**
@@ -45,17 +45,17 @@ class Ini extends Base
      * @param array $parent
      * @return string
      */
-    protected function render(array $data = array(), $parent = array())
+    protected function _render(array $data = array(), $parent = array())
     {
         $result = array();
 
         foreach ($data as $dataKey => $dataValue) {
             if (is_array($dataValue)) {
-                if ($this->isMulti($dataValue)) {
+                if ($this->_isMulti($dataValue)) {
                     $sections = array_merge((array)$parent, (array)$dataKey);
                     $result[] = '';
                     $result[] = '[' . implode('.', $sections) . ']';
-                    $result[] = $this->render($dataValue, $sections);
+                    $result[] = $this->_render($dataValue, $sections);
                 } else {
                     foreach ($dataValue as $key => $value) {
                         $result[] = $dataKey . '[' . $key . '] = "' . str_replace('"', '\"', $value) . '"';

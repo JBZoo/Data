@@ -26,7 +26,7 @@ class JSON extends Base
      * @param string $string
      * @return mixed
      */
-    protected function decode($string)
+    protected function _decode($string)
     {
         return json_decode($string, true);
     }
@@ -36,9 +36,9 @@ class JSON extends Base
      * @param $data
      * @return string
      */
-    protected function encode($data)
+    protected function _encode($data)
     {
-        return $this->render($data);
+        return $this->_render($data);
     }
 
     /**
@@ -47,7 +47,7 @@ class JSON extends Base
      * @param int          $indent The indentation level. Adds $indent tabs to the string
      * @return string
      */
-    protected function render($data, $indent = 0)
+    protected function _render($data, $indent = 0)
     {
         $result = '';
 
@@ -56,7 +56,7 @@ class JSON extends Base
             $result .= json_encode((string)$key) . ': ';
 
             $isComplex = is_object($value) || is_array($value);
-            $result .= $isComplex ? $this->render($value, $indent + 1) : json_encode($value);
+            $result .= $isComplex ? $this->_render($value, $indent + 1) : json_encode($value);
             $result .= ',' . Base::LE;
         }
 

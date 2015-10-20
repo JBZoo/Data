@@ -30,7 +30,7 @@ class PhpArray extends Base
     public function __construct($data = array())
     {
         if ($data && is_string($data) && file_exists($data)) {
-            $data = $this->decode($data);
+            $data = $this->_decode($data);
         }
 
         parent::__construct($data ? (array)$data : array());
@@ -41,7 +41,7 @@ class PhpArray extends Base
      * @param string $string
      * @return mixed
      */
-    protected function decode($string)
+    protected function _decode($string)
     {
         return include $string;
     }
@@ -51,12 +51,12 @@ class PhpArray extends Base
      * @param mixed $data The data to serialize
      * @return string The serialized data
      */
-    protected function encode($data)
+    protected function _encode($data)
     {
         $data = array(
             '<?php',
             '',
-            'return ' . $this->render($data, 0) . ';',
+            'return ' . $this->_render($data, 0) . ';',
         );
 
         return implode(Base::LE, $data);
@@ -67,7 +67,7 @@ class PhpArray extends Base
      * @param int   $depth
      * @return string
      */
-    protected function render($array, $depth = 0)
+    protected function _render($array, $depth = 0)
     {
         $data = (array)$array;
 
@@ -75,17 +75,17 @@ class PhpArray extends Base
 
         $depth++;
         foreach ($data as $key => $val) {
-            $string .= $this->getIndent($depth) . $this->quoteWrap($key) . ' => ';
+            $string .= $this->_getIndent($depth) . $this->_quoteWrap($key) . ' => ';
 
             if (is_array($val) || is_object($val)) {
-                $string .= $this->render($val, $depth) . ',' . Base::LE;
+                $string .= $this->_render($val, $depth) . ',' . Base::LE;
             } else {
-                $string .= $this->quoteWrap($val) . ',' . Base::LE;
+                $string .= $this->_quoteWrap($val) . ',' . Base::LE;
             }
         }
 
         $depth--;
-        $string .= $this->getIndent($depth) . ')';
+        $string .= $this->_getIndent($depth) . ')';
 
         return $string;
     }
@@ -94,7 +94,7 @@ class PhpArray extends Base
      * @param $depth
      * @return string
      */
-    protected function getIndent($depth)
+    protected function _getIndent($depth)
     {
         return str_repeat(self::TAB, $depth);
     }
@@ -103,7 +103,7 @@ class PhpArray extends Base
      * @param $var
      * @return string
      */
-    protected function quoteWrap($var)
+    protected function _quoteWrap($var)
     {
         $type = strtolower(gettype($var));
 

@@ -15,29 +15,31 @@
 
 namespace JBZoo\Data;
 
+use Symfony\Component\Yaml\Yaml;
+
 /**
- * Class Data
+ * Class Yml
  * @package JBZoo\Data
  */
-class Data extends Base
+class Yml extends Base
 {
-    /**
-     * Utility Method to unserialize the given data
-     * @param string $string
-     * @return mixed
-     */
-    protected function decode($string)
-    {
-        return unserialize($string);
-    }
-
     /**
      * Utility Method to serialize the given data
      * @param mixed $data The data to serialize
      * @return string The serialized data
      */
-    protected function encode($data)
+    protected function _encode($data)
     {
-        return serialize($data);
+        return Yaml::dump($data);
+    }
+
+    /**
+     * Utility Method to unserialize the given data
+     * @param string $string
+     * @return mixed
+     */
+    protected function _decode($string)
+    {
+        return Yaml::parse($string);
     }
 }
