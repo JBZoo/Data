@@ -1,8 +1,8 @@
 <?php
 
 return array(
-    'null' => null,
     'host' => 'localhost',
+    'null' => null,
     'port' => 80,
     'servers' => array(
         0 => 'host1',
