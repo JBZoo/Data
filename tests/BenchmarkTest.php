@@ -132,6 +132,60 @@ class BenchmarkTest extends PHPUnit
         ), array('name' => 'Get defined var', 'count' => 10000));
     }
 
+    public function testGetInner()
+    {
+        $array     = $this->_data;
+        $data      = new Data($this->_data);
+        $arrobj    = new \ArrayObject($this->_data);
+        $arrobjExt = new \ArrayObjectExt($this->_data);
+
+        runBench(array(
+            // Simple array
+            'Array::clean'            => function () use ($array) {
+                return $array['inner']['inner']['prop'];
+            },
+            'Array::@'                => function () use ($array) {
+                return @$array['inner']['inner']['prop'];
+            },
+            'Array::isset'            => function () use ($array) {
+                return isset($array['inner']['inner']['prop']) ? $array['inner']['inner']['prop'] : null;
+            },
+            'Array::array_key_exists' => function () use ($array) {
+
+                if (array_key_exists('inner', $array)) {
+                    if (array_key_exists('inner', $array['inner'])) {
+                        if (array_key_exists('prop', $array['inner']['inner'])) {
+                            return $array['inner']['inner']['prop'];
+                        }
+                    }
+                }
+
+                return null;
+            },
+
+            // ArrayObject
+            'ArrayObject::array'      => function () use ($arrobj) {
+                return $arrobj['inner']['inner']['prop'];
+            },
+
+            // ArrayObjectExt
+            'ArrayObjectExt::array'   => function () use ($arrobjExt) {
+                return $arrobjExt['inner']['inner']['prop'];
+            },
+
+            // Data
+            'Data::arrow'             => function () use ($data) {
+                return $data->inner['inner']['prop'];
+            },
+            'Data::array'             => function () use ($data) {
+                return $data['inner']['inner']['prop'];
+            },
+            'Data::find'              => function () use ($data) {
+                return $data->find('inner.inner.prop');
+            },
+        ), array('name' => 'Get inner var', 'count' => 10000));
+    }
+
     public function testGetUndefined()
     {
         $array     = $this->_data;
