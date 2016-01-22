@@ -16,7 +16,7 @@
 namespace JBZoo\PHPUnit;
 
 // @codingStandardsIgnoreFile
-// @codeCoverageIgnoreStart
+
 if (!defined('ROOT_PATH')) { // for PHPUnit process isolation
     define('ROOT_PATH', realpath('.'));
 }
@@ -29,4 +29,6 @@ if ($autoload = realpath(ROOT_PATH . '/vendor/autoload.php')) {
     exit(1);
 }
 
-// @codeCoverageIgnoreEnd
+if ($fixturesPath = realpath(PROJECT_TESTS . '/fixtures.php')) {
+    require_once PROJECT_TESTS . '/fixtures.php';
+}

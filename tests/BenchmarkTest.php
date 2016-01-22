@@ -56,16 +56,20 @@ class BenchmarkTest extends PHPUnit
         $array = $this->_data;
 
         runBench(array(
-            'Array'       => function () use ($array) {
+            'Array'          => function () use ($array) {
                 $var = $array; // for clean experiment
                 return $var;
             },
-            'Data'        => function () use ($array) {
+            'Data'           => function () use ($array) {
                 $var = new Data($array);
                 return $var;
             },
-            'ArrayObject' => function () use ($array) {
+            'ArrayObject'    => function () use ($array) {
                 $var = new \ArrayObject($array);
+                return $var;
+            },
+            'ArrayObjectExt' => function () use ($array) {
+                $var = new \ArrayObjectExt($array);
                 return $var;
             },
         ), array('name' => 'Create var', 'count' => 10000));
@@ -73,47 +77,56 @@ class BenchmarkTest extends PHPUnit
 
     public function testGet()
     {
-        $array  = $this->_data;
-        $data   = new Data($this->_data);
-        $arrobj = new \ArrayObject($this->_data);
+        $array     = $this->_data;
+        $data      = new Data($this->_data);
+        $arrobj    = new \ArrayObject($this->_data);
+        $arrobjExt = new \ArrayObjectExt($this->_data);
 
         runBench(array(
             // Simple array
-            'Array::clean'            => function () use ($array) {
+            'Array::clean'              => function () use ($array) {
                 return $array['prop'];
             },
-            'Array::@'                => function () use ($array) {
+            'Array::@'                  => function () use ($array) {
                 return @$array['prop'];
             },
-            'Array::isset'            => function () use ($array) {
+            'Array::isset'              => function () use ($array) {
                 return isset($array['prop']) ? $array['prop'] : null;
             },
-            'Array::array_key_exists' => function () use ($array) {
+            'Array::array_key_exists'   => function () use ($array) {
                 return array_key_exists('prop', $array) ? $array['prop'] : null;
             },
 
             // ArrayObject
-            'ArrayObject::array'      => function () use ($arrobj) {
+            'ArrayObject::array'        => function () use ($arrobj) {
                 return $arrobj['prop'];
             },
-            'ArrayObject::offsetGet'  => function () use ($arrobj) {
+            'ArrayObject::offsetGet'    => function () use ($arrobj) {
                 return $arrobj->offsetGet('prop');
             },
 
+            // ArrayObjectExt
+            'ArrayObjectExt::array'     => function () use ($arrobjExt) {
+                return $arrobjExt['prop'];
+            },
+            'ArrayObjectExt::offsetGet' => function () use ($arrobjExt) {
+                return $arrobjExt->offsetGet('prop');
+            },
+
             // JBZoo/Data
-            'Data::get'               => function () use ($data) {
+            'Data::get'                 => function () use ($data) {
                 return $data->get('prop');
             },
-            'Data::arrow'             => function () use ($data) {
+            'Data::arrow'               => function () use ($data) {
                 return $data->prop;
             },
-            'Data::array'             => function () use ($data) {
+            'Data::array'               => function () use ($data) {
                 return $data['prop'];
             },
-            'Data::find'              => function () use ($data) {
+            'Data::find'                => function () use ($data) {
                 return $data->find('prop');
             },
-            'Data::offsetGet'         => function () use ($data) {
+            'Data::offsetGet'           => function () use ($data) {
                 return $data->offsetGet('prop');
             },
         ), array('name' => 'Get defined var', 'count' => 10000));
@@ -121,47 +134,59 @@ class BenchmarkTest extends PHPUnit
 
     public function testGetUndefined()
     {
-        $array  = $this->_data;
-        $data   = new Data($this->_data);
-        $arrobj = new \ArrayObject($this->_data);
+        $array     = $this->_data;
+        $data      = new Data($this->_data);
+        $arrobj    = new \ArrayObject($this->_data);
+        $arrobjExt = new \ArrayObjectExt($this->_data);
 
         runBench(array(
             // Simple array
-            'array::@'                => function () use ($array) {
+            'array::@'                   => function () use ($array) {
                 return @$array['undefined'];
             },
-            'array::isset'            => function () use ($array) {
+            'array::isset'               => function () use ($array) {
                 return isset($array['undefined']) ? $array['undefined'] : null;
             },
-            'array::array_key_exists' => function () use ($array) {
+            'array::array_key_exists'    => function () use ($array) {
                 return array_key_exists('undefined', $array) ? $array['undefined'] : null;
             },
 
             // ArrayObject
-            'ArrayObject::arrow@'     => function () use ($arrobj) {
+            'ArrayObject::arrow@'        => function () use ($arrobj) {
                 return @$arrobj->undefined;
             },
-            'ArrayObject::array@'     => function () use ($arrobj) {
+            'ArrayObject::array@'        => function () use ($arrobj) {
                 return @$arrobj['undefined'];
             },
-            'ArrayObject::offsetGet@' => function () use ($arrobj) {
+            'ArrayObject::offsetGet@'    => function () use ($arrobj) {
                 return @$arrobj->offsetGet('undefined');
             },
 
+            // ArrayObjectExt
+            'ArrayObjectExt::arrow@'     => function () use ($arrobjExt) {
+                return @$arrobjExt->undefined;
+            },
+            'ArrayObjectExt::array@'     => function () use ($arrobjExt) {
+                return @$arrobjExt['undefined'];
+            },
+            'ArrayObjectExt::offsetGet@' => function () use ($arrobjExt) {
+                return @$arrobjExt->offsetGet('undefined');
+            },
+
             // JBZoo/Data
-            'Data::get'               => function () use ($data) {
+            'Data::get'                  => function () use ($data) {
                 return $data->get('undefined');
             },
-            'Data::arrow@'            => function () use ($data) {
+            'Data::arrow@'               => function () use ($data) {
                 return @$data->undefined;
             },
-            'Data::array@'            => function () use ($data) {
+            'Data::array@'               => function () use ($data) {
                 return @$data['undefined'];
             },
-            'Data::find'              => function () use ($data) {
+            'Data::find'                 => function () use ($data) {
                 return $data->find('undefined');
             },
-            'Data::offsetGet@'        => function () use ($data) {
+            'Data::offsetGet@'           => function () use ($data) {
                 return @$data->offsetGet('undefined');
             },
         ), array('name' => 'Get undefined var', 'count' => 10000));
