@@ -8,7 +8,8 @@
     "authors"           : [
         {
             "name"  : "SmetDenis",
-            "email" : "denis@jbzoo.com"
+            "email" : "denis@jbzoo.com",
+            "role"  : "lead"
         }
     ],
     "require"           : {
