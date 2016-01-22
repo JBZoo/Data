@@ -19,7 +19,7 @@ namespace JBZoo\Data;
  * Class JSON
  * @package JBZoo\Data
  */
-class JSON extends Base
+class JSON extends Data
 {
     /**
      * Utility Method to unserialize the given data
@@ -57,15 +57,15 @@ class JSON extends Base
 
             $isComplex = is_object($value) || is_array($value);
             $result .= $isComplex ? $this->_render($value, $indent + 1) : json_encode($value);
-            $result .= ',' . Base::LE;
+            $result .= ',' . Data::LE;
         }
 
         if (!empty($result)) {
             $result = substr($result, 0, -2);
         }
 
-        $result = '{' . Base::LE . $result;
-        $result .= Base::LE . str_repeat('    ', $indent) . '}';
+        $result = '{' . Data::LE . $result;
+        $result .= Data::LE . str_repeat('    ', $indent) . '}';
 
         return $result;
     }

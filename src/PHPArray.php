@@ -19,7 +19,7 @@ namespace JBZoo\Data;
  * Class PHPArray
  * @package JBZoo\Data
  */
-class PHPArray extends Base
+class PHPArray extends Data
 {
     const TAB = '    ';
 
@@ -59,7 +59,7 @@ class PHPArray extends Base
             'return ' . $this->_render($data, 0) . ';',
         );
 
-        return implode(Base::LE, $data);
+        return implode(Data::LE, $data);
     }
 
     /**
@@ -71,16 +71,16 @@ class PHPArray extends Base
     {
         $data = (array)$array;
 
-        $string = 'array(' . Base::LE;
+        $string = 'array(' . Data::LE;
 
         $depth++;
         foreach ($data as $key => $val) {
             $string .= $this->_getIndent($depth) . $this->_quoteWrap($key) . ' => ';
 
             if (is_array($val) || is_object($val)) {
-                $string .= $this->_render($val, $depth) . ',' . Base::LE;
+                $string .= $this->_render($val, $depth) . ',' . Data::LE;
             } else {
-                $string .= $this->_quoteWrap($val) . ',' . Base::LE;
+                $string .= $this->_quoteWrap($val) . ',' . Data::LE;
             }
         }
 
@@ -112,7 +112,7 @@ class PHPArray extends Base
                 return "'" . str_replace("'", "\\'", $var) . "'";
 
             case 'null':
-                return "null";
+                return 'null';
 
             case 'boolean':
                 return $var ? 'true' : 'false';

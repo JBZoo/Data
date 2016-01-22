@@ -19,7 +19,7 @@ namespace JBZoo\Data;
  * Class Ini
  * @package JBZoo\Data
  */
-class Ini extends Base
+class Ini extends Data
 {
     /**
      * Utility Method to unserialize the given data
@@ -67,6 +67,6 @@ class Ini extends Base
             }
         }
 
-        return implode(Base::LE, $result);
+        return implode(Data::LE, $result);
     }
 }

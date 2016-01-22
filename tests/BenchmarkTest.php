@@ -137,7 +137,7 @@ class BenchmarkTest extends PHPUnit
                 return array_key_exists('undefined', $array) ? $array['undefined'] : null;
             },
 
-            // ArrayObject/Data
+            // ArrayObject
             'ArrayObject::arrow@'     => function () use ($arrobj) {
                 return @$arrobj->undefined;
             },
