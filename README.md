@@ -19,7 +19,7 @@ composer require jbzoo/data            # Stable version
 | Supported formats | Array, Object, ArrayObject, JSON, INI, Yml, File | Array
 | Get value or default  | `$d->get('key', 42)`  | `array_key_exists('k', $ar) ? $ar['k'] : 42`
 | Get undefined #1  | `$d->get('undefined')` | `@$ar['undefined']` (@ is bad)
-| Get undefined #2 | `$d->find('undefined')` | `isset($ar['undefined']) ? 
+| Get undefined #2 | `$d->find('undefined')` | `isset($ar['und']) ? $ar['und'] : null`
 | Get undefined #3  | `@d['undefined']` (@ is bad) | -
 | Like array  | `$d['key']`  | `$ar['key']`
 | Like object #1 | `$d->key` | -
