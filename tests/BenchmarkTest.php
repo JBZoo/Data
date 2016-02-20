@@ -261,6 +261,7 @@ class BenchmarkTest extends PHPUnit
 
     public function testForReadme()
     {
+        $times = 100000;
         $this->_data = array(
             'prop'  => uniqid('', true),
             'prop1' => uniqid('', true),
@@ -300,7 +301,7 @@ class BenchmarkTest extends PHPUnit
                 $var = new Data($array);
                 return $var;
             },
-        ), array('name' => 'For Readme: Create', 'count' => 10000));
+        ), array('name' => 'For Readme: Create', 'count' => $times));
 
 
         runBench(array(
@@ -313,7 +314,7 @@ class BenchmarkTest extends PHPUnit
             'Data'        => function () use ($data) {
                 return $data->get('prop');
             },
-        ), array('name' => 'For Readme: Get by key', 'count' => 10000));
+        ), array('name' => 'For Readme: Get by key', 'count' => $times));
 
 
         runBench(array(
@@ -342,7 +343,7 @@ class BenchmarkTest extends PHPUnit
             'Data'        => function () use ($data) {
                 return $data->find('inner.inner.prop', 42);
             },
-        ), array('name' => 'For Readme: Find nested defined var', 'count' => 10000));
+        ), array('name' => 'For Readme: Find nested defined var', 'count' => $times));
 
         runBench(array(
             'Array'       => function () use ($array) {
@@ -370,6 +371,6 @@ class BenchmarkTest extends PHPUnit
             'Data'        => function () use ($data) {
                 return $data->find('inner.inner.undefined', 42);
             },
-        ), array('name' => 'For Readme: Find nested undefined var', 'count' => 10000));
+        ), array('name' => 'For Readme: Find nested undefined var', 'count' => $times));
     }
 }
