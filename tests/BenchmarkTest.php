@@ -28,27 +28,39 @@ class BenchmarkTest extends PHPUnit
 
     protected function setUp()
     {
-        $this->_data = array(
-            'prop'  => 'qwerty123',
-            'prop1' => 'qwerty123',
-            'prop2' => 'qwerty123',
-            'prop3' => 'qwerty123',
-            'prop4' => 'qwerty123',
+        $data = array(
+            'prop'  => uniqid('', true),
+            'prop1' => uniqid('', true),
+            'prop2' => uniqid('', true),
+            'prop3' => uniqid('', true),
+            'prop4' => uniqid('', true),
             'inner' => array(
-                'prop'  => 'qwerty123',
-                'prop1' => 'qwerty123',
-                'prop2' => 'qwerty123',
-                'prop3' => 'qwerty123',
-                'prop4' => 'qwerty123',
+                'prop'  => uniqid('', true),
+                'prop1' => uniqid('', true),
+                'prop2' => uniqid('', true),
+                'prop3' => uniqid('', true),
+                'prop4' => uniqid('', true),
                 'inner' => array(
-                    'prop'  => 'qwerty123',
-                    'prop1' => 'qwerty123',
-                    'prop2' => 'qwerty123',
-                    'prop3' => 'qwerty123',
-                    'prop4' => 'qwerty123',
+                    'prop'  => uniqid('', true),
+                    'prop1' => uniqid('', true),
+                    'prop2' => uniqid('', true),
+                    'prop3' => uniqid('', true),
+                    'prop4' => uniqid('', true),
                 ),
             ),
         );
+
+        for ($i = 0; $i <= 9; $i++) {
+            $data['inner' . $i] = array(
+                'prop'  => uniqid('', true),
+                'prop1' => uniqid('', true),
+                'prop2' => uniqid('', true),
+                'prop3' => uniqid('', true),
+                'prop4' => uniqid('', true),
+            );
+        }
+
+        $this->_data = $data;
     }
 
     public function testCreate()
