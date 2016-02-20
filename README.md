@@ -35,14 +35,15 @@ composer require jbzoo/data            # Stable version
 | Export to Serialized | `echo (new Data([/* ... */]))` | `echo serialize([/* ... */])`
 | Export to JSON | `echo (new JSON([/* ... */]))` | `echo json_encode([/* ... */])`
 | Export to Yml | `echo (new Yml ([/* ... */]))` | -
-| Export to ini | `echo (new Ini([/* ... */]))` | -
+| Export to Ini | `echo (new Ini([/* ... */]))` | -
 | Export to PHP Code | `echo (new PHPArray ([/* ... */]))` | -
-| Pretty JSON format | **+** | **-**
-| Load data from file | **+** | **-**
+| Pretty JSON format | **+** | -
+| Load data from file | **+** | -
 
 
 ## Overhead on PHP 5.6.x
 All benchmark tests are executing without xdebug and with big random array and 10 000 iterations.
+
 For more details [see travis log](https://travis-ci.org/JBZoo/Data/jobs/110570934)
 
 | Action | JBZoo/Data  | ArrayObject | Simple PHP Array |
@@ -59,6 +60,7 @@ For more details [see travis log](https://travis-ci.org/JBZoo/Data/jobs/11057093
 
 ## Overhead on PHP 7.0.x
 All benchmark tests are executing without xdebug and with big random array and 100 000 iterations.
+
 For more details [see travis log](https://travis-ci.org/JBZoo/Data/jobs/110570935)
 
 | Action | JBZoo/Data  | ArrayObject | Simple PHP Array |
