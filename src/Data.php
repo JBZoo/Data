@@ -193,7 +193,7 @@ class Data extends \ArrayObject
 
         foreach ($parts as $part) {
             // handle ArrayObject and Array
-            if (($data instanceof \ArrayObject || is_array($data)) && array_key_exists($part, $data)) {
+            if (($data instanceof \ArrayObject || is_array($data)) && isset($data[$part])) {
                 $data = &$data[$part];
                 continue;
             }
