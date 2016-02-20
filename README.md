@@ -26,14 +26,14 @@ composer require jbzoo/data            # Stable version
 | Like object #2 | `$d->get('key')` | -
 | Like object #3 | `$d->find('key')` | -
 | Like object #4 | `$d->offsetGet('key')` | -
-| Isset #1 | `isset($d->key)` | `isset($ar['key'])`
-| Isset #2 | `isset($d['key'])` | `array_key_exists('key', $ar)`
+| Isset #1 | `isset($d['key'])` | `isset($ar['key'])`
+| Isset #2 | `isset($d->key)` | `array_key_exists('key', $ar)`
 | Isset #3 | `$d->has('key')` | -
 | Nested key  #1 | `$d->find('inner.inner.prop', $default)` | `$ar['inner']['inner']['prop']`
 | Nested key  #2 | `$d->inner['inner']['prop']` | -
 | Nested key  #3 | `$d['inner']['inner']['prop']` | -
 | Export to Serialized | `echo (new Data([/* ... */]))` | `echo serialize([/* ... */])`
-| Export to JSON | `echo (new JSON([/* ... */]))` | `echo json_encode([/* ... */])`
+| Export to JSON | `echo (new JSON([/* ... */]))` (readable) | `echo json_encode([/* ... */])`
 | Export to Yml | `echo (new Yml ([/* ... */]))` | -
 | Export to Ini | `echo (new Ini([/* ... */]))` | -
 | Export to PHP Code | `echo (new PHPArray ([/* ... */]))` | -
