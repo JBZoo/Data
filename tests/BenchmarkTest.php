@@ -50,7 +50,7 @@ class BenchmarkTest extends PHPUnit
             ),
         );
 
-        for ($i = 0; $i <= 9; $i++) {
+        for ($i = 0; $i <= 99; $i++) {
             $data['inner' . $i] = array(
                 'prop'  => uniqid('', true),
                 'prop1' => uniqid('', true),
@@ -296,14 +296,58 @@ class BenchmarkTest extends PHPUnit
 
         runBench(array(
             'Array'       => function () use ($array) {
-                return isset($array['inner']['inner']['prop']) ? $array['inner']['inner']['prop'] : null;
+                if (
+                    array_key_exists('inner', $array) &&
+                    array_key_exists('inner', $array['inner']) &&
+                    array_key_exists('prop', $array['inner']['inner'])
+                ) {
+                    return $array['inner']['inner']['prop'];
+                }
+
+                return 42;
             },
             'ArrayObject' => function () use ($arrobj) {
-                return isset($arrobj['inner']['inner']['prop']) ? $arrobj['inner']['inner']['prop'] : null;
+                if (
+                    array_key_exists('inner', $arrobj) &&
+                    array_key_exists('inner', $arrobj['inner']) &&
+                    array_key_exists('prop', $arrobj['inner']['inner'])
+                ) {
+                    return $arrobj['inner']['inner']['prop'];
+                }
+
+                return 42;
             },
             'Data'        => function () use ($data) {
-                return $data->find('inner.inner.prop');
+                return $data->find('inner.inner.prop', 42);
             },
-        ), array('name' => 'For Readme: Find nested', 'count' => 10000));
+        ), array('name' => 'For Readme: Find nested defined var', 'count' => 10000));
+
+        runBench(array(
+            'Array'       => function () use ($array) {
+                if (
+                    array_key_exists('inner', $array) &&
+                    array_key_exists('inner', $array['inner']) &&
+                    array_key_exists('undefined', $array['inner']['inner'])
+                ) {
+                    return $array['inner']['inner']['prop'];
+                }
+
+                return 42;
+            },
+            'ArrayObject' => function () use ($arrobj) {
+                if (
+                    array_key_exists('inner', $arrobj) &&
+                    array_key_exists('inner', $arrobj['inner']) &&
+                    array_key_exists('undefined', $arrobj['inner']['inner'])
+                ) {
+                    return $arrobj['inner']['inner']['undefined'];
+                }
+
+                return 42;
+            },
+            'Data'        => function () use ($data) {
+                return $data->find('inner.inner.undefined', 42);
+            },
+        ), array('name' => 'For Readme: Find nested undefined var', 'count' => 10000));
     }
 }
