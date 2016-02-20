@@ -180,8 +180,7 @@ class Data extends \ArrayObject
      */
     public function find($key, $default = null, $separator = '.')
     {
-        $key   = (string)$key;
-        $value = $this->get($key);
+        $value = $this->get($key, $default);
 
         // check if key exists in array
         if (null !== $value) {
@@ -194,7 +193,7 @@ class Data extends \ArrayObject
 
         foreach ($parts as $part) {
             // handle ArrayObject and Array
-            if (($data instanceof \ArrayObject || is_array($data)) && isset($data[$part])) {
+            if (($data instanceof \ArrayObject || is_array($data)) && array_key_exists($data[$part])) {
                 $data = &$data[$part];
                 continue;
             }

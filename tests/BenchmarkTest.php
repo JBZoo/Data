@@ -261,6 +261,28 @@ class BenchmarkTest extends PHPUnit
 
     public function testForReadme()
     {
+        $this->_data = array(
+            'prop'  => uniqid('', true),
+            'prop1' => uniqid('', true),
+            'prop2' => uniqid('', true),
+            'prop3' => uniqid('', true),
+            'prop4' => uniqid('', true),
+            'inner' => array(
+                'prop'  => uniqid('', true),
+                'prop1' => uniqid('', true),
+                'prop2' => uniqid('', true),
+                'prop3' => uniqid('', true),
+                'prop4' => uniqid('', true),
+                'inner' => array(
+                    'prop'  => uniqid('', true),
+                    'prop1' => uniqid('', true),
+                    'prop2' => uniqid('', true),
+                    'prop3' => uniqid('', true),
+                    'prop4' => uniqid('', true),
+                ),
+            ),
+        );
+
         $array  = $this->_data;
         $data   = new Data($this->_data);
         $arrobj = new \ArrayObject($this->_data);
