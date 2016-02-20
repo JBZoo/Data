@@ -99,6 +99,12 @@ List of filters - [JBZoo/Utils/Filter](https://github.com/JBZoo/Utils/blob/maste
  * `email` - Email or null
  * `strip` - Strip tags
  * `alias` - Sluggify
+ * `low` - String to lower (check mbstring)
+ * `up` - String to upper (check mbstring)
+ * `clean` - Safe string
+ * `html` - HTML escaping
+ * `xml` - XML escaping
+ * `esc` - Escape for UTF-8
  * `function($value) { return $value; }` - Your custom callback function
 
 ```php
