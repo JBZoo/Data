@@ -15,6 +15,8 @@
 
 namespace JBZoo\Data;
 
+use JBZoo\Utils\Filter;
+
 /**
  * Class Data
  * @package JBZoo\Data
@@ -74,15 +76,17 @@ class Data extends \ArrayObject
      * Get a value from the data given its key
      * @param string $key     The key used to fetch the data
      * @param mixed  $default The default value
+     * @param mixed  $filter  Filter returned value
      * @return mixed
      */
-    public function get($key, $default = null)
+    public function get($key, $default = null, $filter = null)
     {
+        $result = $default;
         if ($this->has($key)) {
-            return $this->offsetGet($key);
+            $result = $this->offsetGet($key);
         }
 
-        return $default;
+        return $this->_filter($result, $filter);
     }
 
     /**
@@ -175,16 +179,18 @@ class Data extends \ArrayObject
      *
      * @param string $key       The key to search for. Can be composed using $separator as the key/subkey separator
      * @param mixed  $default   The default value
+     * @param mixed  $filter    Filter returned value
      * @param string $separator The separator to use when searching for subkeys. Default is '.'
      * @return mixed
+     * @throws \JBZoo\Utils\Exception
      */
-    public function find($key, $default = null, $separator = '.')
+    public function find($key, $default = null, $filter = null, $separator = '.')
     {
         $value = $this->get($key, $default);
 
         // check if key exists in array
         if (null !== $value) {
-            return $value;
+            return $this->_filter($value, $filter);
         }
 
         // explode search key and init search data
@@ -204,11 +210,28 @@ class Data extends \ArrayObject
                 continue;
             }
 
-            return $default;
+            return $this->_filter($default, $filter);
         }
 
         // return existing value
-        return $data;
+        return $this->_filter($data, $filter);
+    }
+
+    /**
+     * Filter value before return
+     *
+     * @param mixed $value
+     * @param mixed $filter
+     * @return mixed
+     * @throws \JBZoo\Utils\Exception
+     */
+    protected function _filter($value, $filter)
+    {
+        if (null !== $filter) {
+            $value = Filter::_($value, $filter);
+        }
+
+        return $value;
     }
 
     /**

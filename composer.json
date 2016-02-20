@@ -3,7 +3,7 @@
     "type"              : "library",
     "description"       : "Extended implementation of ArrayObject",
     "license"           : "MIT",
-    "keywords"          : ["ArrayObject", "Array", "Config", "Data"],
+    "keywords"          : ["ArrayObject", "Array", "Config", "Data", "ini", "yml", "params", "json"],
     "minimum-stability" : "stable",
     "authors"           : [
         {
@@ -14,6 +14,7 @@
     ],
     "require"           : {
         "php"          : ">=5.3",
+        "jbzoo/utils"  : "^1.0",
         "symfony/yaml" : "^2.7"
     },
     "require-dev"       : {
