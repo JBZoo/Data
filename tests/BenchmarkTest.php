@@ -261,7 +261,7 @@ class BenchmarkTest extends PHPUnit
 
     public function testForReadme()
     {
-        $times = 100000;
+        $times = 10000;
         $this->_data = array(
             'prop'  => uniqid('', true),
             'prop1' => uniqid('', true),
