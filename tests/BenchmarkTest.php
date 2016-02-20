@@ -257,4 +257,53 @@ class BenchmarkTest extends PHPUnit
             },
         ), array('name' => 'Get undefined var', 'count' => 10000));
     }
+
+
+    public function testForReadme()
+    {
+        $array  = $this->_data;
+        $data   = new Data($this->_data);
+        $arrobj = new \ArrayObject($this->_data);
+
+        runBench(array(
+            'Array'       => function () use ($array) {
+                $var = $array; // for clean experiment
+                return $var;
+            },
+            'ArrayObject' => function () use ($array) {
+                $var = new \ArrayObject($array);
+                return $var;
+            },
+            'Data'        => function () use ($array) {
+                $var = new Data($array);
+                return $var;
+            },
+        ), array('name' => 'For Readme: Create', 'count' => 10000));
+
+
+        runBench(array(
+            'Array'       => function () use ($array) {
+                return array_key_exists('prop', $array) ? $array['prop'] : null;
+            },
+            'ArrayObject' => function () use ($arrobj) {
+                return $arrobj->offsetGet('prop');
+            },
+            'Data'        => function () use ($data) {
+                return $data->get('prop');
+            },
+        ), array('name' => 'For Readme: Get by key', 'count' => 10000));
+
+
+        runBench(array(
+            'Array'       => function () use ($array) {
+                return isset($array['inner']['inner']['prop']) ? $array['inner']['inner']['prop'] : null;
+            },
+            'ArrayObject' => function () use ($arrobj) {
+                return isset($arrobj['inner']['inner']['prop']) ? $arrobj['inner']['inner']['prop'] : null;
+            },
+            'Data'        => function () use ($data) {
+                return $data->find('inner.inner.prop');
+            },
+        ), array('name' => 'For Readme: Find nested', 'count' => 10000));
+    }
 }
