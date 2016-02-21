@@ -116,7 +116,7 @@ $config->get('key', 42, 'strip, trim'); // Chain of filters
 
 // Custom handler
 $config->get('key', 42, function($value) {
-    return = (float)str_replace(',', '.', $value);
+    return (float)str_replace(',', '.', $value);
 });
 ```
 
