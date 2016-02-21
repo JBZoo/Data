@@ -17,11 +17,11 @@ composer require jbzoo/data            # Stable version
 | Action | JBZoo/Data (ArrayObject)  | Simple PHP Array |
 | ------------- | ------------- | ------------- |
 | Create  | `$d = new Data($someData)`  | `$ar = [/* ... */];`
-| Supported formats | Array, Object, ArrayObject, JSON, INI, Yml, File | Array
+| Supported formats | Array, Object, ArrayObject, JSON, INI, Yml, File with PHP array, JBZoo/Data | Array only
 | Get value or default  | `$d->get('key', 42)`  | `array_key_exists('k', $ar) ? $ar['k'] : 42`
-| Get undefined #1  | `$d->get('undefined')` | `@$ar['undefined']` (@ is bad)
+| Get undefined #1  | `$d->get('undefined')` | `@$ar['undefined']` (@ bad idea!)
 | Get undefined #2 | `$d->find('undefined')` | `isset($ar['und']) ? $ar['und'] : null`
-| Get undefined #3  | `@d['undefined']` (@ is bad) | -
+| Get undefined #3  | `@d['undefined']` (@ bad idea!) | -
 | Like array  | `$d['key']`  | `$ar['key']`
 | Like object #1 | `$d->key` | -
 | Like object #2 | `$d->get('key')` | -
@@ -38,11 +38,11 @@ composer require jbzoo/data            # Stable version
 | Export to Yml | `echo (new Yml ([/* ... */]))` (readable) | -
 | Export to Ini | `echo (new Ini([/* ... */]))` (readable) | -
 | Export to PHP Code | `echo (new PHPArray ([/* ... */]))` (readable) | -
-| Pretty JSON format | **+++** | -
-| Load data from file | **+++** | -
-| Filters | **+++** | -
-| Search | **+++** | -
-| Flatten Recursive | **+++** | -
+| Pretty JSON format | **+** | -
+| Load data from file | **+** | -
+| Filters | **+** | -
+| Search | **+** | -
+| Flatten Recursive | **+** | -
 
 ## Usage
 #### Methods to create config object
@@ -57,7 +57,7 @@ $config     = new Data([/* Assoc Array */]));       // Any PHP-array or simple o
 $configIni  = new Ini('./configs/some.ini'));       // Load config from ini file (or string, or simple array)
 $configYml  = new Yml('./configs/some.yml'));       // Yml (or string, or simple array). Parsed with Symfony/Yaml Component.
 $configJSON = new JSON('./configs/some.json'));     // JSON File (or string, or simple array)
-$configPHP  = new PHPArry('./configs/some.php'));   // PHP-file that return array
+$configPHP  = new PHPArray('./configs/some.php'));  // PHP-file that must return array
 
 // Read
 $config->get('key', 42);                   // Check exists and get parameter by key or return default value
@@ -136,7 +136,7 @@ $result = $config->write();
 $result = $config->__toString();
 ```
 
-Result for JSON object
+Example of serializing the `JSON` object
 ```json
 {
     "empty": "",
@@ -163,7 +163,7 @@ Result for JSON object
 }
 ```
 
-Result for PHPArray object
+Example of serializing the `PHPArray` object
 ```php
 <?php
 
@@ -192,7 +192,7 @@ return array(
 );
 ```
 
-Result for Yml object
+Example of serializing the `Yml` object
 ```yml
 empty: ''
 zero: '0'
@@ -207,7 +207,7 @@ section.nested:
     array3: ['0', '1']
 ```
 
-Result for Ini object
+Example of serializing the `Ini` object
 ```ini
 empty = ""
 zero = "0"
@@ -226,7 +226,7 @@ array3[00] = "0"
 array3[01] = "1"
 ```
 
-Result for Data object
+Example of serializing the `Data` object
 ```
 a:7:{s:5:"empty";s:0:"";s:4:"zero";s:1:"0";s:6:"string";s:1:" ";s:3:"tag";s:42:"<a href="http://google.com">Google.com</a>";s:6:"array1";a:2:{i:0;s:1:"1";i:1;s:1:"2";}s:7:"section";a:1:{s:6:"array2";a:3:{i:0;s:1:"1";i:12;s:1:"2";i:3;s:1:"3";}}s:14:"section.nested";a:1:{s:6:"array3";a:2:{s:2:"00";s:1:"0";s:2:"01";s:1:"1";}}}
 ```
@@ -234,7 +234,7 @@ a:7:{s:5:"empty";s:0:"";s:4:"zero";s:1:"0";s:6:"string";s:1:" ";s:3:"tag";s:42:"
 ## Overhead on PHP 5.6.x
 All benchmark tests are executing without xdebug and with big random array and 10 000 iterations.
 
-For more details [see travis log](https://travis-ci.org/JBZoo/Data/jobs/110570934)
+For more details [see the travis log](https://travis-ci.org/JBZoo/Data/jobs/110570934#L438) and  [tests](https://github.com/JBZoo/Data/blob/master/tests/BenchmarkTest.php#L262)
 
 | Action | JBZoo/Data  | ArrayObject | Simple PHP Array |
 | ------------- | ------------- |------------- | ------------- |
@@ -246,12 +246,12 @@ For more details [see travis log](https://travis-ci.org/JBZoo/Data/jobs/11057093
 | Find nested defined var - memory | 440% | - | 940%
 | Find nested undefined var - time | 22% | 4% | -
 | Find nested undefined var - memory | - | - | -
-| Average time for **10 000 iterations!** | 68ms (+44%) | 51ms (+9%) | 47ms
+| Average time for **10 000 iterations!** | 68ms (**+44%**) | 51ms (+9%) | 47ms
 
 ## Overhead on PHP 7.0.x
 All benchmark tests are executing without xdebug and with big random array and 100 000 iterations.
 
-For more details [see travis log](https://travis-ci.org/JBZoo/Data/jobs/110570935)
+For more details [see the travis log](https://travis-ci.org/JBZoo/Data/jobs/110570935#L444) and [tests](https://github.com/JBZoo/Data/blob/master/tests/BenchmarkTest.php#L262)
 
 | Action | JBZoo/Data  | ArrayObject | Simple PHP Array |
 | ------------- | ------------- |------------- | ------------- |
@@ -263,7 +263,7 @@ For more details [see travis log](https://travis-ci.org/JBZoo/Data/jobs/11057093
 | Find nested defined var - memory | - | - | -
 | Find nested undefined var - time | - | 22% | 6%
 | Find nested undefined var - memory | - | - | -
-| Average time for **100 000 iterations!** | 77ms (+54%) | 65ms (+30%) | 50ms
+| Average time for **100 000 iterations!** | 77ms (**+54%**) | 65ms (+30%) | 50ms
 
 
 ## Unit tests and check code style
