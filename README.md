@@ -1,7 +1,8 @@
 # JBZoo Data  [![Build Status](https://travis-ci.org/JBZoo/Data.svg?branch=master)](https://travis-ci.org/JBZoo/Data) [![Coverage Status](https://coveralls.io/repos/JBZoo/Data/badge.svg?branch=master&service=github)](https://coveralls.io/github/JBZoo/Data?branch=master)
 
-Extended implementation of ArrayObject.
-Really useful objects for any config in your system.
+Extended implementation of [ArrayObject](http://php.net/manual/en/class.arrayobject.php).
+
+Really useful objects for any config in your system (write, read, store, change, validate, convert to other format and etc).
 
 [![License](https://poser.pugx.org/JBZoo/Data/license)](https://packagist.org/packages/JBZoo/Data)
 [![Latest Stable Version](https://poser.pugx.org/JBZoo/Data/v/stable)](https://packagist.org/packages/JBZoo/Data) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/JBZoo/Data/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/JBZoo/Data/?branch=master)
@@ -17,7 +18,8 @@ composer require jbzoo/data            # Stable version
 | Action | JBZoo/Data (ArrayObject)  | Simple PHP Array |
 | ------------- | ------------- | ------------- |
 | Create  | `$d = new Data($someData)`  | `$ar = [/* ... */];`
-| Supported formats | Array, Object, ArrayObject, JSON, INI, Yml, File with PHP array, JBZoo/Data | Array only
+| Supported formats | Array, Object, ArrayObject, JSON, INI, Yml  | Array only
+| Load form file | with array, ini, yml, json, serialized | -
 | Get value or default  | `$d->get('key', 42)`  | `array_key_exists('k', $ar) ? $ar['k'] : 42`
 | Get undefined #1  | `$d->get('undefined')` | `@$ar['undefined']` (@ bad idea!)
 | Get undefined #2 | `$d->find('undefined')` | `isset($ar['und']) ? $ar['und'] : null`
@@ -38,8 +40,7 @@ composer require jbzoo/data            # Stable version
 | Export to Yml | `echo (new Yml ([/* ... */]))` (readable) | -
 | Export to Ini | `echo (new Ini([/* ... */]))` (readable) | -
 | Export to PHP Code | `echo (new PHPArray ([/* ... */]))` (readable) | -
-| Pretty JSON format | **+** | -
-| Load data from file | **+** | -
+| Pretty JSON | **+** | -
 | Filters | **+** | -
 | Search | **+** | -
 | Flatten Recursive | **+** | -
