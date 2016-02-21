@@ -124,7 +124,7 @@ class DataTest extends PHPUnit
     public function testUnSerialize()
     {
         $data = new Data(serialize(array()));
-        same(serialize(array()), (string)$data);
+        isSame(serialize(array()), (string)$data);
     }
 
     public function testGet()
@@ -169,8 +169,8 @@ class DataTest extends PHPUnit
     public function testFind()
     {
         $data = new Data($this->_test);
-        same(array('sub' => 'sub-value', 'sub.sub' => 'sub-value-2'), $data->get('sub'));
-        same(array('sub' => 'sub-value', 'sub.sub' => 'sub-value-2'), $data->find('sub'));
+        isSame(array('sub' => 'sub-value', 'sub.sub' => 'sub-value-2'), $data->get('sub'));
+        isSame(array('sub' => 'sub-value', 'sub.sub' => 'sub-value-2'), $data->find('sub'));
         isNull($data->find('sub.sub.sub'));
         is('sub-value', $data->find('sub.sub'));
         is(array(
@@ -181,7 +181,7 @@ class DataTest extends PHPUnit
         ), $data->find('array.sub-sub'));
         is('sub-prop-value-2', $data->find('objects.sub.prop-2'));
 
-        same(array(
+        isSame(array(
             'prop-1' => 'sub-prop-value-1',
             'prop-2' => 'sub-prop-value-2',
         ), (array)$data->find('objects.sub'));
@@ -259,6 +259,20 @@ class DataTest extends PHPUnit
             ),
         ));
 
-        same(array(10, 'qwerty', 'sub-value', 'sub-sub-value'), $data->flattenRecursive());
+        isSame(array(10, 'qwerty', 'sub-value', 'sub-sub-value'), $data->flattenRecursive());
+    }
+
+    public function testFindBug()
+    {
+        $array = array(
+            'response' => array(
+                'code' => '404',
+            ),
+        );
+
+        $data = new Data($array);
+
+        isSame('404', $data->find('response.code', 0));
+        isSame(404, $data->find('response.code', 0, 'int'));
     }
 }

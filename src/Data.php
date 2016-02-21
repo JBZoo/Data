@@ -186,7 +186,7 @@ class Data extends \ArrayObject
      */
     public function find($key, $default = null, $filter = null, $separator = '.')
     {
-        $value = $this->get($key, $default);
+        $value = $this->get($key);
 
         // check if key exists in array
         if (null !== $value) {
