@@ -275,4 +275,26 @@ class DataTest extends PHPUnit
         isSame('404', $data->find('response.code', 0));
         isSame(404, $data->find('response.code', 0, 'int'));
     }
+
+    public function testNoNotice()
+    {
+        $data = new Data(array(
+            'some_value' => 1,
+        ));
+
+        // Methods
+        isSame(null, $data->find('qwerty'));
+        isSame(null, $data->find('qwerty.qwerty'));
+        isSame(null, $data->get('qwerty'));
+        isSame(null, $data->get('qwerty.qwerty'));
+
+        // like object
+        isSame(null, $data->qwerty);
+        isSame(null, $data->qwerty['qwerty']);
+
+        // like array
+        isSame(null, $data['qwerty']);
+        isSame(null, $data['qwerty']['qwerty']);
+        isSame(null, $data['qwerty']['qwerty']['qwerty']['qwerty']);
+    }
 }

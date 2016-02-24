@@ -129,6 +129,10 @@ class Data extends \ArrayObject
      */
     public function __get($name)
     {
+        if (!$this->has($name)) {
+            return null;
+        }
+
         return $this->offsetGet($name);
     }
 
@@ -200,7 +204,7 @@ class Data extends \ArrayObject
         foreach ($parts as $part) {
             // handle ArrayObject and Array
             if (($data instanceof \ArrayObject || is_array($data)) && isset($data[$part])) {
-                $data = &$data[$part];
+                $data = $data[$part];
                 continue;
             }
 
@@ -302,5 +306,17 @@ class Data extends \ArrayObject
         }
 
         return false;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function offsetGet($index)
+    {
+        if (!array_key_exists($index, $this)) {
+            return null;
+        }
+
+        return parent::offsetGet($index);
     }
 }

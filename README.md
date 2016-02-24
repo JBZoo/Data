@@ -21,9 +21,11 @@ composer require jbzoo/data            # Stable version
 | Supported formats | Array, Object, ArrayObject, JSON, INI, Yml  | Array only
 | Load form file | with array, ini, yml, json, serialized | -
 | Get value or default  | `$d->get('key', 42)`  | `array_key_exists('k', $ar) ? $ar['k'] : 42`
-| Get undefined #1  | `$d->get('undefined')` | `@$ar['undefined']` (@ bad idea!)
+| Get undefined #1  | `$d->get('undefined')` | `@$ar['undefined']` (@ is bad idea!)
 | Get undefined #2 | `$d->find('undefined')` | `isset($ar['und']) ? $ar['und'] : null`
-| Get undefined #3  | `@d['undefined']` (@ bad idea!) | -
+| Get undefined #3  | `$d->undefined === null` (no any notice) | -
+| Get undefined #4  | `$d['undefined'] === null` (no any notice) | -
+| Get undefined #5  | `$d['undef']['undef'] === null` (no any notice) | -
 | Like array  | `$d['key']`  | `$ar['key']`
 | Like object #1 | `$d->key` | -
 | Like object #2 | `$d->get('key')` | -
