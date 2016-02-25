@@ -26,6 +26,9 @@ composer require jbzoo/data            # Stable version
 | Get undefined #3  | `$d->undefined === null` (no any notice) | -
 | Get undefined #4  | `$d['undefined'] === null` (no any notice) | -
 | Get undefined #5  | `$d['undef']['undef'] === null` (no any notice) | -
+| Compare #1  | `$d->get('key') === $someVar` | $ar['key'] === $someVar
+| Compare #2  | `$d->is('key', $someVar)` | -
+| Compare #3  | `$d->is('key', $someVar, true)` (strict) | -
 | Like array  | `$d['key']`  | `$ar['key']`
 | Like object #1 | `$d->key` | -
 | Like object #2 | `$d->get('key')` | -

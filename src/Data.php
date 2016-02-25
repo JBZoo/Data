@@ -319,4 +319,29 @@ class Data extends \ArrayObject
 
         return parent::offsetGet($index);
     }
+
+    /**
+     * Compare value by key with somethig
+     *
+     * @param string $key
+     * @param mixed  $compareWith
+     * @param bool   $strictMode
+     * @return bool
+     *
+     * @SuppressWarnings(PHPMD.ShortMethodName)
+     */
+    public function is($key, $compareWith = true, $strictMode = false)
+    {
+        if (strpos($key, '.') === false) {
+            $value = $this->get($key);
+        } else {
+            $value = $this->find($key);
+        }
+
+        if ($strictMode) {
+            return $value === $compareWith;
+        }
+
+        return $value == $compareWith;
+    }
 }

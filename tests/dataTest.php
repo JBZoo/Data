@@ -297,4 +297,27 @@ class DataTest extends PHPUnit
         isSame(null, $data['qwerty']['qwerty']);
         isSame(null, $data['qwerty']['qwerty']['qwerty']['qwerty']);
     }
+
+    public function testIs()
+    {
+        $data = new Data(array(
+            'key'    => 1,
+            'nested' => array(
+                'key' => null,
+            ),
+        ));
+
+        isTrue($data->is('key'));
+        isTrue($data->is('key', '1'));
+        isTrue($data->is('key', 1));
+        isTrue($data->is('key', true));
+        isTrue($data->is('key', 1, true));
+        isTrue($data->is('nested.key', null, true));
+        isTrue($data->is('nested.key', false));
+
+        isFalse($data->is('key', '1', true));
+        isFalse($data->is('key', 1.0, true));
+        isFalse($data->is('nested.key', '1', true));
+        isFalse($data->is('nested.key', false, true));
+    }
 }
