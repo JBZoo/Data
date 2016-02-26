@@ -29,8 +29,8 @@ class DataTest extends PHPUnit
     {
         $this->_test = array(
             // simular
-            'string-empty'      => '',
             'string-zero'       => '0',
+            'string-empty'      => '',
             'string'            => 'qwerty',
             'number-zero'       => 0,
             'number'            => 10,
@@ -99,7 +99,16 @@ class DataTest extends PHPUnit
         isClass('\ArrayAccess', $data);
         isClass('\Serializable', $data);
         isClass('\Countable', $data);
-        isTrue(is_object($data));
+        isClass('\ArrayObject', $data);
+
+        isTrue(is_object($data)); // :)
+        isFalse(is_array($data)); // :(
+
+        foreach ($data as $key => $value) { // like array
+            isSame('string-zero', $key);
+            isSame('0', $value);
+            break;
+        }
     }
 
     public function testHas()
@@ -319,5 +328,26 @@ class DataTest extends PHPUnit
         isFalse($data->is('key', 1.0, true));
         isFalse($data->is('nested.key', '1', true));
         isFalse($data->is('nested.key', false, true));
+    }
+
+    public function testNumeric()
+    {
+        $data = new Data(array(
+            0        => 0,
+            1        => 1,
+            'string' => 'test',
+            2        => array(
+                1,
+            ),
+            'nested' => array(
+                '0', 1,
+            ),
+        ));
+
+        isSame(0, $data->get(0));
+        isSame(1, $data->find('2.0'));
+        isSame('0', $data->find('nested.0'));
+        isSame(0, $data['0']);
+        isSame(1, $data[2][0]);
     }
 }

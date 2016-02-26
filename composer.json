@@ -18,7 +18,7 @@
         "symfony/yaml" : "^2.7"
     },
     "require-dev"       : {
-        "jbzoo/phpunit" : "^1.0"
+        "jbzoo/phpunit" : "^1.2"
     },
     "autoload"          : {
         "psr-4" : {
