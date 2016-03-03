@@ -88,7 +88,7 @@ unset($config->key);        // Like object
 ```
 
 
-#### Filter returned value (required JBZoo/Utils)
+#### Filter values (required JBZoo/Utils)
 
 List of filters - [JBZoo/Utils/Filter](https://github.com/JBZoo/Utils/blob/master/src/Filter.php)
  * `bool` -  Converts many english words that equate to true or false to boolean.
