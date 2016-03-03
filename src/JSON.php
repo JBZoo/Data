@@ -49,6 +49,14 @@ class JSON extends Data
      */
     protected function _render($data, $indent = 0)
     {
+        if (defined('JSON_PRETTY_PRINT')) {
+            return json_encode($data, JSON_PRETTY_PRINT);
+        }
+
+        if (count($data) == 0) {
+            return '[]';
+        }
+
         $result = '';
 
         foreach ($data as $key => $value) {
