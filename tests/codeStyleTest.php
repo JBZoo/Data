@@ -23,4 +23,14 @@ class CodeStyleTest extends Codestyle
 {
     protected $_packageName = 'Data';
     protected $_packageAuthor = 'Denis Smetannikov <denis@jbzoo.com>';
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->_excludePaths[] = 'resource';
+    }
 }
