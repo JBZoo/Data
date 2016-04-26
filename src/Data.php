@@ -108,7 +108,10 @@ class Data extends \ArrayObject
      */
     public function remove($name)
     {
-        $this->offsetUnset($name);
+        if ($this->has($name)) {
+            $this->offsetUnset($name);
+        }
+
         return $this;
     }
 
