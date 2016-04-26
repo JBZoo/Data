@@ -15,8 +15,6 @@ matrix:
       env: XDEBUG_OFF="yes"
     - php: 7.0
       env: XDEBUG_OFF="yes"
-    - php: hhvm
-      env: XDEBUG_OFF="yes"
 
 before_script:
   # Disable xdebug PHP module
