@@ -274,8 +274,8 @@ For more details [see the travis log](https://travis-ci.org/JBZoo/Data/jobs/1105
 
 ## Unit tests and check code style
 ```sh
-composer update-all
-composer test
+make
+make test-all
 ```
 
 
