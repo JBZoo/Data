@@ -31,6 +31,9 @@ class Data extends \ArrayObject
      */
     public function __construct($data = array())
     {
+        $this->setFlags(\ArrayObject::STD_PROP_LIST);
+        $this->setFlags(\ArrayObject::ARRAY_AS_PROPS);
+
         if ($data && is_string($data) && file_exists($data)) {
             $data = $this->_readFile($data);
         }
