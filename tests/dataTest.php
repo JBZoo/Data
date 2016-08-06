@@ -350,4 +350,10 @@ class DataTest extends PHPUnit
         isSame(0, $data['0']);
         isSame(1, $data[2][0]);
     }
+
+    public function testPropsVisible()
+    {
+        $data = new Data($this->_test);
+        isTrue(count(get_object_vars($data)) > 0);
+    }
 }

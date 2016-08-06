@@ -16,6 +16,7 @@
 namespace JBZoo\PHPUnit;
 
 use JBZoo\Data\Data;
+use JBZoo\Profiler\Benchmark;
 
 /**
  * Class BenchmarkTest
@@ -67,7 +68,7 @@ class BenchmarkTest extends PHPUnit
     {
         $array = $this->_data;
 
-        runBench(array(
+        Benchmark::compare(array(
             'Array'          => function () use ($array) {
                 $var = $array; // for clean experiment
                 return $var;
@@ -94,7 +95,7 @@ class BenchmarkTest extends PHPUnit
         $arrobj    = new \ArrayObject($this->_data);
         $arrobjExt = new \ArrayObjectExt($this->_data);
 
-        runBench(array(
+        Benchmark::compare(array(
             // Simple array
             'Array::clean'              => function () use ($array) {
                 return $array['prop'];
@@ -151,7 +152,7 @@ class BenchmarkTest extends PHPUnit
         $arrobj    = new \ArrayObject($this->_data);
         $arrobjExt = new \ArrayObjectExt($this->_data);
 
-        runBench(array(
+        Benchmark::compare(array(
             // Simple array
             'Array::clean'            => function () use ($array) {
                 return $array['inner']['inner']['prop'];
@@ -205,7 +206,7 @@ class BenchmarkTest extends PHPUnit
         $arrobj    = new \ArrayObject($this->_data);
         $arrobjExt = new \ArrayObjectExt($this->_data);
 
-        runBench(array(
+        Benchmark::compare(array(
             // Simple array
             'array::@'                   => function () use ($array) {
                 return @$array['undefined'];
@@ -288,7 +289,7 @@ class BenchmarkTest extends PHPUnit
         $data   = new Data($this->_data);
         $arrobj = new \ArrayObject($this->_data);
 
-        runBench(array(
+        Benchmark::compare(array(
             'Array'       => function () use ($array) {
                 $var = $array; // for clean experiment
                 return $var;
@@ -304,7 +305,7 @@ class BenchmarkTest extends PHPUnit
         ), array('name' => 'For Readme: Create', 'count' => $times));
 
 
-        runBench(array(
+        Benchmark::compare(array(
             'Array'       => function () use ($array) {
                 return array_key_exists('prop', $array) ? $array['prop'] : null;
             },
@@ -317,7 +318,7 @@ class BenchmarkTest extends PHPUnit
         ), array('name' => 'For Readme: Get by key', 'count' => $times));
 
 
-        runBench(array(
+        Benchmark::compare(array(
             'Array'       => function () use ($array) {
                 if (
                     array_key_exists('inner', $array) &&
@@ -345,7 +346,7 @@ class BenchmarkTest extends PHPUnit
             },
         ), array('name' => 'For Readme: Find nested defined var', 'count' => $times));
 
-        runBench(array(
+        Benchmark::compare(array(
             'Array'       => function () use ($array) {
                 if (
                     array_key_exists('inner', $array) &&

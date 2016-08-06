@@ -17,8 +17,9 @@
         "jbzoo/utils" : "^1.4.2"
     },
     "require-dev"       : {
-        "jbzoo/phpunit" : "^1.2",
-        "symfony/yaml"  : "^2.8|^3.0"
+        "jbzoo/phpunit"  : "^1.10",
+        "jbzoo/profiler" : "^1.0",
+        "symfony/yaml"   : "^2.8|^3.0"
     },
     "suggest"           : {
         "symfony/yaml" : "^2.8|^3.0"
