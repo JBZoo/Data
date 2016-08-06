@@ -118,49 +118,6 @@ class Data extends \ArrayObject
     }
 
     /**
-     * Magic method to allow for correct isset() calls
-     * @param string $name The key to search for
-     * @return boolean
-     */
-    public function __isset($name)
-    {
-        return $this->offsetExists($name);
-    }
-
-    /**
-     * Magic method to get values as object properties
-     * @param string $name The key of the data to fetch
-     * @return mixed
-     */
-    public function __get($name)
-    {
-        if (!$this->has($name)) {
-            return null;
-        }
-
-        return $this->offsetGet($name);
-    }
-
-    /**
-     * Magic method to set values through object properties
-     * @param string $name  The key of the data to set
-     * @param mixed  $value The value to set
-     */
-    public function __set($name, $value)
-    {
-        $this->offsetSet($name, $value);
-    }
-
-    /**
-     * Magic method to unset values using unset()
-     * @param string $name The key of the data to set
-     */
-    public function __unset($name)
-    {
-        $this->offsetUnset($name);
-    }
-
-    /**
      * Magic method to convert the data to a string
      * Returns a serialized version of the data contained in
      * the data object using serialize()
