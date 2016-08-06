@@ -14,7 +14,7 @@
     ],
     "require"           : {
         "php"         : ">=5.3",
-        "jbzoo/utils" : "^1.7.8"
+        "jbzoo/utils" : "^1.4.2"
     },
     "require-dev"       : {
         "jbzoo/phpunit"  : "^1.10",
