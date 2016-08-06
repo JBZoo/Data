@@ -33,4 +33,10 @@ class phpArrayDataTest extends PHPUnit
 
         is($dataValid, (string)$data);
     }
+
+    public function testPropsVisible()
+    {
+        $data = new PHPArray($this->testFile);
+        isTrue(count(get_object_vars($data)) > 0);
+    }
 }

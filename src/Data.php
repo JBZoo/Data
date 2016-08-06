@@ -31,6 +31,8 @@ class Data extends \ArrayObject
      */
     public function __construct($data = array())
     {
+        $this->setFlags(\ArrayObject::ARRAY_AS_PROPS);
+
         if ($data && is_string($data) && file_exists($data)) {
             $data = $this->_readFile($data);
         }
@@ -113,49 +115,6 @@ class Data extends \ArrayObject
         }
 
         return $this;
-    }
-
-    /**
-     * Magic method to allow for correct isset() calls
-     * @param string $name The key to search for
-     * @return boolean
-     */
-    public function __isset($name)
-    {
-        return $this->offsetExists($name);
-    }
-
-    /**
-     * Magic method to get values as object properties
-     * @param string $name The key of the data to fetch
-     * @return mixed
-     */
-    public function __get($name)
-    {
-        if (!$this->has($name)) {
-            return null;
-        }
-
-        return $this->offsetGet($name);
-    }
-
-    /**
-     * Magic method to set values through object properties
-     * @param string $name  The key of the data to set
-     * @param mixed  $value The value to set
-     */
-    public function __set($name, $value)
-    {
-        $this->offsetSet($name, $value);
-    }
-
-    /**
-     * Magic method to unset values using unset()
-     * @param string $name The key of the data to set
-     */
-    public function __unset($name)
-    {
-        $this->offsetUnset($name);
     }
 
     /**
