@@ -17,11 +17,11 @@ namespace JBZoo\Data;
 
 /**
  * @param array|null|string $data
- * @return Data
+ * @return JSON
  */
 function json($data = null)
 {
-    if ($data instanceof Data) {
+    if ($data instanceof JSON) {
         return $data;
     }
 
@@ -37,6 +37,7 @@ function json($data = null)
 /**
  * @param array|null|string $data
  * @return Data
+ * @codeCoverageIgnore
  */
 function data($data = null)
 {
@@ -55,11 +56,12 @@ function data($data = null)
 
 /**
  * @param array|null|string $data
- * @return Data
+ * @return PHPArray
+ * @codeCoverageIgnore
  */
 function phpArray($data = null)
 {
-    if ($data instanceof Data) {
+    if ($data instanceof PHPArray) {
         return $data;
     }
 
@@ -74,11 +76,12 @@ function phpArray($data = null)
 
 /**
  * @param array|null|string $data
- * @return Data
+ * @return Ini
+ * @codeCoverageIgnore
  */
 function ini($data = null)
 {
-    if ($data instanceof Data) {
+    if ($data instanceof Ini) {
         return $data;
     }
 
@@ -93,11 +96,12 @@ function ini($data = null)
 
 /**
  * @param array|null|string $data
- * @return Data
+ * @return Yml
+ * @codeCoverageIgnore
  */
 function yml($data = null)
 {
-    if ($data instanceof Data) {
+    if ($data instanceof Yml) {
         return $data;
     }
 
