@@ -16,6 +16,8 @@
 namespace JBZoo\PHPunit;
 
 use JBZoo\Data\Data;
+use JBZoo\Data\JSON;
+use function JBZoo\Data\json;
 
 /**
  * Class DataTest
@@ -355,5 +357,32 @@ class DataTest extends PHPUnit
     {
         $data = new Data($this->_test);
         isTrue(count(get_object_vars($data)) > 0);
+    }
+
+    public function testFunctions()
+    {
+        isClass(Data::class, json());
+        isClass(Data::class, json(false));
+        isClass(Data::class, json(null));
+        isClass(Data::class, json(''));
+        isClass(Data::class, json([]));
+        isClass(Data::class, json('{}'));
+        isClass(Data::class, json('{"test":42}'));
+        isClass(Data::class, json($this->_test));
+        isClass(Data::class, json(json()));
+
+        isSame('[]', '' . json());
+        //isSame('[false]', '' . json(false));
+        isSame('[]', '' . json(null));
+        isSame('[]', '' . json(''));
+        isSame('[]', '' . json([]));
+        isSame('[]', '' . json('{}'));
+        //isSame('{"test":42}', '' . json('{"test":42}'));
+        isSame('[]', '' . json(json()));
+
+        isSame(42, json('{"test":42}')->get('test'));
+
+        $origObj = new JSON();
+        is($origObj, json($origObj));
     }
 }

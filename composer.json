@@ -25,6 +25,9 @@
         "symfony/yaml" : "^2.8|^3.0"
     },
     "autoload"          : {
+        "files" : [
+            "src/functions.php"
+        ],
         "psr-4" : {
             "JBZoo\\Data\\" : "src"
         }
