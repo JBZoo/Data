@@ -365,7 +365,7 @@ class DataTest extends PHPUnit
         isClass(Data::class, json(false));
         isClass(Data::class, json(null));
         isClass(Data::class, json(''));
-        isClass(Data::class, json([]));
+        isClass(Data::class, json(array()));
         isClass(Data::class, json('{}'));
         isClass(Data::class, json('{"test":42}'));
         isClass(Data::class, json($this->_test));
@@ -375,7 +375,7 @@ class DataTest extends PHPUnit
         //isSame('[false]', '' . json(false));
         isSame('[]', '' . json(null));
         isSame('[]', '' . json(''));
-        isSame('[]', '' . json([]));
+        isSame('[]', '' . json(array()));
         isSame('[]', '' . json('{}'));
         //isSame('{"test":42}', '' . json('{"test":42}'));
         isSame('[]', '' . json(json()));
