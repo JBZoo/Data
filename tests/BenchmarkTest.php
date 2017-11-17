@@ -17,7 +17,7 @@ namespace JBZoo\PHPUnit;
 
 use JBZoo\Data\Data;
 use JBZoo\Profiler\Benchmark;
-use JBZoo\Utils\Env;
+use JBZoo\Utils\Sys;
 
 /**
  * Class BenchmarkTest
@@ -96,7 +96,7 @@ class BenchmarkTest extends PHPUnit
         $arrobj    = new \ArrayObject($this->_data);
         $arrobjExt = new \ArrayObjectExt($this->_data);
 
-        if (Env::isHHVM()) {
+        if (Sys::isHHVM()) {
             $data->setFlags(0);
         }
 
