@@ -6,11 +6,11 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @package   Data
- * @license   MIT
- * @copyright Copyright (C) JBZoo.com,  All rights reserved.
- * @link      https://github.com/JBZoo/Data
- * @author    Denis Smetannikov <denis@jbzoo.com>
+ * @package    Data
+ * @license    MIT
+ * @copyright  Copyright (C) JBZoo.com, All rights reserved.
+ * @link       https://github.com/JBZoo/Data
+ * @author     Denis Smetannikov <denis@jbzoo.com>
  */
 
 namespace JBZoo\PHPUnit;
@@ -18,18 +18,18 @@ namespace JBZoo\PHPUnit;
 use JBZoo\Data\PHPArray;
 
 /**
- * Class phpArrayDataTest
+ * Class PhpArrayDataTest
+ *
  * @package JBZoo\Data
  */
-class phpArrayDataTest extends PHPUnit
+class PhpArrayDataTest extends PHPUnit
 {
-
     protected $testFile = './tests/resource/data.inc';
 
     public function testFile()
     {
-        $data      = new PHPArray($this->testFile);
-        $dataValid = $this->openFile($this->testFile);
+        $data = new PHPArray($this->testFile);
+        $dataValid = openFile($this->testFile);
 
         is($dataValid, (string)$data);
     }

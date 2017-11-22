@@ -6,11 +6,11 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @package   Data
- * @license   MIT
- * @copyright Copyright (C) JBZoo.com,  All rights reserved.
- * @link      https://github.com/JBZoo/Data
- * @author    Denis Smetannikov <denis@jbzoo.com>
+ * @package    Data
+ * @license    MIT
+ * @copyright  Copyright (C) JBZoo.com, All rights reserved.
+ * @link       https://github.com/JBZoo/Data
+ * @author     Denis Smetannikov <denis@jbzoo.com>
  */
 
 namespace JBZoo\Data;
@@ -33,12 +33,12 @@ class Data extends \ArrayObject
     {
         $this->setFlags(\ArrayObject::ARRAY_AS_PROPS);
 
-        if ($data && is_string($data) && file_exists($data)) {
-            $data = $this->_readFile($data);
+        if ($data && \is_string($data) && file_exists($data)) {
+            $data = $this->readFile($data);
         }
 
-        if (is_string($data)) {
-            $data = $this->_decode($data);
+        if (\is_string($data)) {
+            $data = $this->decode($data);
         }
 
         parent::__construct($data ? (array)$data : array());
@@ -49,9 +49,9 @@ class Data extends \ArrayObject
      * @param string $string
      * @return mixed
      */
-    protected function _decode($string)
+    protected function decode($string)
     {
-        return unserialize($string);
+        return unserialize($string, []);
     }
 
     /**
@@ -59,7 +59,7 @@ class Data extends \ArrayObject
      * @param mixed $data The data to serialize
      * @return string The serialized data
      */
-    protected function _encode($data)
+    protected function encode($data)
     {
         return serialize($data);
     }
@@ -88,7 +88,7 @@ class Data extends \ArrayObject
             $result = $this->offsetGet($key);
         }
 
-        return $this->_filter($result, $filter);
+        return $this->filter($result, $filter);
     }
 
     /**
@@ -134,7 +134,7 @@ class Data extends \ArrayObject
      */
     public function write()
     {
-        return $this->_encode($this->getArrayCopy());
+        return $this->encode($this->getArrayCopy());
     }
 
     /**
@@ -156,7 +156,7 @@ class Data extends \ArrayObject
 
         // check if key exists in array
         if (null !== $value) {
-            return $this->_filter($value, $filter);
+            return $this->filter($value, $filter);
         }
 
         // explode search key and init search data
@@ -165,22 +165,22 @@ class Data extends \ArrayObject
 
         foreach ($parts as $part) {
             // handle ArrayObject and Array
-            if (($data instanceof \ArrayObject || is_array($data)) && isset($data[$part])) {
+            if (($data instanceof \ArrayObject || \is_array($data)) && isset($data[$part])) {
                 $data = $data[$part];
                 continue;
             }
 
             // handle object
-            if (is_object($data) && isset($data->$part)) {
+            if (\is_object($data) && isset($data->$part)) {
                 $data = &$data->$part;
                 continue;
             }
 
-            return $this->_filter($default, $filter);
+            return $this->filter($default, $filter);
         }
 
         // return existing value
-        return $this->_filter($data, $filter);
+        return $this->filter($data, $filter);
     }
 
     /**
@@ -191,7 +191,7 @@ class Data extends \ArrayObject
      * @return mixed
      * @throws \JBZoo\Utils\Exception
      */
-    protected function _filter($value, $filter)
+    protected function filter($value, $filter)
     {
         if (null !== $filter) {
             $value = Filter::_($value, $filter);
@@ -240,14 +240,14 @@ class Data extends \ArrayObject
 
     /**
      * @param string $filePath
-     * @return null|string
+     * @return string
      */
-    protected function _readFile($filePath)
+    protected function readFile($filePath)
     {
         $contents = null;
 
         if ($realPath = realpath($filePath)) {
-            $handle   = fopen($realPath, "rb");
+            $handle   = fopen($realPath, 'rb');
             $contents = fread($handle, filesize($realPath));
             fclose($handle);
         }
@@ -260,9 +260,9 @@ class Data extends \ArrayObject
      * @param $array
      * @return bool
      */
-    protected function _isMulti($array)
+    protected function isMulti($array)
     {
-        $arrayCount = array_filter($array, 'is_array');
+        $arrayCount = array_filter($array, '\is_array');
         if (count($arrayCount) > 0) {
             return true;
         }
@@ -304,6 +304,7 @@ class Data extends \ArrayObject
             return $value === $compareWith;
         }
 
+        /** @noinspection TypeUnsafeComparisonInspection */
         return $value == $compareWith;
     }
 }

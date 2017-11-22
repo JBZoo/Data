@@ -6,11 +6,11 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @package   Data
- * @license   MIT
- * @copyright Copyright (C) JBZoo.com,  All rights reserved.
- * @link      https://github.com/JBZoo/Data
- * @author    Denis Smetannikov <denis@jbzoo.com>
+ * @package    Data
+ * @license    MIT
+ * @copyright  Copyright (C) JBZoo.com, All rights reserved.
+ * @link       https://github.com/JBZoo/Data
+ * @author     Denis Smetannikov <denis@jbzoo.com>
  */
 
 namespace JBZoo\PHPUnit;
@@ -20,84 +20,84 @@ use JBZoo\Data\JSON;
 
 /**
  * Class JsonDataTest
+ *
  * @package JBZoo\Data
  */
 class JsonDataTest extends PHPUnit
 {
-
-    protected $test = array();
+    protected $test = [];
 
     public function setUp()
     {
-        $this->test = array(
+        $this->test = [
             // simular
-            'string-empty'      => '',
-            'string-zero'       => '0',
-            'string'            => 'qwerty',
-            'number-zero'       => 0,
-            'number'            => 10,
-            'bool-true'         => true,
-            'bool-false'        => false,
-            'null'              => null,
+            'string-empty'    => '',
+            'string-zero'     => '0',
+            'string'          => 'qwerty',
+            'number-zero'     => 0,
+            'number'          => 10,
+            'bool-true'       => true,
+            'bool-false'      => false,
+            'null'            => null,
 
             // array
-            'array_empty'       => array(),
-            'array_not_empty'   => array(
+            'array_empty'     => [],
+            'array_not_empty' => [
                 '123' => '123321',
-            ),
+            ],
 
             // objects
-            'objects'           => (object)array(
+            'objects'         => (object)[
                 'prop-1' => 'prop-value-1',
                 'prop-2' => 'prop-value-2',
-                'sub'    => (object)array(
+                'sub'    => (object)[
                     'prop-1' => 'sub-prop-value-1',
                     'prop-2' => 'sub-prop-value-2',
-                ),
-            ),
+                ],
+            ],
 
             // real nested
-            'sub'               => array(
+            'sub'             => [
                 'sub'     => 'sub-value',
                 'sub.sub' => 'sub-value-2',
-            ),
+            ],
 
-            'array'             => array(
+            'array' => [
                 'sub'     => 'array-value',
-                'sub-sub' => array(
+                'sub-sub' => [
                     'key-1' => 'deep-value',
-                    'sub'   => array(
+                    'sub'   => [
                         'key-sub' => 'really-deep-value',
-                    ),
-                ),
-            ),
+                    ],
+                ],
+            ],
 
-            'data'              => new Data(array(
+            'data'              => new Data([
                 'key-1' => 'data-value-1',
                 'key-2' => 'data-value-2',
-            )),
+            ]),
 
             // real nested
-            'nested'            => array(
+            'nested'            => [
                 'value-1' => 'val-1',
                 'value-2' => 'val-2',
-                'sub'     => array(
+                'sub'     => [
                     'qwerty' => 'deep-value',
-                ),
-            ),
+                ],
+            ],
 
             // pseudo nested
             'nested.value-1'    => 'wsxzaq',
             'nested.value-2'    => 'qazxsw',
             'nested.sub.qwerty' => 'ytrewq',
-        );
+        ];
     }
 
     public function testToString()
     {
         $data = new JSON($this->test);
 
-        $jsonTest  = (string)$data;
+        $jsonTest = (string)$data;
         $jsonValid = openFile('./tests/resource/data.json');
 
         is($jsonValid, $jsonTest);
@@ -106,7 +106,7 @@ class JsonDataTest extends PHPUnit
     public function testJson()
     {
         $dataValid = openFile('./tests/resource/data.json');
-        $data      = new JSON($dataValid);
+        $data = new JSON($dataValid);
 
         is($dataValid, (string)$data);
     }

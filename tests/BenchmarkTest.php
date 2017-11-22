@@ -6,11 +6,11 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @package   Data
- * @license   MIT
- * @copyright Copyright (C) JBZoo.com,  All rights reserved.
- * @link      https://github.com/JBZoo/Data
- * @author    Denis Smetannikov <denis@jbzoo.com>
+ * @package    Data
+ * @license    MIT
+ * @copyright  Copyright (C) JBZoo.com, All rights reserved.
+ * @link       https://github.com/JBZoo/Data
+ * @author     Denis Smetannikov <denis@jbzoo.com>
  */
 
 namespace JBZoo\PHPUnit;
@@ -21,55 +21,55 @@ use JBZoo\Utils\Sys;
 
 /**
  * Class BenchmarkTest
+ *
  * @package JBZoo\PHPUnit
  */
 class BenchmarkTest extends PHPUnit
 {
-
-    protected $_data = array();
+    protected $data = [];
 
     protected function setUp()
     {
-        $data = array(
+        $data = [
             'prop'  => uniqid('', true),
             'prop1' => uniqid('', true),
             'prop2' => uniqid('', true),
             'prop3' => uniqid('', true),
             'prop4' => uniqid('', true),
-            'inner' => array(
+            'inner' => [
                 'prop'  => uniqid('', true),
                 'prop1' => uniqid('', true),
                 'prop2' => uniqid('', true),
                 'prop3' => uniqid('', true),
                 'prop4' => uniqid('', true),
-                'inner' => array(
+                'inner' => [
                     'prop'  => uniqid('', true),
                     'prop1' => uniqid('', true),
                     'prop2' => uniqid('', true),
                     'prop3' => uniqid('', true),
                     'prop4' => uniqid('', true),
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
 
         for ($i = 0; $i <= 99; $i++) {
-            $data['inner' . $i] = array(
+            $data['inner' . $i] = [
                 'prop'  => uniqid('', true),
                 'prop1' => uniqid('', true),
                 'prop2' => uniqid('', true),
                 'prop3' => uniqid('', true),
                 'prop4' => uniqid('', true),
-            );
+            ];
         }
 
-        $this->_data = $data;
+        $this->data = $data;
     }
 
     public function testCreate()
     {
-        $array = $this->_data;
+        $array = $this->data;
 
-        Benchmark::compare(array(
+        Benchmark::compare([
             'Array'          => function () use ($array) {
                 $var = $array; // for clean experiment
                 return $var;
@@ -86,21 +86,22 @@ class BenchmarkTest extends PHPUnit
                 $var = new \ArrayObjectExt($array);
                 return $var;
             },
-        ), array('name' => 'Create var', 'count' => 10000));
+        ], ['name' => 'Create var', 'count' => 10000]);
+        isTrue(true);
     }
 
     public function testGet()
     {
-        $array     = $this->_data;
-        $data      = new Data($this->_data);
-        $arrobj    = new \ArrayObject($this->_data);
-        $arrobjExt = new \ArrayObjectExt($this->_data);
+        $array = $this->data;
+        $data = new Data($this->data);
+        $arrObj = new \ArrayObject($this->data);
+        $arrObjExt = new \ArrayObjectExt($this->data);
 
         if (Sys::isHHVM()) {
             $data->setFlags(0);
         }
 
-        Benchmark::compare(array(
+        Benchmark::compare([
             // Simple array
             'Array::clean'              => function () use ($array) {
                 return $array['prop'];
@@ -109,26 +110,26 @@ class BenchmarkTest extends PHPUnit
                 return @$array['prop'];
             },
             'Array::isset'              => function () use ($array) {
-                return isset($array['prop']) ? $array['prop'] : null;
+                return $array['prop'] ?? null;
             },
             'Array::array_key_exists'   => function () use ($array) {
                 return array_key_exists('prop', $array) ? $array['prop'] : null;
             },
 
             // ArrayObject
-            'ArrayObject::array'        => function () use ($arrobj) {
-                return $arrobj['prop'];
+            'ArrayObject::array'        => function () use ($arrObj) {
+                return $arrObj['prop'];
             },
-            'ArrayObject::offsetGet'    => function () use ($arrobj) {
-                return $arrobj->offsetGet('prop');
+            'ArrayObject::offsetGet'    => function () use ($arrObj) {
+                return $arrObj->offsetGet('prop');
             },
 
             // ArrayObjectExt
-            'ArrayObjectExt::array'     => function () use ($arrobjExt) {
-                return $arrobjExt['prop'];
+            'ArrayObjectExt::array'     => function () use ($arrObjExt) {
+                return $arrObjExt['prop'];
             },
-            'ArrayObjectExt::offsetGet' => function () use ($arrobjExt) {
-                return $arrobjExt->offsetGet('prop');
+            'ArrayObjectExt::offsetGet' => function () use ($arrObjExt) {
+                return $arrObjExt->offsetGet('prop');
             },
 
             // JBZoo/Data
@@ -147,17 +148,19 @@ class BenchmarkTest extends PHPUnit
             'Data::offsetGet'           => function () use ($data) {
                 return $data->offsetGet('prop');
             },
-        ), array('name' => 'Get defined var', 'count' => 10000));
+        ], ['name' => 'Get defined var', 'count' => 10000]);
+
+        isTrue(true);
     }
 
     public function testGetInner()
     {
-        $array     = $this->_data;
-        $data      = new Data($this->_data);
-        $arrobj    = new \ArrayObject($this->_data);
-        $arrobjExt = new \ArrayObjectExt($this->_data);
+        $array = $this->data;
+        $data = new Data($this->data);
+        $arrObj = new \ArrayObject($this->data);
+        $arrObjExt = new \ArrayObjectExt($this->data);
 
-        Benchmark::compare(array(
+        Benchmark::compare([
             // Simple array
             'Array::clean'            => function () use ($array) {
                 return $array['inner']['inner']['prop'];
@@ -166,7 +169,7 @@ class BenchmarkTest extends PHPUnit
                 return @$array['inner']['inner']['prop'];
             },
             'Array::isset'            => function () use ($array) {
-                return isset($array['inner']['inner']['prop']) ? $array['inner']['inner']['prop'] : null;
+                return $array['inner']['inner']['prop'] ?? null;
             },
             'Array::array_key_exists' => function () use ($array) {
 
@@ -182,13 +185,13 @@ class BenchmarkTest extends PHPUnit
             },
 
             // ArrayObject
-            'ArrayObject::array'      => function () use ($arrobj) {
-                return $arrobj['inner']['inner']['prop'];
+            'ArrayObject::array'      => function () use ($arrObj) {
+                return $arrObj['inner']['inner']['prop'];
             },
 
             // ArrayObjectExt
-            'ArrayObjectExt::array'   => function () use ($arrobjExt) {
-                return $arrobjExt['inner']['inner']['prop'];
+            'ArrayObjectExt::array'   => function () use ($arrObjExt) {
+                return $arrObjExt['inner']['inner']['prop'];
             },
 
             // Data
@@ -201,48 +204,50 @@ class BenchmarkTest extends PHPUnit
             'Data::find'              => function () use ($data) {
                 return $data->find('inner.inner.prop');
             },
-        ), array('name' => 'Get inner var', 'count' => 10000));
+        ], ['name' => 'Get inner var', 'count' => 10000]);
+
+        isTrue(true);
     }
 
     public function testGetUndefined()
     {
-        $array     = $this->_data;
-        $data      = new Data($this->_data);
-        $arrobj    = new \ArrayObject($this->_data);
-        $arrobjExt = new \ArrayObjectExt($this->_data);
+        $array = $this->data;
+        $data = new Data($this->data);
+        $arrObj = new \ArrayObject($this->data);
+        $arrObjExt = new \ArrayObjectExt($this->data);
 
-        Benchmark::compare(array(
+        Benchmark::compare([
             // Simple array
             'array::@'                   => function () use ($array) {
                 return @$array['undefined'];
             },
             'array::isset'               => function () use ($array) {
-                return isset($array['undefined']) ? $array['undefined'] : null;
+                return $array['undefined'] ?? null;
             },
             'array::array_key_exists'    => function () use ($array) {
                 return array_key_exists('undefined', $array) ? $array['undefined'] : null;
             },
 
             // ArrayObject
-            'ArrayObject::arrow@'        => function () use ($arrobj) {
-                return @$arrobj->undefined;
+            'ArrayObject::arrow@'        => function () use ($arrObj) {
+                return @$arrObj->undefined;
             },
-            'ArrayObject::array@'        => function () use ($arrobj) {
-                return @$arrobj['undefined'];
+            'ArrayObject::array@'        => function () use ($arrObj) {
+                return @$arrObj['undefined'];
             },
-            'ArrayObject::offsetGet@'    => function () use ($arrobj) {
-                return @$arrobj->offsetGet('undefined');
+            'ArrayObject::offsetGet@'    => function () use ($arrObj) {
+                return @$arrObj->offsetGet('undefined');
             },
 
             // ArrayObjectExt
-            'ArrayObjectExt::arrow@'     => function () use ($arrobjExt) {
-                return @$arrobjExt->undefined;
+            'ArrayObjectExt::arrow@'     => function () use ($arrObjExt) {
+                return @$arrObjExt->undefined;
             },
-            'ArrayObjectExt::array@'     => function () use ($arrobjExt) {
-                return @$arrobjExt['undefined'];
+            'ArrayObjectExt::array@'     => function () use ($arrObjExt) {
+                return @$arrObjExt['undefined'];
             },
-            'ArrayObjectExt::offsetGet@' => function () use ($arrobjExt) {
-                return @$arrobjExt->offsetGet('undefined');
+            'ArrayObjectExt::offsetGet@' => function () use ($arrObjExt) {
+                return @$arrObjExt->offsetGet('undefined');
             },
 
             // JBZoo/Data
@@ -261,40 +266,42 @@ class BenchmarkTest extends PHPUnit
             'Data::offsetGet@'           => function () use ($data) {
                 return @$data->offsetGet('undefined');
             },
-        ), array('name' => 'Get undefined var', 'count' => 10000));
+        ], ['name' => 'Get undefined var', 'count' => 10000]);
+
+        isTrue(true);
     }
 
 
     public function testForReadme()
     {
         $times = 10000;
-        $this->_data = array(
+        $this->data = [
             'prop'  => uniqid('', true),
             'prop1' => uniqid('', true),
             'prop2' => uniqid('', true),
             'prop3' => uniqid('', true),
             'prop4' => uniqid('', true),
-            'inner' => array(
+            'inner' => [
                 'prop'  => uniqid('', true),
                 'prop1' => uniqid('', true),
                 'prop2' => uniqid('', true),
                 'prop3' => uniqid('', true),
                 'prop4' => uniqid('', true),
-                'inner' => array(
+                'inner' => [
                     'prop'  => uniqid('', true),
                     'prop1' => uniqid('', true),
                     'prop2' => uniqid('', true),
                     'prop3' => uniqid('', true),
                     'prop4' => uniqid('', true),
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
 
-        $array  = $this->_data;
-        $data   = new Data($this->_data);
-        $arrobj = new \ArrayObject($this->_data);
+        $array = $this->data;
+        $data = new Data($this->data);
+        $arrObj = new \ArrayObject($this->data);
 
-        Benchmark::compare(array(
+        Benchmark::compare([
             'Array'       => function () use ($array) {
                 $var = $array; // for clean experiment
                 return $var;
@@ -307,23 +314,23 @@ class BenchmarkTest extends PHPUnit
                 $var = new Data($array);
                 return $var;
             },
-        ), array('name' => 'For Readme: Create', 'count' => $times));
+        ], ['name' => 'For Readme: Create', 'count' => $times]);
 
 
-        Benchmark::compare(array(
+        Benchmark::compare([
             'Array'       => function () use ($array) {
                 return array_key_exists('prop', $array) ? $array['prop'] : null;
             },
-            'ArrayObject' => function () use ($arrobj) {
-                return $arrobj->offsetGet('prop');
+            'ArrayObject' => function () use ($arrObj) {
+                return $arrObj->offsetGet('prop');
             },
             'Data'        => function () use ($data) {
                 return $data->get('prop');
             },
-        ), array('name' => 'For Readme: Get by key', 'count' => $times));
+        ], ['name' => 'For Readme: Get by key', 'count' => $times]);
 
 
-        Benchmark::compare(array(
+        Benchmark::compare([
             'Array'       => function () use ($array) {
                 if (
                     array_key_exists('inner', $array) &&
@@ -335,13 +342,13 @@ class BenchmarkTest extends PHPUnit
 
                 return 42;
             },
-            'ArrayObject' => function () use ($arrobj) {
+            'ArrayObject' => function () use ($arrObj) {
                 if (
-                    array_key_exists('inner', $arrobj) &&
-                    array_key_exists('inner', $arrobj['inner']) &&
-                    array_key_exists('prop', $arrobj['inner']['inner'])
+                    array_key_exists('inner', $arrObj) &&
+                    array_key_exists('inner', $arrObj['inner']) &&
+                    array_key_exists('prop', $arrObj['inner']['inner'])
                 ) {
-                    return $arrobj['inner']['inner']['prop'];
+                    return $arrObj['inner']['inner']['prop'];
                 }
 
                 return 42;
@@ -349,9 +356,9 @@ class BenchmarkTest extends PHPUnit
             'Data'        => function () use ($data) {
                 return $data->find('inner.inner.prop', 42);
             },
-        ), array('name' => 'For Readme: Find nested defined var', 'count' => $times));
+        ], ['name' => 'For Readme: Find nested defined var', 'count' => $times]);
 
-        Benchmark::compare(array(
+        Benchmark::compare([
             'Array'       => function () use ($array) {
                 if (
                     array_key_exists('inner', $array) &&
@@ -363,13 +370,13 @@ class BenchmarkTest extends PHPUnit
 
                 return 42;
             },
-            'ArrayObject' => function () use ($arrobj) {
+            'ArrayObject' => function () use ($arrObj) {
                 if (
-                    array_key_exists('inner', $arrobj) &&
-                    array_key_exists('inner', $arrobj['inner']) &&
-                    array_key_exists('undefined', $arrobj['inner']['inner'])
+                    array_key_exists('inner', $arrObj) &&
+                    array_key_exists('inner', $arrObj['inner']) &&
+                    array_key_exists('undefined', $arrObj['inner']['inner'])
                 ) {
-                    return $arrobj['inner']['inner']['undefined'];
+                    return $arrObj['inner']['inner']['undefined'];
                 }
 
                 return 42;
@@ -377,6 +384,8 @@ class BenchmarkTest extends PHPUnit
             'Data'        => function () use ($data) {
                 return $data->find('inner.inner.undefined', 42);
             },
-        ), array('name' => 'For Readme: Find nested undefined var', 'count' => $times));
+        ], ['name' => 'For Readme: Find nested undefined var', 'count' => $times]);
+
+        isTrue(true);
     }
 }

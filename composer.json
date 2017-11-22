@@ -13,16 +13,16 @@
         }
     ],
     "require"           : {
-        "php"         : ">=5.6",
+        "php"         : ">=7.0",
         "jbzoo/utils" : "^1.4.2|^2.0"
     },
     "require-dev"       : {
-        "jbzoo/phpunit"  : "^1.10",
+        "jbzoo/phpunit"  : "^2.0",
         "jbzoo/profiler" : "^1.0",
-        "symfony/yaml"   : "^2.8|^3.0"
+        "symfony/yaml"   : "^3.3"
     },
     "suggest"           : {
-        "symfony/yaml" : "^2.8|^3.0"
+        "symfony/yaml" : "^3.3"
     },
     "autoload"          : {
         "files" : [

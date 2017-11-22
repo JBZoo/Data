@@ -6,11 +6,11 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @package   Data
- * @license   MIT
- * @copyright Copyright (C) JBZoo.com,  All rights reserved.
- * @link      https://github.com/JBZoo/Data
- * @author    Denis Smetannikov <denis@jbzoo.com>
+ * @package    Data
+ * @license    MIT
+ * @copyright  Copyright (C) JBZoo.com, All rights reserved.
+ * @link       https://github.com/JBZoo/Data
+ * @author     Denis Smetannikov <denis@jbzoo.com>
  */
 
 namespace JBZoo\PHPunit;
@@ -21,76 +21,77 @@ use function JBZoo\Data\json;
 
 /**
  * Class DataTest
+ *
  * @package JBZoo\Data
  */
 class DataTest extends PHPUnit
 {
-    protected $_test = array();
+    protected $_test = [];
 
     public function setUp()
     {
-        $this->_test = array(
+        $this->_test = [
             // simular
-            'string-zero'       => '0',
-            'string-empty'      => '',
-            'string'            => 'qwerty',
-            'number-zero'       => 0,
-            'number'            => 10,
-            'bool-true'         => true,
-            'bool-false'        => false,
-            'null'              => null,
+            'string-zero'     => '0',
+            'string-empty'    => '',
+            'string'          => 'qwerty',
+            'number-zero'     => 0,
+            'number'          => 10,
+            'bool-true'       => true,
+            'bool-false'      => false,
+            'null'            => null,
 
             // array
-            'array_empty'       => array(),
-            'array_not_empty'   => array(
+            'array_empty'     => [],
+            'array_not_empty' => [
                 '123' => '123321',
-            ),
+            ],
 
             // objects
-            'objects'           => (object)array(
+            'objects'         => (object)[
                 'prop-1' => 'prop-value-1',
                 'prop-2' => 'prop-value-2',
-                'sub'    => (object)array(
+                'sub'    => (object)[
                     'prop-1' => 'sub-prop-value-1',
                     'prop-2' => 'sub-prop-value-2',
-                ),
-            ),
+                ],
+            ],
 
             // real nested
-            'sub'               => array(
+            'sub'             => [
                 'sub'     => 'sub-value',
                 'sub.sub' => 'sub-value-2',
-            ),
+            ],
 
-            'array'             => array(
+            'array' => [
                 'sub'     => 'array-value',
-                'sub-sub' => array(
+                'sub-sub' => [
                     'key-1' => 'deep-value',
-                    'sub'   => array(
+                    'sub'   => [
                         'key-sub' => 'really-deep-value',
-                    ),
-                ),
-            ),
+                    ],
+                ],
+            ],
 
-            'data'              => new Data(array(
+            'data'              => new Data([
                 'key-1' => 'data-value-1',
                 'key-2' => 'data-value-2',
-            )),
+            ]),
 
             // real nested
-            'nested'            => array(
+            'nested'            => [
                 'value-1' => 'val-1',
                 'value-2' => 'val-2',
-                'sub'     => array(
+                'sub'     => [
                     'qwerty' => 'deep-value',
-                ),
-            ),
+                ],
+            ],
 
             // pseudo nested
             'nested.value-1'    => 'wsxzaq',
             'nested.value-2'    => 'qazxsw',
             'nested.sub.qwerty' => 'ytrewq',
-        );
+        ];
     }
 
     public function testCreate()
@@ -134,8 +135,8 @@ class DataTest extends PHPUnit
 
     public function testUnSerialize()
     {
-        $data = new Data(serialize(array()));
-        isSame(serialize(array()), (string)$data);
+        $data = new Data(serialize([]));
+        isSame(serialize([]), (string)$data);
     }
 
     public function testGet()
@@ -180,22 +181,22 @@ class DataTest extends PHPUnit
     public function testFind()
     {
         $data = new Data($this->_test);
-        isSame(array('sub' => 'sub-value', 'sub.sub' => 'sub-value-2'), $data->get('sub'));
-        isSame(array('sub' => 'sub-value', 'sub.sub' => 'sub-value-2'), $data->find('sub'));
+        isSame(['sub' => 'sub-value', 'sub.sub' => 'sub-value-2'], $data->get('sub'));
+        isSame(['sub' => 'sub-value', 'sub.sub' => 'sub-value-2'], $data->find('sub'));
         isNull($data->find('sub.sub.sub'));
         is('sub-value', $data->find('sub.sub'));
-        is(array(
+        is([
             'key-1' => 'deep-value',
-            'sub'   => array(
+            'sub'   => [
                 'key-sub' => 'really-deep-value',
-            ),
-        ), $data->find('array.sub-sub'));
+            ],
+        ], $data->find('array.sub-sub'));
         is('sub-prop-value-2', $data->find('objects.sub.prop-2'));
 
-        isSame(array(
+        isSame([
             'prop-1' => 'sub-prop-value-1',
             'prop-2' => 'sub-prop-value-2',
-        ), (array)$data->find('objects.sub'));
+        ], (array)$data->find('objects.sub'));
 
         is('tttttt', $data->find('undefined', 'tttttt'));
         is('ffffff', $data->find('undefined.key', 'ffffff'));
@@ -259,27 +260,27 @@ class DataTest extends PHPUnit
     public function testFlattenRecursive()
     {
         // like object
-        $data = new Data(array(
+        $data = new Data([
             'number' => 10,
             'string' => 'qwerty',
-            'sub'    => array(
+            'sub'    => [
                 'sub'     => 'sub-value',
-                'sub-sub' => array(
+                'sub-sub' => [
                     'sub-key' => 'sub-sub-value',
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
-        isSame(array(10, 'qwerty', 'sub-value', 'sub-sub-value'), $data->flattenRecursive());
+        isSame([10, 'qwerty', 'sub-value', 'sub-sub-value'], $data->flattenRecursive());
     }
 
     public function testFindBug()
     {
-        $array = array(
-            'response' => array(
+        $array = [
+            'response' => [
                 'code' => '404',
-            ),
-        );
+            ],
+        ];
 
         $data = new Data($array);
 
@@ -289,9 +290,9 @@ class DataTest extends PHPUnit
 
     public function testNoNotice()
     {
-        $data = new Data(array(
+        $data = new Data([
             'some_value' => 1,
-        ));
+        ]);
 
         // Methods
         isSame(null, $data->find('qwerty'));
@@ -311,12 +312,12 @@ class DataTest extends PHPUnit
 
     public function testIs()
     {
-        $data = new Data(array(
+        $data = new Data([
             'key'    => 1,
-            'nested' => array(
+            'nested' => [
                 'key' => null,
-            ),
-        ));
+            ],
+        ]);
 
         isTrue($data->is('key'));
         isTrue($data->is('key', '1'));
@@ -334,17 +335,18 @@ class DataTest extends PHPUnit
 
     public function testNumeric()
     {
-        $data = new Data(array(
+        $data = new Data([
             0        => 0,
             1        => 1,
             'string' => 'test',
-            2        => array(
+            2        => [
                 1,
-            ),
-            'nested' => array(
-                '0', 1,
-            ),
-        ));
+            ],
+            'nested' => [
+                '0',
+                1,
+            ],
+        ]);
 
         isSame(0, $data->get(0));
         isSame(1, $data->find('2.0'));
@@ -365,7 +367,7 @@ class DataTest extends PHPUnit
         isClass(Data::class, json(false));
         isClass(Data::class, json(null));
         isClass(Data::class, json(''));
-        isClass(Data::class, json(array()));
+        isClass(Data::class, json([]));
         isClass(Data::class, json('{}'));
         isClass(Data::class, json('{"test":42}'));
         isClass(Data::class, json($this->_test));
@@ -375,7 +377,7 @@ class DataTest extends PHPUnit
         //isSame('[false]', '' . json(false));
         isSame('[]', '' . json(null));
         isSame('[]', '' . json(''));
-        isSame('[]', '' . json(array()));
+        isSame('[]', '' . json([]));
         isSame('[]', '' . json('{}'));
         //isSame('{"test":42}', '' . json('{"test":42}'));
         isSame('[]', '' . json(json()));

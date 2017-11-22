@@ -6,27 +6,29 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @package   Data
- * @license   MIT
- * @copyright Copyright (C) JBZoo.com,  All rights reserved.
- * @link      https://github.com/JBZoo/Data
- * @author    Denis Smetannikov <denis@jbzoo.com>
+ * @package    Data
+ * @license    MIT
+ * @copyright  Copyright (C) JBZoo.com, All rights reserved.
+ * @link       https://github.com/JBZoo/Data
+ * @author     Denis Smetannikov <denis@jbzoo.com>
  */
 
 namespace JBZoo\Data;
 
 /**
  * Class Ini
+ *
  * @package JBZoo\Data
  */
 class Ini extends Data
 {
     /**
      * Utility Method to unserialize the given data
+     *
      * @param string $string
      * @return mixed
      */
-    protected function _decode($string)
+    protected function decode($string)
     {
         return parse_ini_string($string, true, INI_SCANNER_NORMAL);
     }
@@ -35,9 +37,9 @@ class Ini extends Data
      * @param mixed $data
      * @return string
      */
-    protected function _encode($data)
+    protected function encode($data)
     {
-        return $this->_render($data, array());
+        return $this->render($data, []);
     }
 
     /**
@@ -45,23 +47,21 @@ class Ini extends Data
      * @param array $parent
      * @return string
      */
-    protected function _render(array $data = array(), $parent = array())
+    protected function render(array $data = [], array $parent = [])
     {
-        $result = array();
-
+        $result = [];
         foreach ($data as $dataKey => $dataValue) {
-            if (is_array($dataValue)) {
-                if ($this->_isMulti($dataValue)) {
-                    $sections = array_merge((array)$parent, (array)$dataKey);
+            if (\is_array($dataValue)) {
+                if ($this->isMulti($dataValue)) {
+                    $sections = array_merge($parent, (array)$dataKey);
                     $result[] = '';
                     $result[] = '[' . implode('.', $sections) . ']';
-                    $result[] = $this->_render($dataValue, $sections);
+                    $result[] = $this->render($dataValue, $sections);
                 } else {
-                    foreach ($dataValue as $key => $value) {
+                    foreach ((array)$dataValue as $key => $value) {
                         $result[] = $dataKey . '[' . $key . '] = "' . str_replace('"', '\"', $value) . '"';
                     }
                 }
-
             } else {
                 $result[] = $dataKey . ' = "' . str_replace('"', '\"', $dataValue) . '"';
             }
