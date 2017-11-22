@@ -9,7 +9,7 @@ Really useful objects for any config in your system (write, read, store, change,
 
 ## Install
 ```sh
-composer require jbzoo/data:"1.x-dev"  # Last version
+composer require jbzoo/data:"2.x-dev"  # Last version
 composer require jbzoo/data            # Stable version
 ```
 
