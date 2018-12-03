@@ -29,9 +29,9 @@ class PhpArrayDataTest extends PHPUnit
     public function testFile()
     {
         $data = new PHPArray($this->testFile);
-        $dataValid = openFile($this->testFile);
+        $dataValid = include $this->testFile;
 
-        is($dataValid, (string)$data);
+        is($dataValid, $data->getArrayCopy());
     }
 
     public function testPropsVisible()

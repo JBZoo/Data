@@ -51,7 +51,8 @@ class Data extends \ArrayObject
      */
     protected function decode($string)
     {
-        return unserialize($string, []);
+        /** @noinspection UnserializeExploitsInspection */
+        return \unserialize($string, []);
     }
 
     /**
@@ -161,7 +162,7 @@ class Data extends \ArrayObject
 
         // explode search key and init search data
         $parts = explode($separator, $key);
-        $data  = $this;
+        $data = $this;
 
         foreach ($parts as $part) {
             // handle ArrayObject and Array
@@ -208,7 +209,7 @@ class Data extends \ArrayObject
     public function search($needle)
     {
         $aIterator = new \RecursiveArrayIterator($this);
-        $iterator  = new \RecursiveIteratorIterator($aIterator);
+        $iterator = new \RecursiveIteratorIterator($aIterator);
 
         while ($iterator->valid()) {
             $iterator->current();
@@ -247,9 +248,7 @@ class Data extends \ArrayObject
         $contents = null;
 
         if ($realPath = realpath($filePath)) {
-            $handle   = fopen($realPath, 'rb');
-            $contents = fread($handle, filesize($realPath));
-            fclose($handle);
+            $contents = file_get_contents($realPath);
         }
 
         return $contents;
