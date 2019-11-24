@@ -17,6 +17,7 @@ namespace JBZoo\PHPunit;
 
 use JBZoo\Data\Data;
 use JBZoo\Data\JSON;
+use JBZoo\Utils\Sys;
 use function JBZoo\Data\json;
 
 /**
@@ -300,14 +301,18 @@ class DataTest extends PHPUnit
         isSame(null, $data->get('qwerty'));
         isSame(null, $data->get('qwerty.qwerty'));
 
-        // like object
-        isSame(null, $data->qwerty);
-        isSame(null, $data->qwerty['qwerty']);
+        if (Sys::isPHP('7.4')) {
+            skip('Needs to redesign method offsetGet() for PHP 7.4');
+        } else {
+            // like object
+            isSame(null, $data->qwerty);
+            isSame(null, $data->qwerty['qwerty']);
 
-        // like array
-        isSame(null, $data['qwerty']);
-        isSame(null, $data['qwerty']['qwerty']);
-        isSame(null, $data['qwerty']['qwerty']['qwerty']['qwerty']);
+            // like array
+            isSame(null, $data['qwerty']);
+            isSame(null, $data['qwerty']['qwerty']);
+            isSame(null, $data['qwerty']['qwerty']['qwerty']['qwerty']);
+        }
     }
 
     public function testIs()
