@@ -13,14 +13,14 @@
         }
     ],
     "require"           : {
-        "php"         : ">=7.0",
-        "jbzoo/utils" : "^2.2.1"
+        "php"         : ">=7.1",
+        "jbzoo/utils" : "^2.3.3"
     },
     "require-dev"       : {
-        "jbzoo/phpunit"          : "^2.2.1",
-        "jbzoo/profiler"         : "^1.0.5",
-        "symfony/yaml"           : "^3.3.13",
-        "satooshi/php-coveralls" : "^1.0.2"
+        "jbzoo/phpunit"               : "dev-master",
+        "jbzoo/profiler"              : "^1.0.5",
+        "symfony/yaml"                : "^4.4",
+        "php-coveralls/php-coveralls" : "^2.2"
     },
     "suggest"           : {
         "symfony/yaml" : "^3.3.13"
