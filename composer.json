@@ -13,19 +13,23 @@
         }
     ],
     "require"           : {
-        "php"         : ">=7.1",
-        "ext-json"    : "*",
-        "jbzoo/utils" : "^2.3.3"
+        "php"      : ">=7.1",
+        "ext-json" : "*"
     },
+
     "require-dev"       : {
         "jbzoo/phpunit"               : "^3.0",
+        "jbzoo/utils"                 : "^2.3.3",
         "jbzoo/profiler"              : "^1.0.5",
         "symfony/yaml"                : "^4.4",
         "php-coveralls/php-coveralls" : "^2.2"
     },
+
     "suggest"           : {
-        "symfony/yaml" : "^3.3.13"
+        "symfony/yaml" : "^3.3|^4.4",
+        "jbzoo/utils"  : "^2.3.2|^3.0"
     },
+
     "autoload"          : {
         "files" : [
             "src/functions.php"
@@ -34,14 +38,11 @@
             "JBZoo\\Data\\" : "src"
         }
     },
-    "extra"             : {
-        "branch-alias" : {
-            "dev-master" : "1.x-dev"
-        }
-    },
+
     "config"            : {
         "optimize-autoloader" : true
     },
+
     "support"           : {
         "issues" : "https://github.com/SmetDenis/Data/issues"
     }
