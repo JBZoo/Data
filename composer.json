@@ -17,8 +17,8 @@
     },
 
     "require-dev"       : {
-        "jbzoo/phpunit"               : "^2.3",
-        "jbzoo/utils"                 : "*",
+        "jbzoo/phpunit"               : "^3.0",
+        "jbzoo/utils"                 : "^3.0",
         "jbzoo/profiler"              : "^1.0.5",
         "symfony/yaml"                : "^4.4",
         "php-coveralls/php-coveralls" : "^2.2"
