@@ -30,6 +30,10 @@ class BenchmarkTest extends PHPUnit
 
     protected function setUp()
     {
+        if (Sys::isPHP('7.4')) {
+            skip('Needs to replace array_key_exists =>  isset()');
+        }
+
         $data = [
             'prop'  => uniqid('', true),
             'prop1' => uniqid('', true),
