@@ -17,6 +17,7 @@ namespace JBZoo\Data;
 
 use ArrayObject;
 use JBZoo\Utils\Filter;
+use JBZoo\Utils\Sys;
 use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
 
@@ -271,8 +272,14 @@ class Data extends ArrayObject
      */
     public function offsetGet($index)
     {
-        if (!isset($index, $this)) {
-            return null;
+        if (Sys::isPHP('7.4')) {
+            if (!isset($index, $this)) {
+                return null;
+            }
+        } else {
+            if (!array_key_exists($index, $this)) {
+                return null;
+            }
         }
 
         return parent::offsetGet($index);

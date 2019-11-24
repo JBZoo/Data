@@ -4,7 +4,6 @@
     "description"       : "Extended implementation of ArrayObject",
     "license"           : "MIT",
     "keywords"          : ["ArrayObject", "Array", "Config", "Data", "ini", "yml", "params", "json"],
-    "minimum-stability" : "stable",
     "authors"           : [
         {
             "name"  : "SmetDenis",
@@ -19,7 +18,7 @@
 
     "require-dev"       : {
         "jbzoo/phpunit"               : "^2.3",
-        "jbzoo/utils"                 : "^2.3",
+        "jbzoo/utils"                 : "*",
         "jbzoo/profiler"              : "^1.0.5",
         "symfony/yaml"                : "^4.4",
         "php-coveralls/php-coveralls" : "^2.2"

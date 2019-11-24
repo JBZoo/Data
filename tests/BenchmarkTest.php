@@ -97,10 +97,6 @@ class BenchmarkTest extends PHPUnit
         $arrObj = new \ArrayObject($this->data);
         $arrObjExt = new \ArrayObjectExt($this->data);
 
-        if (Sys::isHHVM()) {
-            $data->setFlags(0);
-        }
-
         Benchmark::compare([
             // Simple array
             'Array::clean'              => function () use ($array) {
