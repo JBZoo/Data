@@ -28,7 +28,7 @@ class DataTest extends PHPUnit
 {
     protected $_test = [];
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->_test = [
             // simular

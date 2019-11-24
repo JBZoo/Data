@@ -28,7 +28,7 @@ class BenchmarkTest extends PHPUnit
 {
     protected $data = [];
 
-    protected function setUp()
+    protected function setUp(): void
     {
         if (Sys::isPHP('7.4')) {
             skip('Needs to replace array_key_exists =>  isset()');

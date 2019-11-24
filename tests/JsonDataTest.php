@@ -27,7 +27,7 @@ class JsonDataTest extends PHPUnit
 {
     protected $test = [];
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->test = [
             // simular
