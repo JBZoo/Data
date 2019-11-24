@@ -26,6 +26,7 @@ update:
 
 validate:
 	@echo "\033[0;33m>>> >>> >>> >>> >>> >>> >>> >>> \033[0;30;46m Composer validate \033[0m"
+	@composer check-platform-reqs --no-interaction
 	@composer validate --no-interaction
 	@echo ""
 
