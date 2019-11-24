@@ -15,13 +15,16 @@
 
 namespace JBZoo\Data;
 
+use ArrayObject;
 use JBZoo\Utils\Filter;
+use RecursiveArrayIterator;
+use RecursiveIteratorIterator;
 
 /**
  * Class Data
  * @package JBZoo\Data
  */
-class Data extends \ArrayObject
+class Data extends ArrayObject
 {
     const LE = "\n";
 
@@ -31,13 +34,13 @@ class Data extends \ArrayObject
      */
     public function __construct($data = [])
     {
-        $this->setFlags(\ArrayObject::ARRAY_AS_PROPS);
+        $this->setFlags(ArrayObject::ARRAY_AS_PROPS);
 
-        if ($data && \is_string($data) && file_exists($data)) {
+        if ($data && is_string($data) && file_exists($data)) {
             $data = $this->readFile($data);
         }
 
-        if (\is_string($data)) {
+        if (is_string($data)) {
             $data = $this->decode($data);
         }
 
@@ -52,7 +55,7 @@ class Data extends \ArrayObject
     protected function decode($string)
     {
         /** @noinspection UnserializeExploitsInspection */
-        return \unserialize($string, []);
+        return unserialize($string, []);
     }
 
     /**
@@ -142,14 +145,13 @@ class Data extends \ArrayObject
      * Find a key in the data recursively
      * This method finds the given key, searching also in any array or
      * object that's nested under the current data object.
-     * Example: $data->find('parentkey.subkey.subsubkey');
+     * Example: $data->find('parent-key.sub-key.sub-sub-key');
      *
      * @param string $key       The key to search for. Can be composed using $separator as the key/subkey separator
      * @param mixed  $default   The default value
      * @param mixed  $filter    Filter returned value
-     * @param string $separator The separator to use when searching for subkeys. Default is '.'
+     * @param string $separator The separator to use when searching for sub keys. Default is '.'
      * @return mixed
-     * @throws \JBZoo\Utils\Exception
      */
     public function find($key, $default = null, $filter = null, $separator = '.')
     {
@@ -166,13 +168,13 @@ class Data extends \ArrayObject
 
         foreach ($parts as $part) {
             // handle ArrayObject and Array
-            if (($data instanceof \ArrayObject || \is_array($data)) && isset($data[$part])) {
+            if (($data instanceof ArrayObject || is_array($data)) && isset($data[$part])) {
                 $data = $data[$part];
                 continue;
             }
 
             // handle object
-            if (\is_object($data) && isset($data->$part)) {
+            if (is_object($data) && isset($data->$part)) {
                 $data = &$data->$part;
                 continue;
             }
@@ -190,7 +192,6 @@ class Data extends \ArrayObject
      * @param mixed $value
      * @param mixed $filter
      * @return mixed
-     * @throws \JBZoo\Utils\Exception
      */
     protected function filter($value, $filter)
     {
@@ -208,8 +209,8 @@ class Data extends \ArrayObject
      */
     public function search($needle)
     {
-        $aIterator = new \RecursiveArrayIterator($this);
-        $iterator = new \RecursiveIteratorIterator($aIterator);
+        $aIterator = new RecursiveArrayIterator($this);
+        $iterator = new RecursiveIteratorIterator($aIterator);
 
         while ($iterator->valid()) {
             $iterator->current();
@@ -232,7 +233,7 @@ class Data extends \ArrayObject
     {
         $flat = [];
 
-        foreach (new \RecursiveIteratorIterator(new \RecursiveArrayIterator($this)) as $value) {
+        foreach (new RecursiveIteratorIterator(new RecursiveArrayIterator($this)) as $value) {
             $flat[] = $value;
         }
 
@@ -262,11 +263,7 @@ class Data extends \ArrayObject
     protected function isMulti($array)
     {
         $arrayCount = array_filter($array, '\is_array');
-        if (count($arrayCount) > 0) {
-            return true;
-        }
-
-        return false;
+        return count($arrayCount) > 0;
     }
 
     /**
@@ -274,7 +271,7 @@ class Data extends \ArrayObject
      */
     public function offsetGet($index)
     {
-        if (!property_exists($index, $this)) {
+        if (!isset($index, $this)) {
             return null;
         }
 
@@ -282,7 +279,7 @@ class Data extends \ArrayObject
     }
 
     /**
-     * Compare value by key with somethig
+     * Compare value by key with something
      *
      * @param string $key
      * @param mixed  $compareWith
