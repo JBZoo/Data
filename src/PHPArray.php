@@ -114,14 +114,10 @@ class PHPArray extends Data
         switch ($type) {
             case 'string':
                 return "'" . str_replace("'", "\\'", $var) . "'";
-
             case 'null':
                 return 'null';
-
             case 'boolean':
                 return $var ? 'true' : 'false';
-
-            //TODO: handle other variable types.. ( objects? )
             case 'integer':
             case 'double':
         }

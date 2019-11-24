@@ -29,7 +29,7 @@ class Data extends \ArrayObject
      * Class constructor
      * @param array|string $data The data array
      */
-    public function __construct($data = array())
+    public function __construct($data = [])
     {
         $this->setFlags(\ArrayObject::ARRAY_AS_PROPS);
 
@@ -41,7 +41,7 @@ class Data extends \ArrayObject
             $data = $this->decode($data);
         }
 
-        parent::__construct($data ? (array)$data : array());
+        parent::__construct($data ? (array)$data : []);
     }
 
     /**
@@ -230,7 +230,7 @@ class Data extends \ArrayObject
      */
     public function flattenRecursive()
     {
-        $flat = array();
+        $flat = [];
 
         foreach (new \RecursiveIteratorIterator(new \RecursiveArrayIterator($this)) as $value) {
             $flat[] = $value;

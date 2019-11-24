@@ -14,6 +14,7 @@
     ],
     "require"           : {
         "php"         : ">=7.1",
+        "ext-json"    : "*",
         "jbzoo/utils" : "^2.3.3"
     },
     "require-dev"       : {
