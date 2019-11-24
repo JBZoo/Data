@@ -274,7 +274,7 @@ class Data extends \ArrayObject
      */
     public function offsetGet($index)
     {
-        if (!array_key_exists($index, $this)) {
+        if (!property_exists($index, $this)) {
             return null;
         }
 
