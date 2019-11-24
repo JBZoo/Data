@@ -31,7 +31,7 @@ class PHPArray extends Data
      */
     public function __construct($data = [])
     {
-        if ($data && \is_string($data) && file_exists($data)) {
+        if ($data && is_string($data) && file_exists($data)) {
             $data = $this->decode($data);
         }
 
@@ -81,7 +81,7 @@ class PHPArray extends Data
         foreach ($data as $key => $val) {
             $string .= $this->getIndent($depth) . $this->quoteWrap($key) . ' => ';
 
-            if (\is_array($val) || \is_object($val)) {
+            if (is_array($val) || is_object($val)) {
                 $string .= $this->render($val, $depth) . ',' . Data::LE;
             } else {
                 $string .= $this->quoteWrap($val) . ',' . Data::LE;
@@ -114,14 +114,10 @@ class PHPArray extends Data
         switch ($type) {
             case 'string':
                 return "'" . str_replace("'", "\\'", $var) . "'";
-
             case 'null':
                 return 'null';
-
             case 'boolean':
                 return $var ? 'true' : 'false';
-
-            //TODO: handle other variable types.. ( objects? )
             case 'integer':
             case 'double':
         }

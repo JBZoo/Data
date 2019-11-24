@@ -51,7 +51,7 @@ class Ini extends Data
     {
         $result = [];
         foreach ($data as $dataKey => $dataValue) {
-            if (\is_array($dataValue)) {
+            if (is_array($dataValue)) {
                 if ($this->isMulti($dataValue)) {
                     $sections = array_merge($parent, (array)$dataKey);
                     $result[] = '';
