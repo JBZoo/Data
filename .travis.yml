@@ -22,4 +22,4 @@ script:
   - make test-all
 
 after_success:
-  - make coveralls
+  - travis_retry php vendor/bin/php-coveralls -v
