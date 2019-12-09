@@ -16,7 +16,7 @@
 namespace JBZoo\Data;
 
 /**
- * @param array|null|string $data
+ * @param mixed $data
  * @return JSON
  */
 function json($data = null)
@@ -35,7 +35,7 @@ function json($data = null)
 }
 
 /**
- * @param array|null|string $data
+ * @param mixed $data
  * @return Data
  * @codeCoverageIgnore
  */
@@ -55,7 +55,7 @@ function data($data = null)
 }
 
 /**
- * @param array|null|string $data
+ * @param mixed $data
  * @return PHPArray
  * @codeCoverageIgnore
  */
@@ -75,7 +75,7 @@ function phpArray($data = null)
 }
 
 /**
- * @param array|null|string $data
+ * @param mixed $data
  * @return Ini
  * @codeCoverageIgnore
  */
@@ -95,7 +95,7 @@ function ini($data = null)
 }
 
 /**
- * @param array|null|string $data
+ * @param mixed $data
  * @return Yml
  * @codeCoverageIgnore
  */

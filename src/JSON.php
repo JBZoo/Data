@@ -36,7 +36,7 @@ class JSON extends Data
     /**
      * Utility Method to unserialize the given data
      *
-     * @param $data
+     * @param array $data
      * @return string
      */
     protected function encode($data)

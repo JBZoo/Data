@@ -95,7 +95,7 @@ class PHPArray extends Data
     }
 
     /**
-     * @param $depth
+     * @param int $depth
      * @return string
      */
     protected function getIndent($depth)
@@ -104,7 +104,7 @@ class PHPArray extends Data
     }
 
     /**
-     * @param $var
+     * @param mixed $var
      * @return string
      */
     protected function quoteWrap($var)

@@ -1,35 +1,36 @@
 {
-    "name"              : "jbzoo/data",
-    "type"              : "library",
-    "description"       : "Extended implementation of ArrayObject",
-    "license"           : "MIT",
-    "keywords"          : ["ArrayObject", "Array", "Config", "Data", "ini", "yml", "params", "json"],
-    "authors"           : [
+    "name"        : "jbzoo/data",
+    "type"        : "library",
+    "description" : "Extended implementation of ArrayObject",
+    "license"     : "MIT",
+    "keywords"    : ["ArrayObject", "Array", "Config", "Data", "ini", "yml", "params", "json"],
+    "authors"     : [
         {
             "name"  : "SmetDenis",
             "email" : "denis@jbzoo.com",
             "role"  : "lead"
         }
     ],
-    "require"           : {
+    "require"     : {
         "php"      : ">=7.1",
         "ext-json" : "*"
     },
 
-    "require-dev"       : {
+    "require-dev" : {
         "jbzoo/phpunit"               : "^3.0",
         "jbzoo/utils"                 : "^3.0",
         "jbzoo/profiler"              : "^1.0.5",
         "symfony/yaml"                : "^4.4",
-        "php-coveralls/php-coveralls" : "^2.2"
+        "php-coveralls/php-coveralls" : "^2.2",
+        "phpstan/phpstan"             : "^0.12.2"
     },
 
-    "suggest"           : {
+    "suggest"     : {
         "symfony/yaml" : "^3.3|^4.4",
         "jbzoo/utils"  : "^2.3.2|^3.0"
     },
 
-    "autoload"          : {
+    "autoload"    : {
         "files" : [
             "src/functions.php"
         ],
@@ -38,11 +39,11 @@
         }
     },
 
-    "config"            : {
+    "config"      : {
         "optimize-autoloader" : true
     },
 
-    "support"           : {
+    "support"     : {
         "issues" : "https://github.com/SmetDenis/Data/issues"
     }
 }

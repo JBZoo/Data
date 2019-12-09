@@ -17,7 +17,6 @@ namespace JBZoo\Data;
 
 use ArrayObject;
 use JBZoo\Utils\Filter;
-use JBZoo\Utils\Sys;
 use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
 
@@ -258,7 +257,7 @@ class Data extends ArrayObject
 
     /**
      * Check is array is nested
-     * @param $array
+     * @param array $array
      * @return bool
      */
     protected function isMulti($array)
@@ -272,14 +271,8 @@ class Data extends ArrayObject
      */
     public function offsetGet($index)
     {
-        if (Sys::isPHP('7.4')) {
-            if (!isset($index, $this)) {
-                return null;
-            }
-        } else {
-            if (!array_key_exists($index, $this)) {
-                return null;
-            }
+        if (!property_exists($this, $index)) {
+            return null;
         }
 
         return parent::offsetGet($index);

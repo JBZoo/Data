@@ -17,7 +17,7 @@ build: update
 
 test-all:
 	@echo "\033[0;33m>>> >>> >>> >>> >>> >>> >>> >>> \033[0;30;46m Run all tests \033[0m"
-	@make validate test phpmd phpcs phpcpd phploc
+	@make validate test phpstan phpmd phpcs phpcpd phploc
 
 update:
 	@echo "\033[0;33m>>> >>> >>> >>> >>> >>> >>> >>> \033[0;30;46m Update project \033[0m"
@@ -79,3 +79,10 @@ coveralls:
 	@echo "\033[0;33m>>> >>> >>> >>> >>> >>> >>> >>> \033[0;30;46m Send coverage to coveralls.io \033[0m"
 	@php ./vendor/satooshi/php-coveralls/bin/coveralls --verbose
 	@echo ""
+
+phpstan: ## Check PHP code by PHPStan
+	@echo "$(C_AR)>>> >>> >>> >>> $(C_T) Checking by PHPStan $(CE)"
+	@php `pwd`/vendor/bin/phpstan analyse   \
+        --level=4                           \
+        --error-format=table                \
+        `pwd`/src
