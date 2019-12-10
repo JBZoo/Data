@@ -13,6 +13,8 @@ matrix:
   include:
     - php: 7.3
       env: XDEBUG_OFF="yes"
+    - php: 7.4
+      env: XDEBUG_OFF="yes"
 
 before_script:
   - if [[ $XDEBUG_OFF = yes ]]; then phpenv config-rm xdebug.ini; fi;
