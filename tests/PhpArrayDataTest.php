@@ -39,4 +39,36 @@ class PhpArrayDataTest extends PHPUnit
         $data = new PHPArray($this->testFile);
         isTrue(count(get_object_vars($data)) > 0);
     }
+
+    public function testToString()
+    {
+        $data = new PHPArray($this->testFile);
+
+        isSame(implode(PHP_EOL, [
+            '<?php',
+            '',
+            'return array (',
+            "  'host' => 'localhost',",
+            "  'null' => NULL,",
+            "  'port' => 80,",
+            "  'servers' => ",
+            '  array (',
+            "    0 => 'host1',",
+            "    1 => 'host2',",
+            "    2 => 'host3',",
+            '  ),',
+            "  'application' => ",
+            '  array (',
+            "    'name' => 'configuration',",
+            "    'secret' => 's3cr3t',",
+            "    'null' => NULL,",
+            "    'false' => false,",
+            "    'true' => true,",
+            "    'array' => ",
+            '    array (',
+            '    ),',
+            '  ),',
+            ');',
+        ]), (string)$data);
+    }
 }

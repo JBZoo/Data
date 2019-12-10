@@ -60,68 +60,9 @@ class PHPArray extends Data
         $data = [
             '<?php',
             '',
-            'return ' . $this->render($data, 0) . ';',
+            'return ' . var_export($data, true) . ';',
         ];
 
         return implode(Data::LE, $data);
-    }
-
-    /**
-     * @param array $array
-     * @param int   $depth
-     * @return string
-     */
-    protected function render($array, $depth = 0)
-    {
-        $data = (array)$array;
-
-        $string = 'array(' . Data::LE;
-
-        $depth++;
-        foreach ($data as $key => $val) {
-            $string .= $this->getIndent($depth) . $this->quoteWrap($key) . ' => ';
-
-            if (is_array($val) || is_object($val)) {
-                $string .= $this->render($val, $depth) . ',' . Data::LE;
-            } else {
-                $string .= $this->quoteWrap($val) . ',' . Data::LE;
-            }
-        }
-
-        $depth--;
-        $string .= $this->getIndent($depth) . ')';
-
-        return $string;
-    }
-
-    /**
-     * @param int $depth
-     * @return string
-     */
-    protected function getIndent($depth)
-    {
-        return str_repeat(self::TAB, $depth);
-    }
-
-    /**
-     * @param mixed $var
-     * @return string
-     */
-    protected function quoteWrap($var)
-    {
-        $type = strtolower(gettype($var));
-
-        switch ($type) {
-            case 'string':
-                return "'" . str_replace("'", "\\'", $var) . "'";
-            case 'null':
-                return 'null';
-            case 'boolean':
-                return $var ? 'true' : 'false';
-            case 'integer':
-            case 'double':
-        }
-
-        return $var;
     }
 }
