@@ -30,10 +30,6 @@ class BenchmarkTest extends PHPUnit
 
     protected function setUp(): void
     {
-        if (Sys::isPHP('7.4')) {
-            skip('Needs to replace array_key_exists =>  isset()');
-        }
-
         $data = [
             'prop'  => uniqid('', true),
             'prop1' => uniqid('', true),
@@ -112,9 +108,9 @@ class BenchmarkTest extends PHPUnit
             'Array::isset'              => function () use ($array) {
                 return $array['prop'] ?? null;
             },
-            'Array::array_key_exists'   => function () use ($array) {
-                return array_key_exists('prop', $array) ? $array['prop'] : null;
-            },
+            //'Array::array_key_exists'   => function () use ($array) {
+            //    return array_key_exists('prop', $array) ? $array['prop'] : null;
+            //},
 
             // ArrayObject
             'ArrayObject::array'        => function () use ($arrObj) {
@@ -162,46 +158,46 @@ class BenchmarkTest extends PHPUnit
 
         Benchmark::compare([
             // Simple array
-            'Array::clean'            => function () use ($array) {
+            'Array::clean'          => function () use ($array) {
                 return $array['inner']['inner']['prop'];
             },
-            'Array::@'                => function () use ($array) {
+            'Array::@'              => function () use ($array) {
                 return @$array['inner']['inner']['prop'];
             },
-            'Array::isset'            => function () use ($array) {
+            'Array::isset'          => function () use ($array) {
                 return $array['inner']['inner']['prop'] ?? null;
             },
-            'Array::array_key_exists' => function () use ($array) {
-
-                if (array_key_exists('inner', $array)) {
-                    if (array_key_exists('inner', $array['inner'])) {
-                        if (array_key_exists('prop', $array['inner']['inner'])) {
-                            return $array['inner']['inner']['prop'];
-                        }
-                    }
-                }
-
-                return null;
-            },
+            //'Array::array_key_exists' => function () use ($array) {
+            //
+            //    if (array_key_exists('inner', $array)) {
+            //        if (array_key_exists('inner', $array['inner'])) {
+            //            if (array_key_exists('prop', $array['inner']['inner'])) {
+            //                return $array['inner']['inner']['prop'];
+            //            }
+            //        }
+            //    }
+            //
+            //    return null;
+            //},
 
             // ArrayObject
-            'ArrayObject::array'      => function () use ($arrObj) {
+            'ArrayObject::array'    => function () use ($arrObj) {
                 return $arrObj['inner']['inner']['prop'];
             },
 
             // ArrayObjectExt
-            'ArrayObjectExt::array'   => function () use ($arrObjExt) {
+            'ArrayObjectExt::array' => function () use ($arrObjExt) {
                 return $arrObjExt['inner']['inner']['prop'];
             },
 
             // Data
-            'Data::arrow'             => function () use ($data) {
+            'Data::arrow'           => function () use ($data) {
                 return $data->inner['inner']['prop'];
             },
-            'Data::array'             => function () use ($data) {
+            'Data::array'           => function () use ($data) {
                 return $data['inner']['inner']['prop'];
             },
-            'Data::find'              => function () use ($data) {
+            'Data::find'            => function () use ($data) {
                 return $data->find('inner.inner.prop');
             },
         ], ['name' => 'Get inner var', 'count' => 10000]);
@@ -222,9 +218,6 @@ class BenchmarkTest extends PHPUnit
                 return @$array['undefined'];
             },
             'array::isset'               => function () use ($array) {
-                return $array['undefined'] ?? null;
-            },
-            'array::array_key_exists'    => function () use ($array) {
                 return $array['undefined'] ?? null;
             },
 
@@ -303,24 +296,22 @@ class BenchmarkTest extends PHPUnit
 
         Benchmark::compare([
             'Array'       => function () use ($array) {
-                $var = $array; // for clean experiment
-                return $var;
+                // for clean experiment
+                return $array;
             },
             'ArrayObject' => function () use ($array) {
-                $var = new \ArrayObject($array);
-                return $var;
+                return new \ArrayObject($array);
             },
             'Data'        => function () use ($array) {
-                $var = new Data($array);
-                return $var;
+                return new Data($array);
             },
         ], ['name' => 'For Readme: Create', 'count' => $times]);
 
 
         Benchmark::compare([
-            'Array'       => function () use ($array) {
-                return array_key_exists('prop', $array) ? $array['prop'] : null;
-            },
+            //'Array'       => function () use ($array) {
+            //    return array_key_exists('prop', $array) ? $array['prop'] : null;
+            //},
             'ArrayObject' => function () use ($arrObj) {
                 return $arrObj->offsetGet('prop');
             },
@@ -329,62 +320,59 @@ class BenchmarkTest extends PHPUnit
             },
         ], ['name' => 'For Readme: Get by key', 'count' => $times]);
 
+        if (!Sys::isPHP('7.4')) {
+            Benchmark::compare([
+                'Array'       => function () use ($array) {
+                    if (array_key_exists('inner', $array) &&
+                        array_key_exists('inner', $array['inner']) &&
+                        array_key_exists('prop', $array['inner']['inner'])
+                    ) {
+                        return $array['inner']['inner']['prop'];
+                    }
 
-        Benchmark::compare([
-            'Array'       => function () use ($array) {
-                if (
-                    array_key_exists('inner', $array) &&
-                    array_key_exists('inner', $array['inner']) &&
-                    array_key_exists('prop', $array['inner']['inner'])
-                ) {
-                    return $array['inner']['inner']['prop'];
-                }
+                    return 42;
+                },
+                'ArrayObject' => function () use ($arrObj) {
+                    if (array_key_exists('inner', $arrObj) &&
+                        array_key_exists('inner', $arrObj['inner']) &&
+                        array_key_exists('prop', $arrObj['inner']['inner'])
+                    ) {
+                        return $arrObj['inner']['inner']['prop'];
+                    }
 
-                return 42;
-            },
-            'ArrayObject' => function () use ($arrObj) {
-                if (
-                    array_key_exists('inner', $arrObj) &&
-                    array_key_exists('inner', $arrObj['inner']) &&
-                    array_key_exists('prop', $arrObj['inner']['inner'])
-                ) {
-                    return $arrObj['inner']['inner']['prop'];
-                }
+                    return 42;
+                },
+                'Data'        => function () use ($data) {
+                    return $data->find('inner.inner.prop', 42);
+                },
+            ], ['name' => 'For Readme: Find nested defined var', 'count' => $times]);
 
-                return 42;
-            },
-            'Data'        => function () use ($data) {
-                return $data->find('inner.inner.prop', 42);
-            },
-        ], ['name' => 'For Readme: Find nested defined var', 'count' => $times]);
+            Benchmark::compare([
+                'Array'       => function () use ($array) {
+                    if (array_key_exists('inner', $array) &&
+                        array_key_exists('inner', $array['inner']) &&
+                        array_key_exists('undefined', $array['inner']['inner'])
+                    ) {
+                        return $array['inner']['inner']['prop'];
+                    }
 
-        Benchmark::compare([
-            'Array'       => function () use ($array) {
-                if (
-                    array_key_exists('inner', $array) &&
-                    array_key_exists('inner', $array['inner']) &&
-                    array_key_exists('undefined', $array['inner']['inner'])
-                ) {
-                    return $array['inner']['inner']['prop'];
-                }
+                    return 42;
+                },
+                'ArrayObject' => function () use ($arrObj) {
+                    if (array_key_exists('inner', $arrObj) &&
+                        array_key_exists('inner', $arrObj['inner']) &&
+                        array_key_exists('undefined', $arrObj['inner']['inner'])
+                    ) {
+                        return $arrObj['inner']['inner']['undefined'];
+                    }
 
-                return 42;
-            },
-            'ArrayObject' => function () use ($arrObj) {
-                if (
-                    array_key_exists('inner', $arrObj) &&
-                    array_key_exists('inner', $arrObj['inner']) &&
-                    array_key_exists('undefined', $arrObj['inner']['inner'])
-                ) {
-                    return $arrObj['inner']['inner']['undefined'];
-                }
-
-                return 42;
-            },
-            'Data'        => function () use ($data) {
-                return $data->find('inner.inner.undefined', 42);
-            },
-        ], ['name' => 'For Readme: Find nested undefined var', 'count' => $times]);
+                    return 42;
+                },
+                'Data'        => function () use ($data) {
+                    return $data->find('inner.inner.undefined', 42);
+                },
+            ], ['name' => 'For Readme: Find nested undefined var', 'count' => $times]);
+        }
 
         isTrue(true);
     }
