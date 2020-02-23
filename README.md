@@ -58,11 +58,11 @@ require_once './vendor/autoload.php'; // composer autoload.php
 namespace JBZoo\Data\Data; // And others
 
 // Create
-$config     = new Data([/* Assoc Array */]));       // Any PHP-array or simple object, serialized data
-$configIni  = new Ini('./configs/some.ini'));       // Load config from ini file (or string, or simple array)
-$configYml  = new Yml('./configs/some.yml'));       // Yml (or string, or simple array). Parsed with Symfony/Yaml Component.
-$configJSON = new JSON('./configs/some.json'));     // JSON File (or string, or simple array)
-$configPHP  = new PHPArray('./configs/some.php'));  // PHP-file that must return array
+$config     = new Data([/* Assoc Array */]);       // Any PHP-array or simple object, serialized data
+$configIni  = new Ini('./configs/some.ini');       // Load config from ini file (or string, or simple array)
+$configYml  = new Yml('./configs/some.yml');       // Yml (or string, or simple array). Parsed with Symfony/Yaml Component.
+$configJSON = new JSON('./configs/some.json');     // JSON File (or string, or simple array)
+$configPHP  = new PHPArray('./configs/some.php');  // PHP-file that must return array
 
 // Read
 $config->get('key', 42);                   // Check exists and get parameter by key or return default value
