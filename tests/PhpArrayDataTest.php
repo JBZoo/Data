@@ -15,7 +15,7 @@
 
 namespace JBZoo\PHPUnit;
 
-use JBZoo\Data\PHPArray;
+use JBZoo\Data\PhpArray;
 
 /**
  * Class PhpArrayDataTest
@@ -28,7 +28,7 @@ class PhpArrayDataTest extends PHPUnit
 
     public function testFile()
     {
-        $data = new PHPArray($this->testFile);
+        $data = new PhpArray($this->testFile);
         $dataValid = include $this->testFile;
 
         is($dataValid, $data->getArrayCopy());
@@ -36,13 +36,13 @@ class PhpArrayDataTest extends PHPUnit
 
     public function testPropsVisible()
     {
-        $data = new PHPArray($this->testFile);
+        $data = new PhpArray($this->testFile);
         isTrue(count(get_object_vars($data)) > 0);
     }
 
     public function testToString()
     {
-        $data = new PHPArray($this->testFile);
+        $data = new PhpArray($this->testFile);
 
         isSame(implode(PHP_EOL, [
             '<?php',
