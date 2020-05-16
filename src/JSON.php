@@ -1,4 +1,5 @@
 <?php
+
 /**
  * JBZoo Data
  *
@@ -30,13 +31,14 @@ class JSON extends Data
      */
     protected function decode($string)
     {
+        /** @noinspection JsonEncodingApiUsageInspection */
         return json_decode($string, true);
     }
 
     /**
      * Utility Method to unserialize the given data
      *
-     * @param array $data
+     * @param mixed $data
      * @return string
      */
     protected function encode($data)
@@ -52,6 +54,7 @@ class JSON extends Data
      */
     protected function render($data)
     {
-        return json_encode($data, JSON_PRETTY_PRINT);
+        /** @noinspection JsonEncodingApiUsageInspection */
+        return (string)json_encode($data, JSON_PRETTY_PRINT);
     }
 }

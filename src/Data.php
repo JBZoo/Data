@@ -1,4 +1,5 @@
 <?php
+
 /**
  * JBZoo Data
  *
@@ -26,7 +27,7 @@ use RecursiveIteratorIterator;
  */
 class Data extends ArrayObject
 {
-    const LE = "\n";
+    public const LE = "\n";
 
     /**
      * Class constructor
@@ -163,7 +164,7 @@ class Data extends ArrayObject
         }
 
         // explode search key and init search data
-        $parts = explode($separator, $key);
+        $parts = (array)explode($separator, $key);
         $data = $this;
 
         foreach ($parts as $part) {
@@ -209,7 +210,7 @@ class Data extends ArrayObject
      */
     public function search($needle)
     {
-        $aIterator = new RecursiveArrayIterator($this);
+        $aIterator = new RecursiveArrayIterator($this->getArrayCopy());
         $iterator = new RecursiveIteratorIterator($aIterator);
 
         while ($iterator->valid()) {
@@ -233,7 +234,7 @@ class Data extends ArrayObject
     {
         $flat = [];
 
-        foreach (new RecursiveIteratorIterator(new RecursiveArrayIterator($this)) as $value) {
+        foreach (new RecursiveIteratorIterator(new RecursiveArrayIterator($this->getArrayCopy())) as $value) {
             $flat[] = $value;
         }
 
@@ -242,11 +243,11 @@ class Data extends ArrayObject
 
     /**
      * @param string $filePath
-     * @return string
+     * @return string|false
      */
     protected function readFile($filePath)
     {
-        $contents = null;
+        $contents = false;
 
         if ($realPath = realpath($filePath)) {
             $contents = file_get_contents($realPath);
@@ -267,7 +268,8 @@ class Data extends ArrayObject
     }
 
     /**
-     * {@inheritdoc}
+     * @param mixed $index
+     * @return mixed|null
      */
     public function offsetGet($index)
     {

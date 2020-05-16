@@ -1,4 +1,5 @@
 <?php
+
 /**
  * JBZoo Data
  *
@@ -37,7 +38,6 @@ function json($data = null)
 /**
  * @param mixed $data
  * @return Data
- * @codeCoverageIgnore
  */
 function data($data = null)
 {
@@ -56,19 +56,18 @@ function data($data = null)
 
 /**
  * @param mixed $data
- * @return PHPArray
- * @codeCoverageIgnore
+ * @return PhpArray
  */
 function phpArray($data = null)
 {
-    if ($data instanceof PHPArray) {
+    if ($data instanceof PhpArray) {
         return $data;
     }
 
     if (is_string($data)) {
-        $result = new PHPArray($data);
+        $result = new PhpArray($data);
     } else {
-        $result = new PHPArray((array)$data);
+        $result = new PhpArray((array)$data);
     }
 
     return $result;
@@ -77,7 +76,6 @@ function phpArray($data = null)
 /**
  * @param mixed $data
  * @return Ini
- * @codeCoverageIgnore
  */
 function ini($data = null)
 {
@@ -97,7 +95,6 @@ function ini($data = null)
 /**
  * @param mixed $data
  * @return Yml
- * @codeCoverageIgnore
  */
 function yml($data = null)
 {

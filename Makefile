@@ -83,6 +83,6 @@ coveralls:
 phpstan: ## Check PHP code by PHPStan
 	@echo "$(C_AR)>>> >>> >>> >>> $(C_T) Checking by PHPStan $(CE)"
 	@php `pwd`/vendor/bin/phpstan analyse   \
-        --level=3                           \
+        --level=5                           \
         --error-format=table                \
         `pwd`/src

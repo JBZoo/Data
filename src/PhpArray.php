@@ -1,4 +1,5 @@
 <?php
+
 /**
  * JBZoo Data
  *
@@ -20,10 +21,8 @@ namespace JBZoo\Data;
  *
  * @package JBZoo\Data
  */
-class PHPArray extends Data
+class PhpArray extends Data
 {
-    const TAB = '    ';
-
     /**
      * Class constructor
      *
@@ -46,7 +45,11 @@ class PHPArray extends Data
      */
     protected function decode($string)
     {
-        return include $string;
+        if (file_exists($string)) {
+            return include $string;
+        }
+
+        throw new Exception("Php file with array '{$string}' not found");
     }
 
     /**
@@ -63,6 +66,6 @@ class PHPArray extends Data
             'return ' . var_export($data, true) . ';',
         ];
 
-        return implode(Data::LE, $data);
+        return implode(self::LE, $data);
     }
 }

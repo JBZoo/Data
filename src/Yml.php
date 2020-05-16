@@ -1,4 +1,5 @@
 <?php
+
 /**
  * JBZoo Data
  *
@@ -32,7 +33,7 @@ class Yml extends Data
      */
     protected function encode($data)
     {
-        return Yaml::dump($data);
+        return Yaml::dump($data, 10, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK | Yaml::DUMP_NULL_AS_TILDE);
     }
 
     /**
