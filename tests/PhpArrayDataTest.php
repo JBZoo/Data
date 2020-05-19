@@ -1,8 +1,9 @@
 <?php
+
 /**
- * JBZoo Data
+ * JBZoo Toolbox - Data
  *
- * This file is part of the JBZoo CCK package.
+ * This file is part of the JBZoo Toolbox project.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *

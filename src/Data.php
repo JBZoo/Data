@@ -1,9 +1,9 @@
 <?php
 
 /**
- * JBZoo Data
+ * JBZoo Toolbox - Data
  *
- * This file is part of the JBZoo CCK package.
+ * This file is part of the JBZoo Toolbox project.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
@@ -13,8 +13,6 @@
  * @link       https://github.com/JBZoo/Data
  * @author     Denis Smetannikov <denis@jbzoo.com>
  */
-
-declare(strict_types=1);
 
 namespace JBZoo\Data;
 
@@ -33,7 +31,7 @@ class Data extends ArrayObject
 
     /**
      * Class constructor
-     * @param array|string $data The data array
+     * @param array|string|mixed $data The data array
      */
     public function __construct($data = [])
     {
@@ -208,7 +206,7 @@ class Data extends ArrayObject
     /**
      * Find a value also in nested arrays/objects
      * @param mixed $needle The value to search for
-     * @return string|false
+     * @return string|float|int|bool|null
      */
     public function search($needle)
     {

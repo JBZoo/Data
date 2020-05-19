@@ -12,22 +12,21 @@
         }
     ],
     "require"     : {
-        "php"      : ">=7.1",
+        "php"      : ">=7.2",
         "ext-json" : "*"
     },
 
     "require-dev" : {
-        "jbzoo/phpunit"               : "^3.0",
-        "jbzoo/utils"                 : "^3.0",
-        "jbzoo/profiler"              : "^1.0.5",
-        "symfony/yaml"                : "^4.4",
-        "php-coveralls/php-coveralls" : "^2.2",
-        "phpstan/phpstan"             : "^0.12.2"
+        "jbzoo/phpunit"   : "dev-master",
+        "jbzoo/codestyle" : "dev-master",
+        "jbzoo/utils"     : "^3.0||^4.0",
+        "jbzoo/profiler"  : "^1.0.5",
+        "symfony/yaml"    : "^4.0||^5.0"
     },
 
     "suggest"     : {
-        "symfony/yaml" : "^3.3|^4.4",
-        "jbzoo/utils"  : "^2.3.2|^3.0"
+        "symfony/yaml" : ">=4.4",
+        "jbzoo/utils"  : ">=3.0"
     },
 
     "autoload"    : {

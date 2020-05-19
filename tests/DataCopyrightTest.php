@@ -17,19 +17,21 @@
 namespace JBZoo\PHPUnit;
 
 /**
- * Class DataCodeStyleTest
+ * Class PHPUnitCopyrightTest
  *
  * @package JBZoo\PHPUnit
  */
-class DataCodeStyleTest extends AbstractCodestyleTest
+class DataCopyrightTest extends AbstractCopyrightTest
 {
     /**
      * @var string
      */
     protected $packageName = 'Data';
 
-    /**
-     * @var string
-     */
-    protected $packageAuthor = 'Denis Smetannikov <denis@jbzoo.com>';
+    protected function setUp(): void
+    {
+        $this->excludePaths[] = 'resource';
+
+        parent::setUp();
+    }
 }

@@ -11,78 +11,18 @@
 # @link       https://github.com/JBZoo/Data
 #
 
-.PHONY: build update test-all validate autoload test phpmd phpcs phpcpd phploc reset coveralls
+ifneq (, $(wildcard ./vendor/jbzoo/codestyle/src/init.Makefile))
+    include ./vendor/jbzoo/codestyle/src/init.Makefile
+endif
 
-build: update
 
-test-all:
-	@echo "\033[0;33m>>> >>> >>> >>> >>> >>> >>> >>> \033[0;30;46m Run all tests \033[0m"
-	@make validate test phpstan phpmd phpcs phpcpd phploc
+install: ##@Project Install all 3rd party dependencies
+	$(call title,"Install all 3rd party dependencies")
+	@composer install --optimize-autoloader
 
-update:
-	@echo "\033[0;33m>>> >>> >>> >>> >>> >>> >>> >>> \033[0;30;46m Update project \033[0m"
-	@composer update --optimize-autoloader --no-interaction
-	@echo ""
 
-validate:
-	@echo "\033[0;33m>>> >>> >>> >>> >>> >>> >>> >>> \033[0;30;46m Composer validate \033[0m"
-	@composer check-platform-reqs --no-interaction
-	@composer validate --no-interaction
-	@echo ""
-
-autoload:
-	@echo "\033[0;33m>>> >>> >>> >>> >>> >>> >>> >>> \033[0;30;46m Composer autoload \033[0m"
-	@composer dump-autoload --optimize --no-interaction
-	@echo ""
-
-test:
-	@echo "\033[0;33m>>> >>> >>> >>> >>> >>> >>> >>> \033[0;30;46m Run unit-tests \033[0m"
-	@php ./vendor/phpunit/phpunit/phpunit --configuration ./phpunit.xml.dist
-	@echo ""
-
-test-x:
-	@echo "\033[0;33m>>> >>> >>> >>> >>> >>> >>> >>> \033[0;30;46m Run unit-tests with XDebug \033[0m"
-	@php-x ./vendor/phpunit/phpunit/phpunit --configuration ./phpunit.xml.dist --verbose
-	@echo ""
-
-phpmd:
-	@echo "\033[0;33m>>> >>> >>> >>> >>> >>> >>> >>> \033[0;30;46m Check PHPmd \033[0m"
-	@php ./vendor/phpmd/phpmd/src/bin/phpmd ./src text codesize,controversial,design,naming,unusedcode
-
-phpcs:
-	@echo "\033[0;33m>>> >>> >>> >>> >>> >>> >>> >>> \033[0;30;46m Check Code Style \033[0m"
-	@php ./vendor/squizlabs/php_codesniffer/bin/phpcs ./src     \
-        --standard=PSR2                                         \
-        --report=full
-	@echo ""
-
-phpcpd:
-	@echo "\033[0;33m>>> >>> >>> >>> >>> >>> >>> >>> \033[0;30;46m Check Copy&Paste \033[0m"
-	@php ./vendor/sebastian/phpcpd/phpcpd ./src --verbose
-	@echo ""
-
-phploc:
-	@echo "\033[0;33m>>> >>> >>> >>> >>> >>> >>> >>> \033[0;30;46m Show stats \033[0m"
-	@php ./vendor/phploc/phploc/phploc ./src --verbose
-	@echo ""
-
-reset:
-	@echo "\033[0;33m>>> >>> >>> >>> >>> >>> >>> >>> \033[0;30;46m Hard reset \033[0m"
-	@git reset --hard
-
-clean:
-	@echo "\033[0;33m>>> >>> >>> >>> >>> >>> >>> >>> \033[0;30;46m Cleanup project \033[0m"
-	@rm -rf ./vendor/
-	@rm -f ./composer.lock
-
-coveralls:
-	@echo "\033[0;33m>>> >>> >>> >>> >>> >>> >>> >>> \033[0;30;46m Send coverage to coveralls.io \033[0m"
-	@php ./vendor/satooshi/php-coveralls/bin/coveralls --verbose
-	@echo ""
-
-phpstan: ## Check PHP code by PHPStan
-	@echo "$(C_AR)>>> >>> >>> >>> $(C_T) Checking by PHPStan $(CE)"
-	@php `pwd`/vendor/bin/phpstan analyse   \
-        --level=5                           \
-        --error-format=table                \
-        `pwd`/src
+test-all: ##@Project Run all project tests at once
+	@make test-composer
+	@make codestyle
+	@make report-phpqa
+	@make report-composer-graph

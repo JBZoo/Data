@@ -14,22 +14,19 @@
  * @author     Denis Smetannikov <denis@jbzoo.com>
  */
 
-namespace JBZoo\PHPUnit;
+$default = include __DIR__ . '/../vendor/jbzoo/codestyle/src/phan/default.php';
 
-/**
- * Class DataCodeStyleTest
- *
- * @package JBZoo\PHPUnit
- */
-class DataCodeStyleTest extends AbstractCodestyleTest
-{
-    /**
-     * @var string
-     */
-    protected $packageName = 'Data';
+return array_merge($default, [
+    'file_list' => [
+        'src/functions.php'
+    ],
 
-    /**
-     * @var string
-     */
-    protected $packageAuthor = 'Denis Smetannikov <denis@jbzoo.com>';
-}
+    'directory_list' => [
+        // project
+        'src',
+
+        // Libs
+        'vendor/jbzoo/utils',
+        'vendor/symfony/yaml',
+    ]
+]);
