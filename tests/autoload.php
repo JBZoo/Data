@@ -29,3 +29,5 @@ if ($autoload = realpath('./vendor/autoload.php')) {
 if ($fixturesPath = realpath(PROJECT_TESTS . '/fixtures.php')) {
     require_once PROJECT_TESTS . '/fixtures.php';
 }
+
+require_once './vendor/jbzoo/phpunit/src/functions/var-dumper.php';

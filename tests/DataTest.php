@@ -17,10 +17,17 @@
 namespace JBZoo\PHPunit;
 
 use JBZoo\Data\Data;
+use JBZoo\Data\Ini;
 use JBZoo\Data\JSON;
+use JBZoo\Data\PhpArray;
+use JBZoo\Data\Yml;
 use JBZoo\Utils\Sys;
 
+use function JBZoo\Data\data;
+use function JBZoo\Data\ini;
 use function JBZoo\Data\json;
+use function JBZoo\Data\phpArray;
+use function JBZoo\Data\yml;
 
 /**
  * Class DataTest
@@ -29,12 +36,15 @@ use function JBZoo\Data\json;
  */
 class DataTest extends PHPUnit
 {
-    protected $_test = [];
+    /**
+     * @var array
+     */
+    protected $test = [];
 
     protected function setUp(): void
     {
-        $this->_test = [
-            // simular
+        $this->test = [
+            // regular types
             'string-zero'     => '0',
             'string-empty'    => '',
             'string'          => 'qwerty',
@@ -99,13 +109,13 @@ class DataTest extends PHPUnit
 
     public function testCreate()
     {
-        $data = new Data($this->_test);
+        $data = new Data($this->test);
 
-        isClass('\IteratorAggregate', $data);
-        isClass('\ArrayAccess', $data);
-        isClass('\Serializable', $data);
-        isClass('\Countable', $data);
-        isClass('\ArrayObject', $data);
+        isClass(\IteratorAggregate::class, $data);
+        isClass(\ArrayAccess::class, $data);
+        isClass(\Serializable::class, $data);
+        isClass(\Countable::class, $data);
+        isClass(\ArrayObject::class, $data);
 
         isTrue(is_object($data)); // :)
         isFalse(is_array($data)); // :(
@@ -119,7 +129,7 @@ class DataTest extends PHPUnit
 
     public function testHas()
     {
-        $data = new Data($this->_test);
+        $data = new Data($this->test);
 
         isFalse($data->has('undefined'));
         isTrue($data->has('null'));
@@ -144,7 +154,7 @@ class DataTest extends PHPUnit
 
     public function testGet()
     {
-        $data = new Data($this->_test);
+        $data = new Data($this->test);
 
         is(10, $data->get('number'));
         is('qwerty', $data->get('string'));
@@ -163,19 +173,19 @@ class DataTest extends PHPUnit
     public function testSet()
     {
         // methods
-        $data = new Data($this->_test);
+        $data = new Data($this->test);
         is(10, $data->get('number'));
         $data->set('number', 'qqq');
         is('qqq', $data->get('number'));
 
         // like array
-        $data = new Data($this->_test);
+        $data = new Data($this->test);
         is(10, $data['number']);
         $data['number'] = 'qqq';
         is('qqq', $data['number']);
 
         // like object
-        $data = new Data($this->_test);
+        $data = new Data($this->test);
         is(10, $data->number);
         $data->number = 'qqq';
         is('qqq', $data->number);
@@ -183,7 +193,7 @@ class DataTest extends PHPUnit
 
     public function testFind()
     {
-        $data = new Data($this->_test);
+        $data = new Data($this->test);
         isSame(['sub' => 'sub-value', 'sub.sub' => 'sub-value-2'], $data->get('sub'));
         isSame(['sub' => 'sub-value', 'sub.sub' => 'sub-value-2'], $data->find('sub'));
         isNull($data->find('sub.sub.sub'));
@@ -210,7 +220,7 @@ class DataTest extends PHPUnit
 
     public function testRemove()
     {
-        $data = new Data($this->_test);
+        $data = new Data($this->test);
         is('qwerty', $data->get('string'));
         $data->remove('string');
         isFalse($data->has('string'));
@@ -219,34 +229,38 @@ class DataTest extends PHPUnit
 
     public function testIsset()
     {
-        $data = new Data($this->_test);
+        $data = new Data($this->test);
         isTrue(isset($data['string']));
         isFalse(isset($data['undefined']));
 
+        /** @noinspection MissingIssetImplementationInspection */
         isTrue(isset($data->string));
+        /** @noinspection MissingIssetImplementationInspection */
         isFalse(isset($data->undefined));
     }
 
     public function testEmpty()
     {
-        $data = new Data($this->_test);
+        $data = new Data($this->test);
         isFalse(empty($data['string']));
         isTrue(empty($data['undefined']));
 
+        /** @noinspection MissingIssetImplementationInspection */
         isFalse(empty($data->string));
+        /** @noinspection MissingIssetImplementationInspection */
         isTrue(empty($data->undefined));
     }
 
     public function testUnset()
     {
         // like object
-        $data = new Data($this->_test);
+        $data = new Data($this->test);
         is('qwerty', $data->get('string'));
         unset($data->string);
         isFalse($data->has('string'));
 
         // like array
-        $data = new Data($this->_test);
+        $data = new Data($this->test);
         is('qwerty', $data['string']);
         unset($data['string']);
         isFalse($data->has('string'));
@@ -255,7 +269,7 @@ class DataTest extends PHPUnit
     public function testSearch()
     {
         // like object
-        $data = new Data($this->_test);
+        $data = new Data($this->test);
         isFalse($data->search('q1w2e3'));
         is('nested.sub.qwerty', $data->search('ytrewq'));
     }
@@ -367,12 +381,13 @@ class DataTest extends PHPUnit
         if (Sys::isPHP('7.4')) {
             skip('Needs research around ArrayObject::ARRAY_AS_PROPS...');
         }
-        $data = new Data($this->_test);
+        $data = new Data($this->test);
         isTrue(count(get_object_vars($data)) > 0);
     }
 
     public function testFunctions()
     {
+        // General cases
         isClass(Data::class, json());
         isClass(Data::class, json(false));
         isClass(Data::class, json(null));
@@ -380,7 +395,7 @@ class DataTest extends PHPUnit
         isClass(Data::class, json([]));
         isClass(Data::class, json('{}'));
         isClass(Data::class, json('{"test":42}'));
-        isClass(Data::class, json($this->_test));
+        isClass(Data::class, json($this->test));
         isClass(Data::class, json(json()));
 
         isSame('[]', '' . json());
@@ -391,10 +406,41 @@ class DataTest extends PHPUnit
         isSame('[]', '' . json('{}'));
         //isSame('{"test":42}', '' . json('{"test":42}'));
         isSame('[]', '' . json(json()));
-
         isSame(42, json('{"test":42}')->get('test'));
 
         $origObj = new JSON();
         is($origObj, json($origObj));
+
+
+        // Similar functions
+        $stdObj = new \stdClass();
+        $stdObj->string = 'qwerty';
+
+        isSame('qwerty', data($this->test)->get('string'));
+        isSame('a:1:{s:4:"test";s:3:"123";}', (string)data(['test' => '123']));
+        isClass(Data::class, data(data()));
+        isClass(Data::class, data($stdObj));
+        isSame('qwerty', data($stdObj)->get('string'));
+
+
+        isSame('qwerty', phpArray($this->test)->get('string'));
+        isSame("<?php\n\nreturn array (\n  'test' => '123',\n);", (string)phpArray(['test' => '123']));
+        isClass(PhpArray::class, phpArray(phpArray()));
+        isClass(PhpArray::class, phpArray($stdObj));
+        isSame('qwerty', phpArray($stdObj)->get('string'));
+
+
+        isSame('qwerty', ini($this->test)->get('string'));
+        isSame('test = "123"', (string)ini(['test' => '123']));
+        isClass(Ini::class, ini(ini()));
+        isClass(Ini::class, ini($stdObj));
+        isSame('qwerty', ini($stdObj)->get('string'));
+
+
+        isSame('qwerty', yml($this->test)->get('string'));
+        isSame("test: '123'\n", (string)yml(['test' => '123']));
+        isClass(Yml::class, yml(yml()));
+        isClass(Yml::class, yml($stdObj));
+        isSame('qwerty', yml($stdObj)->get('string'));
     }
 }

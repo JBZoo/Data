@@ -17,11 +17,12 @@
     },
 
     "require-dev" : {
-        "jbzoo/phpunit"   : "dev-master",
-        "jbzoo/codestyle" : "dev-master",
-        "jbzoo/utils"     : "^3.0||^4.0",
-        "jbzoo/profiler"  : "^1.0.5",
-        "symfony/yaml"    : "^4.0||^5.0"
+        "jbzoo/phpunit"      : "dev-master",
+        "jbzoo/codestyle"    : "dev-master",
+        "jbzoo/utils"        : "^3.0||^4.0",
+        "jbzoo/profiler"     : "^1.0.5",
+        "symfony/yaml"       : "^4.0||^5.0",
+        "symfony/var-dumper" : ">=4.4"
     },
 
     "suggest"     : {
