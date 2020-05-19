@@ -31,7 +31,7 @@ class Data extends ArrayObject
 
     /**
      * Class constructor
-     * @param array|string|mixed $data The data array
+     * @param array|string|false $data The data array
      */
     public function __construct($data = [])
     {

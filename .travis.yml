@@ -23,15 +23,14 @@ php:
 jobs:
   fast_finish: true
   include:
-    - php: 7.4
-      env: XDEBUG_OFF="yes"
+    - env: XDEBUG_OFF="yes"
 
 before_script:
   - if [[ $XDEBUG_OFF = yes ]]; then phpenv config-rm xdebug.ini; fi;
 
 script:
-  - make
-  - make test-all
+  - make install  --no-print-directory
+  - make test-all --no-print-directory
 
 after_success:
-  - travis_retry php vendor/bin/php-coveralls -v
+  - make report-coveralls
