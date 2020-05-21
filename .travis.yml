@@ -20,17 +20,20 @@ php:
   - 7.3
   - 7.4
 
-jobs:
-  fast_finish: true
-  include:
-    - env: XDEBUG_OFF="yes"
+env:
+  matrix:
+    - JBZOO_COMPOSER_UPDATE_FLAGS="--prefer-lowest --prefer-stable"
+    - JBZOO_COMPOSER_UPDATE_FLAGS=""
+    - XDEBUG_OFF="yes"
 
 before_script:
+  - composer self-update
   - if [[ $XDEBUG_OFF = yes ]]; then phpenv config-rm xdebug.ini; fi;
+  - sudo apt update && sudo apt install graphviz
 
 script:
-  - make install  --no-print-directory
+  - make update   --no-print-directory
   - make test-all --no-print-directory
 
-after_success:
+after_script:
   - make report-coveralls

@@ -31,7 +31,6 @@ class JSON extends Data
      */
     protected function decode($string)
     {
-        /** @noinspection JsonEncodingApiUsageInspection */
         return json_decode($string, true);
     }
 
@@ -54,7 +53,6 @@ class JSON extends Data
      */
     protected function render($data)
     {
-        /** @noinspection JsonEncodingApiUsageInspection */
         return (string)json_encode($data, JSON_PRETTY_PRINT);
     }
 }

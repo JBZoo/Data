@@ -1,0 +1,35 @@
+{
+    "symbol-whitelist"    : [
+        "null",
+        "true",
+        "false",
+        "static",
+        "self",
+        "parent",
+        "array",
+        "string",
+        "int",
+        "float",
+        "bool",
+        "iterable",
+        "callable",
+        "void",
+        "object",
+        "Symfony\\Component\\Yaml\\Yaml",
+        "JBZoo\\Utils\\Filter"
+    ],
+    "php-core-extensions" : [
+        "Core",
+        "date",
+        "pcre",
+        "Phar",
+        "Reflection",
+        "SPL",
+        "standard"
+    ],
+    "scan-files"          : [
+        "bin/*.php",
+        "src/*.php",
+        "src/**/*.php"
+    ]
+}

@@ -27,9 +27,4 @@ class DataCodeStyleTest extends AbstractCodestyleTest
      * @var string
      */
     protected $packageName = 'Data';
-
-    /**
-     * @var string
-     */
-    protected $packageAuthor = 'Denis Smetannikov <denis@jbzoo.com>';
 }
