@@ -46,6 +46,6 @@ class IniDataTest extends PHPUnit
     public function testPropsVisible()
     {
         $data = new Ini(openFile($this->testFile));
-        isTrue(count(get_object_vars($data)) > 0);
+        isTrue(count((array)$data) > 0);
     }
 }

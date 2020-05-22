@@ -115,6 +115,6 @@ class JsonDataTest extends PHPUnit
     public function testPropsVisible()
     {
         $data = new JSON($this->test);
-        isTrue(count(get_object_vars($data)) > 0);
+        isTrue(count((array)$data) > 0);
     }
 }

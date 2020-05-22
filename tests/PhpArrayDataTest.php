@@ -38,7 +38,7 @@ class PhpArrayDataTest extends PHPUnit
     public function testPropsVisible()
     {
         $data = new PhpArray($this->testFile);
-        isTrue(count(get_object_vars($data)) > 0);
+        isTrue(count((array)$data) > 0);
     }
 
     public function testToString()
