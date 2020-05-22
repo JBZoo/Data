@@ -29,7 +29,7 @@ class JSON extends Data
      * @param string $string
      * @return mixed
      */
-    protected function decode($string)
+    protected function decode(string $string)
     {
         return json_decode($string, true);
     }

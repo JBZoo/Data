@@ -38,9 +38,5 @@
         "psr-4" : {
             "JBZoo\\Data\\" : "src"
         }
-    },
-
-    "config"      : {
-        "optimize-autoloader" : true
     }
 }

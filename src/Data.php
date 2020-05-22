@@ -42,7 +42,7 @@ class Data extends ArrayObject
         }
 
         if (is_string($data)) {
-            $data = $this->decode($data);
+            $data = $this->decode((string)$data);
         }
 
         parent::__construct($data ? (array)$data : []);
@@ -53,7 +53,7 @@ class Data extends ArrayObject
      * @param string $string
      * @return mixed
      */
-    protected function decode($string)
+    protected function decode(string $string)
     {
         /** @noinspection UnserializeExploitsInspection */
         return unserialize($string, []);

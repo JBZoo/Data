@@ -29,7 +29,7 @@ class Ini extends Data
      * @param string $string
      * @return mixed
      */
-    protected function decode($string)
+    protected function decode(string $string)
     {
         return parse_ini_string($string, true, INI_SCANNER_NORMAL);
     }

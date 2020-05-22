@@ -43,7 +43,7 @@ class PhpArray extends Data
      * @param string $string
      * @return mixed
      */
-    protected function decode($string)
+    protected function decode(string $string)
     {
         if (file_exists($string)) {
             return include $string;
