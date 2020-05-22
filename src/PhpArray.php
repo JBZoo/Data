@@ -48,8 +48,6 @@ class PhpArray extends Data
         if (file_exists($string)) {
             return include $string;
         }
-
-        throw new Exception("Php file with array '{$string}' not found");
     }
 
     /**

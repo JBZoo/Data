@@ -42,7 +42,7 @@ class Data extends ArrayObject
         }
 
         if (is_string($data)) {
-            $data = $this->decode((string)$data);
+            $data = $this->decode($data);
         }
 
         parent::__construct($data ? (array)$data : []);

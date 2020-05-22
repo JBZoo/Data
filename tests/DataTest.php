@@ -21,7 +21,6 @@ use JBZoo\Data\Ini;
 use JBZoo\Data\JSON;
 use JBZoo\Data\PhpArray;
 use JBZoo\Data\Yml;
-use JBZoo\Utils\Sys;
 
 use function JBZoo\Data\data;
 use function JBZoo\Data\ini;
@@ -307,28 +306,14 @@ class DataTest extends PHPUnit
 
     public function testNoNotice()
     {
-        $data = new Data([
-            'some_value' => 1,
-        ]);
+        $data = new Data(['some_value' => 1]);
 
         // Methods
         isSame(null, $data->find('qwerty'));
         isSame(null, $data->find('qwerty.qwerty'));
         isSame(null, $data->get('qwerty'));
         isSame(null, $data->get('qwerty.qwerty'));
-
-        if (Sys::isPHP('7.4')) {
-            skip('Needs to redesign method offsetGet() for PHP 7.4');
-        } else {
-            // like object
-            isSame(null, $data->qwerty);
-            isSame(null, $data->qwerty['qwerty']);
-
-            // like array
-            isSame(null, $data['qwerty']);
-            isSame(null, $data['qwerty']['qwerty']);
-            isSame(null, $data['qwerty']['qwerty']['qwerty']['qwerty']);
-        }
+        isSame(null, $data->qwerty);
     }
 
     public function testIs()
@@ -378,11 +363,8 @@ class DataTest extends PHPUnit
 
     public function testPropsVisible()
     {
-        if (Sys::isPHP('7.4')) {
-            skip('Needs research around ArrayObject::ARRAY_AS_PROPS...');
-        }
         $data = new Data($this->test);
-        isTrue(count(get_object_vars($data)) > 0);
+        isTrue(count((array)$data) > 0);
     }
 
     public function testFunctions()
