@@ -41,7 +41,7 @@ class PhpArray extends Data
      * Utility Method to unserialize the given data
      *
      * @param string $string
-     * @return mixed
+     * @return mixed|null
      */
     protected function decode(string $string)
     {
