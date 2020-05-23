@@ -27,10 +27,16 @@ use JBZoo\Utils\Sys;
  */
 class BenchmarkTest extends PHPUnit
 {
+    private $iterations = 1000000;
+
     protected $data = [];
 
     protected function setUp(): void
     {
+        if (Sys::hasXdebug()) {
+            skip('Xdebug is enabled. Test is skipped');
+        }
+
         $data = [
             'prop'  => uniqid('', true),
             'prop1' => uniqid('', true),
@@ -87,7 +93,7 @@ class BenchmarkTest extends PHPUnit
                 $var = new \ArrayObjectExt($array);
                 return $var;
             },
-        ], ['name' => 'Create var', 'count' => 1000000]);
+        ], ['name' => 'Create var', 'count' => $this->iterations]);
         isTrue(true);
     }
 
@@ -145,7 +151,7 @@ class BenchmarkTest extends PHPUnit
             'Data::offsetGet'           => function () use ($data) {
                 return $data->offsetGet('prop');
             },
-        ], ['name' => 'Get defined var', 'count' => 1000000]);
+        ], ['name' => 'Get defined var', 'count' => $this->iterations]);
 
         isTrue(true);
     }
@@ -189,7 +195,7 @@ class BenchmarkTest extends PHPUnit
             'Data::find'            => function () use ($data) {
                 return $data->find('inner.inner.prop');
             },
-        ], ['name' => 'Get inner var', 'count' => 1000000]);
+        ], ['name' => 'Get inner var', 'count' => $this->iterations]);
 
         isTrue(true);
     }
@@ -248,7 +254,7 @@ class BenchmarkTest extends PHPUnit
             'Data::offsetGet@'           => function () use ($data) {
                 return @$data->offsetGet('undefined');
             },
-        ], ['name' => 'Get undefined var', 'count' => 1000000]);
+        ], ['name' => 'Get undefined var', 'count' => $this->iterations]);
 
         isTrue(true);
     }
@@ -256,7 +262,7 @@ class BenchmarkTest extends PHPUnit
 
     public function testForReadme()
     {
-        $times = 1000000;
+        $times = $this->iterations;
         $this->data = [
             'prop'  => uniqid('', true),
             'prop1' => uniqid('', true),
