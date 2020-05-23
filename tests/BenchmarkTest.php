@@ -87,7 +87,7 @@ class BenchmarkTest extends PHPUnit
                 $var = new \ArrayObjectExt($array);
                 return $var;
             },
-        ], ['name' => 'Create var', 'count' => 10000]);
+        ], ['name' => 'Create var', 'count' => 1000000]);
         isTrue(true);
     }
 
@@ -145,7 +145,7 @@ class BenchmarkTest extends PHPUnit
             'Data::offsetGet'           => function () use ($data) {
                 return $data->offsetGet('prop');
             },
-        ], ['name' => 'Get defined var', 'count' => 10000]);
+        ], ['name' => 'Get defined var', 'count' => 1000000]);
 
         isTrue(true);
     }
@@ -168,18 +168,6 @@ class BenchmarkTest extends PHPUnit
             'Array::isset'          => function () use ($array) {
                 return $array['inner']['inner']['prop'] ?? null;
             },
-            //'Array::array_key_exists' => function () use ($array) {
-            //
-            //    if (array_key_exists('inner', $array)) {
-            //        if (array_key_exists('inner', $array['inner'])) {
-            //            if (array_key_exists('prop', $array['inner']['inner'])) {
-            //                return $array['inner']['inner']['prop'];
-            //            }
-            //        }
-            //    }
-            //
-            //    return null;
-            //},
 
             // ArrayObject
             'ArrayObject::array'    => function () use ($arrObj) {
@@ -201,7 +189,7 @@ class BenchmarkTest extends PHPUnit
             'Data::find'            => function () use ($data) {
                 return $data->find('inner.inner.prop');
             },
-        ], ['name' => 'Get inner var', 'count' => 10000]);
+        ], ['name' => 'Get inner var', 'count' => 1000000]);
 
         isTrue(true);
     }
@@ -260,7 +248,7 @@ class BenchmarkTest extends PHPUnit
             'Data::offsetGet@'           => function () use ($data) {
                 return @$data->offsetGet('undefined');
             },
-        ], ['name' => 'Get undefined var', 'count' => 10000]);
+        ], ['name' => 'Get undefined var', 'count' => 1000000]);
 
         isTrue(true);
     }
@@ -268,7 +256,7 @@ class BenchmarkTest extends PHPUnit
 
     public function testForReadme()
     {
-        $times = 10000;
+        $times = 1000000;
         $this->data = [
             'prop'  => uniqid('', true),
             'prop1' => uniqid('', true),

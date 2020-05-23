@@ -403,6 +403,7 @@ class DataTest extends PHPUnit
         isClass(Data::class, data(data()));
         isClass(Data::class, data($stdObj));
         isSame('qwerty', data($stdObj)->get('string'));
+        isSame('123', data('a:1:{s:4:"test";s:3:"123";}')->get('test'));
 
 
         isSame('qwerty', phpArray($this->test)->get('string'));
@@ -410,6 +411,7 @@ class DataTest extends PHPUnit
         isClass(PhpArray::class, phpArray(phpArray()));
         isClass(PhpArray::class, phpArray($stdObj));
         isSame('qwerty', phpArray($stdObj)->get('string'));
+        isSame('localhost', phpArray('./tests/resource/data.inc')->get('host'));
 
 
         isSame('qwerty', ini($this->test)->get('string'));
