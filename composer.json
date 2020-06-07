@@ -1,42 +1,49 @@
 {
-    "name"        : "jbzoo/data",
-    "type"        : "library",
-    "description" : "Extended implementation of ArrayObject",
-    "license"     : "MIT",
-    "keywords"    : ["ArrayObject", "Array", "Config", "Data", "ini", "yml", "params", "json"],
-    "authors"     : [
+    "name"              : "jbzoo/data",
+    "type"              : "library",
+    "description"       : "Extended implementation of ArrayObject",
+    "license"           : "MIT",
+    "keywords"          : ["ArrayObject", "Array", "Config", "Data", "ini", "yml", "params", "json"],
+    "authors"           : [
         {
             "name"  : "Denis Smetannikov",
             "email" : "admin@jbzoo.com",
             "role"  : "lead"
         }
     ],
-    "require"     : {
+    "require"           : {
         "php"      : "^7.2",
         "ext-json" : "*"
     },
 
-    "require-dev" : {
-        "jbzoo/phpunit"             : "dev-master",
-        "jbzoo/codestyle"           : "dev-master",
-        "jbzoo/utils"               : "^3.1.2||^4.0",
-        "jbzoo/profiler"            : "^1.0.5",
-        "symfony/yaml"              : "^4.4||^5.0",
-        "symfony/var-dumper"        : "^4.4||^5.0",
-        "roave/security-advisories" : "dev-master"
+    "require-dev"       : {
+        "jbzoo/toolbox-dev" : "1.1.x-dev",
+        "jbzoo/utils"       : "^3.1.2||^4.0",
+        "symfony/yaml"      : "^4.4||^5.0"
     },
 
-    "suggest"     : {
+    "suggest"           : {
         "symfony/yaml" : ">=4.4",
         "jbzoo/utils"  : ">=3.0"
     },
 
-    "autoload"    : {
+    "autoload"          : {
         "files" : [
             "src/functions.php"
         ],
         "psr-4" : {
             "JBZoo\\Data\\" : "src"
         }
+    },
+
+    "minimum-stability" : "dev",
+    "prefer-stable"     : true,
+
+    "autoload-dev"      : {
+        "classmap" : ["tests"]
+    },
+
+    "config"            : {
+        "optimize-autoloader" : true
     }
 }
