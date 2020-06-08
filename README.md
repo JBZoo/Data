@@ -236,7 +236,7 @@ Example of serializing the `Data` object
 a:7:{s:5:"empty";s:0:"";s:4:"zero";s:1:"0";s:6:"string";s:1:" ";s:3:"tag";s:42:"<a href="http://google.com">Google.com</a>";s:6:"array1";a:2:{i:0;s:1:"1";i:1;s:1:"2";}s:7:"section";a:1:{s:6:"array2";a:3:{i:0;s:1:"1";i:12;s:1:"2";i:3;s:1:"3";}}s:14:"section.nested";a:1:{s:6:"array3";a:2:{s:2:"00";s:1:"0";s:2:"01";s:1:"1";}}}
 ```
 
-## Overhead on PHP 5.6.x
+## Summary benchmark info (execution time) PHP v7.4.0
 All benchmark tests are executing without xdebug and with a huge random array and 100.000 iterations.
 
 Benchmark tests based on the tool [phpbench/phpbench](https://github.com/phpbench/phpbench). See details [here](tests/phpbench).   
@@ -244,62 +244,60 @@ Benchmark tests based on the tool [phpbench/phpbench](https://github.com/phpbenc
 Please, pay attention - `1μs = 1/1.000.000 of second!`
 
 **benchmark: CreateObject**
-
 subject | groups | its | revs | mean | stdev | rstdev | mem_real | diff
  --- | --- | --- | --- | --- | --- | --- | --- | --- 
-benchArrayObjectExtOrig | Native,ArrayObject,Extended | 3 | 100000 | 6.84μs | 0.05μs | 0.68% | 8,388,608b | 1.00x
-benchDataFunc | Data,Func | 3 | 100000 | 6.92μs | 0.09μs | 1.30% | 8,388,608b | 1.01x
-benchArrayObjectOrig | Native,ArrayObject | 3 | 100000 | 7.01μs | 0.27μs | 3.80% | 8,388,608b | 1.03x
-benchYmlFunc | Yml,Func | 3 | 100000 | 7.02μs | 0.13μs | 1.91% | 8,388,608b | 1.03x
-benchYml | Yml | 3 | 100000 | 7.05μs | 0.17μs | 2.36% | 8,388,608b | 1.03x
-benchData | Data | 3 | 100000 | 7.16μs | 0.13μs | 1.84% | 8,388,608b | 1.05x
-benchPhpArray | PhpArray | 3 | 100000 | 7.35μs | 0.07μs | 0.96% | 8,388,608b | 1.07x
-benchPhpArrayFunc | PhpArray,Func | 3 | 100000 | 7.52μs | 0.20μs | 2.61% | 8,388,608b | 1.10x
-benchJson | JSON | 3 | 100000 | 7.57μs | 0.47μs | 6.25% | 8,388,608b | 1.11x
-benchJsonFunc | JSON,Func | 3 | 100000 | 7.85μs | 0.58μs | 7.33% | 8,388,608b | 1.15x
-benchIniFunc | Ini,Func | 3 | 100000 | 7.88μs | 0.37μs | 4.71% | 8,388,608b | 1.15x
-benchIni | Ini | 3 | 100000 | 8.26μs | 0.00μs | 0.03% | 8,388,608b | 1.21x
+benchArrayObjectOrig | Native,ArrayObject | 3 | 100000 | 7.30μs | 0.01μs | 0.18% | 8,388,608b | 1.00x
+benchArrayObjectExtOrig | Native,ArrayObject,Extended | 3 | 100000 | 7.43μs | 0.05μs | 0.66% | 8,388,608b | 1.02x
+benchJson | JSON | 3 | 100000 | 7.55μs | 0.01μs | 0.15% | 8,388,608b | 1.03x
+benchIni | Ini | 3 | 100000 | 7.55μs | 0.01μs | 0.15% | 8,388,608b | 1.03x
+benchData | Data | 3 | 100000 | 7.57μs | 0.03μs | 0.41% | 8,388,608b | 1.04x
+benchIniFunc | Ini,Func | 3 | 100000 | 7.62μs | 0.01μs | 0.10% | 8,388,608b | 1.04x
+benchDataFunc | Data,Func | 3 | 100000 | 7.63μs | 0.01μs | 0.19% | 8,388,608b | 1.05x
+benchYml | Yml | 3 | 100000 | 7.63μs | 0.10μs | 1.36% | 8,388,608b | 1.05x
+benchJsonFunc | JSON,Func | 3 | 100000 | 7.64μs | 0.01μs | 0.11% | 8,388,608b | 1.05x
+benchPhpArray | PhpArray | 3 | 100000 | 7.65μs | 0.03μs | 0.44% | 8,388,608b | 1.05x
+benchYmlFunc | Yml,Func | 3 | 100000 | 7.70μs | 0.05μs | 0.60% | 8,388,608b | 1.05x
+benchPhpArrayFunc | PhpArray,Func | 3 | 100000 | 7.75μs | 0.06μs | 0.72% | 8,388,608b | 1.06x
+
 
 **benchmark: GetUndefinedValue**
-
 subject | groups | its | revs | mean | stdev | rstdev | mem_real | diff
  --- | --- | --- | --- | --- | --- | --- | --- | --- 
-benchArrayIsset | Native,Array,Undefined | 3 | 1000000 | 0.04μs | 0.00μs | 0.24% | 8,388,608b | 1.00x
-benchDataOffsetGet | Data,Undefined | 3 | 1000000 | 0.12μs | 0.00μs | 0.45% | 8,388,608b | 2.70x
-benchDataArray | Data,Undefined | 3 | 1000000 | 0.14μs | 0.00μs | 0.73% | 8,388,608b | 3.04x
-benchDataArrow | Data,Undefined | 3 | 1000000 | 0.14μs | 0.00μs | 0.31% | 8,388,608b | 3.16x
-benchDataGet | Data,Undefined | 3 | 1000000 | 0.15μs | 0.00μs | 0.48% | 8,388,608b | 3.32x
-benchArrayRegularMuted | Native,Array,Undefined | 3 | 1000000 | 0.30μs | 0.01μs | 2.91% | 8,388,608b | 6.64x
-benchDataFind | Data,Undefined | 3 | 1000000 | 0.38μs | 0.00μs | 0.17% | 8,388,608b | 8.59x
-benchDataFindInner | Data,Undefined | 3 | 1000000 | 0.43μs | 0.01μs | 1.28% | 8,388,608b | 9.57x
+benchArrayIsset | Native,Array,Undefined | 3 | 1000000 | 0.04μs | 0.00μs | 1.48% | 8,388,608b | 1.00x
+benchDataOffsetGet | Data,Undefined | 3 | 1000000 | 0.11μs | 0.00μs | 0.41% | 8,388,608b | 2.88x
+benchDataGet | Data,Undefined | 3 | 1000000 | 0.14μs | 0.00μs | 0.39% | 8,388,608b | 3.56x
+benchDataArray | Data,Undefined | 3 | 1000000 | 0.14μs | 0.00μs | 0.08% | 8,388,608b | 3.72x
+benchDataArrow | Data,Undefined | 3 | 1000000 | 0.15μs | 0.00μs | 0.34% | 8,388,608b | 3.86x
+benchArrayRegularMuted | Native,Array,Undefined | 3 | 1000000 | 0.19μs | 0.00μs | 0.04% | 8,388,608b | 4.99x
+benchDataFind | Data,Undefined | 3 | 1000000 | 0.37μs | 0.00μs | 0.11% | 8,388,608b | 9.69x
+benchDataFindInner | Data,Undefined | 3 | 1000000 | 0.41μs | 0.00μs | 0.14% | 8,388,608b | 10.86x
+
 
 **benchmark: GetValue**
-
 subject | groups | its | revs | mean | stdev | rstdev | mem_real | diff
  --- | --- | --- | --- | --- | --- | --- | --- | --- 
-benchArrayIsset | Native,Array | 3 | 1000000 | 0.05μs | 0.00μs | 1.94% | 8,388,608b | 1.00x
-benchArrayObjectArrayExt | Native,ArrayObject,Extended | 3 | 1000000 | 0.05μs | 0.00μs | 0.48% | 8,388,608b | 1.00x
-benchArrayRegular | Native,Array | 3 | 1000000 | 0.05μs | 0.00μs | 1.70% | 8,388,608b | 1.02x
-benchArrayRegularMuted | Native,Array | 3 | 1000000 | 0.05μs | 0.00μs | 2.12% | 8,388,608b | 1.04x
-benchArrayObjectArray | Native,ArrayObject | 3 | 1000000 | 0.06μs | 0.00μs | 5.24% | 8,388,608b | 1.10x
-benchArrayObjectExtOffsetGet | Native,ArrayObject,Extended | 3 | 1000000 | 0.08μs | 0.00μs | 1.41% | 8,388,608b | 1.55x
-benchArrayObjectOffsetGet | Native,ArrayObject | 3 | 1000000 | 0.08μs | 0.00μs | 4.92% | 8,388,608b | 1.59x
-benchDataArray | Data | 3 | 1000000 | 0.20μs | 0.00μs | 1.28% | 8,388,608b | 3.94x
-benchDataArrow | Data | 3 | 1000000 | 0.20μs | 0.00μs | 2.10% | 8,388,608b | 4.00x
-benchDataOffsetGet | Data | 3 | 1000000 | 0.21μs | 0.00μs | 0.34% | 8,388,608b | 4.07x
-benchDataGet | Data | 3 | 1000000 | 0.32μs | 0.00μs | 0.79% | 8,388,608b | 6.26x
-benchDataFind | Data | 3 | 1000000 | 0.40μs | 0.02μs | 5.48% | 8,388,608b | 7.90x
+benchArrayRegular | Native,Array | 3 | 1000000 | 0.04μs | 0.00μs | 5.02% | 8,388,608b | 1.00x
+benchArrayRegularMuted | Native,Array | 3 | 1000000 | 0.04μs | 0.00μs | 1.40% | 8,388,608b | 1.06x
+benchArrayIsset | Native,Array | 3 | 1000000 | 0.04μs | 0.00μs | 2.04% | 8,388,608b | 1.07x
+benchArrayObjectArray | Native,ArrayObject | 3 | 1000000 | 0.05μs | 0.00μs | 1.07% | 8,388,608b | 1.14x
+benchArrayObjectArrayExt | Native,ArrayObject,Extended | 3 | 1000000 | 0.05μs | 0.00μs | 0.24% | 8,388,608b | 1.19x
+benchArrayObjectOffsetGet | Native,ArrayObject | 3 | 1000000 | 0.07μs | 0.00μs | 1.35% | 8,388,608b | 1.77x
+benchArrayObjectExtOffsetGet | Native,ArrayObject,Extended | 3 | 1000000 | 0.08μs | 0.00μs | 0.23% | 8,388,608b | 1.86x
+benchDataOffsetGet | Data | 3 | 1000000 | 0.16μs | 0.00μs | 0.28% | 8,388,608b | 4.01x
+benchDataArray | Data | 3 | 1000000 | 0.20μs | 0.00μs | 0.17% | 8,388,608b | 4.96x
+benchDataArrow | Data | 3 | 1000000 | 0.21μs | 0.00μs | 0.21% | 8,388,608b | 5.07x
+benchDataGet | Data | 3 | 1000000 | 0.28μs | 0.00μs | 0.21% | 8,388,608b | 6.95x
+benchDataFind | Data | 3 | 1000000 | 0.35μs | 0.00μs | 0.65% | 8,388,608b | 8.52x
 
 **benchmark: GetValueInner**
-
 subject | groups | its | revs | mean | stdev | rstdev | mem_real | diff
  --- | --- | --- | --- | --- | --- | --- | --- | --- 
-benchArrayIsset | Native,Array | 3 | 1000000 | 0.06μs | 0.00μs | 1.10% | 8,388,608b | 1.00x
-benchArrayObjectArrayExt | Native,ArrayObject,Extended | 3 | 1000000 | 0.07μs | 0.00μs | 1.57% | 8,388,608b | 1.06x
-benchArrayObjectArray | Native,ArrayObject | 3 | 1000000 | 0.07μs | 0.00μs | 0.33% | 8,388,608b | 1.07x
-benchArrayRegularMuted | Native,Array | 3 | 1000000 | 0.07μs | 0.00μs | 6.74% | 8,388,608b | 1.08x
-benchArrayRegular | Native,Array | 3 | 1000000 | 0.07μs | 0.00μs | 0.69% | 8,388,608b | 1.12x
-benchDataFind | Data | 3 | 1000000 | 0.76μs | 0.01μs | 1.67% | 8,388,608b | 11.89x
+benchArrayRegular | Native,Array | 3 | 1000000 | 0.05μs | 0.00μs | 0.23% | 8,388,608b | 1.00x
+benchArrayRegularMuted | Native,Array | 3 | 1000000 | 0.06μs | 0.00μs | 0.86% | 8,388,608b | 1.06x
+benchArrayIsset | Native,Array | 3 | 1000000 | 0.06μs | 0.00μs | 0.27% | 8,388,608b | 1.08x
+benchArrayObjectArrayExt | Native,ArrayObject,Extended | 3 | 1000000 | 0.06μs | 0.00μs | 0.76% | 8,388,608b | 1.14x
+benchArrayObjectArray | Native,ArrayObject | 3 | 1000000 | 0.07μs | 0.00μs | 1.39% | 8,388,608b | 1.22x
+benchDataFind | Data | 3 | 1000000 | 0.81μs | 0.01μs | 1.06% | 8,388,608b | 15.22x
 
 
 ## Unit tests and check code style
