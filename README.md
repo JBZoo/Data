@@ -302,7 +302,7 @@ benchDataFind | Data | 3 | 1000000 | 0.81μs | 0.01μs | 1.06% | 8,388,608b | 15
 
 ## Unit tests and check code style
 ```sh
-make
+make update
 make test-all
 ```
 
