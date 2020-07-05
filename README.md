@@ -1,11 +1,11 @@
-# JBZoo Data  [![Build Status](https://travis-ci.org/JBZoo/Data.svg?branch=master)](https://travis-ci.org/JBZoo/Data) [![Coverage Status](https://coveralls.io/repos/JBZoo/Data/badge.svg?branch=master&service=github)](https://coveralls.io/github/JBZoo/Data?branch=master)
-
+# JBZoo / Data
+  
 Extended implementation of [ArrayObject](http://php.net/manual/en/class.arrayobject.php).
 
 Really useful objects for any config in your system (write, read, store, change, validate, convert to other format and etc).
 
-[![License](https://poser.pugx.org/JBZoo/Data/license)](https://packagist.org/packages/JBZoo/Data)
-[![Latest Stable Version](https://poser.pugx.org/JBZoo/Data/v/stable)](https://packagist.org/packages/JBZoo/Data) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/JBZoo/Data/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/JBZoo/Data/?branch=master)
+[![Build Status](https://travis-ci.org/JBZoo/Data.svg?branch=master)](https://travis-ci.org/JBZoo/Data)    [![Coverage Status](https://coveralls.io/repos/JBZoo/Data/badge.svg)](https://coveralls.io/github/JBZoo/Data?branch=master)    [![Psalm Coverage](https://shepherd.dev/github/JBZoo/Data/coverage.svg)](https://shepherd.dev/github/JBZoo/Data)    
+[![Latest Stable Version](https://poser.pugx.org/JBZoo/Data/v)](https://packagist.org/packages/JBZoo/Data)    [![Latest Unstable Version](https://poser.pugx.org/JBZoo/Data/v/unstable)](https://packagist.org/packages/JBZoo/Data)    [![Dependents](https://poser.pugx.org/JBZoo/Data/dependents)](https://packagist.org/packages/JBZoo/Data/dependents?order_by=downloads)    [![GitHub Issues](https://img.shields.io/github/issues/JBZoo/Data)](https://github.com/JBZoo/Data/issues)    [![Total Downloads](https://poser.pugx.org/JBZoo/Data/downloads)](https://packagist.org/packages/JBZoo/Data/stats)    [![GitHub License](https://img.shields.io/github/license/JBZoo/Data)](https://github.com/JBZoo/Data/blob/master/LICENSE)
 
 ## Install
 ```sh
