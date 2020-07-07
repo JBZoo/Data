@@ -35,23 +35,12 @@ class JSON extends Data
     }
 
     /**
-     * Utility Method to unserialize the given data
+     * Does the real json encoding adding human readability. Supports automatic indenting with tabs
      *
      * @param mixed $data
      * @return string
      */
-    protected function encode($data)
-    {
-        return $this->render($data);
-    }
-
-    /**
-     * Do the real json encoding adding human readability. Supports automatic indenting with tabs
-     *
-     * @param array|object $data The array or object to encode in json
-     * @return string
-     */
-    protected function render($data)
+    protected function encode($data): string
     {
         return (string)json_encode($data, JSON_PRETTY_PRINT);
     }

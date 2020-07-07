@@ -38,7 +38,7 @@ class Data extends ArrayObject
         $this->setFlags(ArrayObject::ARRAY_AS_PROPS);
 
         if ($data && is_string($data) && file_exists($data)) {
-            $data = $this->readFile($data);
+            $data = self::readFile($data);
         }
 
         if (is_string($data)) {
@@ -74,7 +74,7 @@ class Data extends ArrayObject
      * @param string $name The key to check
      * @return boolean
      */
-    public function has($name)
+    public function has(string $name): bool
     {
         return $this->offsetExists($name);
     }
@@ -86,14 +86,14 @@ class Data extends ArrayObject
      * @param mixed  $filter  Filter returned value
      * @return mixed
      */
-    public function get($key, $default = null, $filter = null)
+    public function get(string $key, $default = null, $filter = null)
     {
         $result = $default;
         if ($this->has($key)) {
             $result = $this->offsetGet($key);
         }
 
-        return $this->filter($result, $filter);
+        return self::filter($result, $filter);
     }
 
     /**
@@ -102,7 +102,7 @@ class Data extends ArrayObject
      * @param mixed  $value The value to set
      * @return $this
      */
-    public function set($name, $value)
+    public function set(string $name, $value)
     {
         $this->offsetSet($name, $value);
         return $this;
@@ -113,7 +113,7 @@ class Data extends ArrayObject
      * @param string $name The key of the data to remove
      * @return $this
      */
-    public function remove($name)
+    public function remove(string $name): self
     {
         if ($this->has($name)) {
             $this->offsetUnset($name);
@@ -137,7 +137,7 @@ class Data extends ArrayObject
      * Encode an array or an object in INI format
      * @return string
      */
-    public function write()
+    public function write(): string
     {
         return $this->encode($this->getArrayCopy());
     }
@@ -154,13 +154,13 @@ class Data extends ArrayObject
      * @param string $separator The separator to use when searching for sub keys. Default is '.'
      * @return mixed
      */
-    public function find($key, $default = null, $filter = null, $separator = '.')
+    public function find(string $key, $default = null, $filter = null, string $separator = '.')
     {
         $value = $this->get($key);
 
         // check if key exists in array
         if (null !== $value) {
-            return $this->filter($value, $filter);
+            return self::filter($value, $filter);
         }
 
         // explode search key and init search data
@@ -180,11 +180,11 @@ class Data extends ArrayObject
                 continue;
             }
 
-            return $this->filter($default, $filter);
+            return self::filter($default, $filter);
         }
 
         // return existing value
-        return $this->filter($data, $filter);
+        return self::filter($data, $filter);
     }
 
     /**
@@ -194,7 +194,7 @@ class Data extends ArrayObject
      * @param mixed $filter
      * @return mixed
      */
-    protected function filter($value, $filter)
+    protected static function filter($value, $filter)
     {
         if (null !== $filter) {
             $value = Filter::_($value, $filter);
@@ -230,7 +230,7 @@ class Data extends ArrayObject
      * Return flattened array copy. Keys are <b>NOT</b> preserved.
      * @return array
      */
-    public function flattenRecursive()
+    public function flattenRecursive(): array
     {
         $flat = [];
 
@@ -245,7 +245,7 @@ class Data extends ArrayObject
      * @param string $filePath
      * @return string|false
      */
-    protected function readFile($filePath)
+    protected static function readFile(string $filePath)
     {
         $contents = false;
 
@@ -261,7 +261,7 @@ class Data extends ArrayObject
      * @param array $array
      * @return bool
      */
-    protected function isMulti($array)
+    protected static function isMulti(array $array): bool
     {
         $arrayCount = array_filter($array, '\is_array');
         return count($arrayCount) > 0;
@@ -290,7 +290,7 @@ class Data extends ArrayObject
      *
      * @SuppressWarnings(PHPMD.ShortMethodName)
      */
-    public function is($key, $compareWith = true, $strictMode = false)
+    public function is(string $key, $compareWith = true, bool $strictMode = false): bool
     {
         if (strpos($key, '.') === false) {
             $value = $this->get($key);

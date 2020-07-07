@@ -48,12 +48,12 @@ class Ini extends Data
      * @param array $parent
      * @return string
      */
-    protected function render(array $data = [], array $parent = [])
+    protected function render(array $data = [], array $parent = []): string
     {
         $result = [];
         foreach ($data as $dataKey => $dataValue) {
             if (is_array($dataValue)) {
-                if ($this->isMulti($dataValue)) {
+                if (self::isMulti($dataValue)) {
                     $sections = array_merge($parent, (array)$dataKey);
                     $result[] = '';
                     $result[] = '[' . implode('.', $sections) . ']';
