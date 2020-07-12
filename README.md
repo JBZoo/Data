@@ -7,83 +7,90 @@ Really useful objects for any config in your system (write, read, store, change,
 [![Build Status](https://travis-ci.org/JBZoo/Data.svg?branch=master)](https://travis-ci.org/JBZoo/Data)    [![Coverage Status](https://coveralls.io/repos/JBZoo/Data/badge.svg)](https://coveralls.io/github/JBZoo/Data?branch=master)    [![Psalm Coverage](https://shepherd.dev/github/JBZoo/Data/coverage.svg)](https://shepherd.dev/github/JBZoo/Data)    
 [![Latest Stable Version](https://poser.pugx.org/JBZoo/Data/v)](https://packagist.org/packages/JBZoo/Data)    [![Latest Unstable Version](https://poser.pugx.org/JBZoo/Data/v/unstable)](https://packagist.org/packages/JBZoo/Data)    [![Dependents](https://poser.pugx.org/JBZoo/Data/dependents)](https://packagist.org/packages/JBZoo/Data/dependents?order_by=downloads)    [![GitHub Issues](https://img.shields.io/github/issues/JBZoo/Data)](https://github.com/JBZoo/Data/issues)    [![Total Downloads](https://poser.pugx.org/JBZoo/Data/downloads)](https://packagist.org/packages/JBZoo/Data/stats)    [![GitHub License](https://img.shields.io/github/license/JBZoo/Data)](https://github.com/JBZoo/Data/blob/master/LICENSE)
 
-## Install
+
+## Installation
 ```sh
-composer require jbzoo/data            # Stable version
+composer require jbzoo/data
 ```
 
-
-## Comparing the useful for every day
-| Action | JBZoo/Data (ArrayObject)  | Simple PHP Array |
-| ------------- | ------------- | ------------- |
-| Create  | `$d = new Data($someData)`  | `$ar = [/* ... */];`
-| Supported formats | Array, Object, ArrayObject, JSON, INI, Yml  | Array only
-| Load form file | with array, ini, yml, json, serialized | -
-| Get value or default  | `$d->get('key', 42)`  | `array_key_exists('k', $ar) ? $ar['k'] : 42`
-| Get undefined #1  | `$d->get('undefined')` | `@$ar['undefined']` (@ is bad idea!)
-| Get undefined #2 | `$d->find('undefined')` | `isset($ar['und']) ? $ar['und'] : null`
-| Get undefined #3  | `$d->undefined === null` (no any notice) | -
-| Get undefined #4  | `$d['undefined'] === null` (no any notice) | -
-| Get undefined #5  | `$d['undef']['undef'] === null` (no any notice) | -
-| Compare #1  | `$d->get('key') === $someVar` | $ar['key'] === $someVar
-| Compare #2  | `$d->is('key', $someVar)` | -
-| Compare #3  | `$d->is('key', $someVar, true)` (strict) | -
-| Like array  | `$d['key']`  | `$ar['key']`
-| Like object #1 | `$d->key` | -
-| Like object #2 | `$d->get('key')` | -
-| Like object #3 | `$d->find('key')` | -
-| Like object #4 | `$d->offsetGet('key')` | -
-| Isset #1 | `isset($d['key'])` | `isset($ar['key'])`
-| Isset #2 | `isset($d->key)` | `array_key_exists('key', $ar)`
-| Isset #3 | `$d->has('key')` | -
-| Nested key  #1 | `$d->find('inner.inner.prop', $default)` | `$ar['inner']['inner']['prop']`
-| Nested key  #2 | `$d->inner['inner']['prop']` | -
-| Nested key  #3 | `$d['inner']['inner']['prop']` | -
-| Export to Serialized | `echo (new Data([/* ... */]))` | `echo serialize([/* ... */])`
-| Export to JSON | `echo (new JSON([/* ... */]))` (readable) | `echo json_encode([/* ... */])`
-| Export to Yml | `echo (new Yml ([/* ... */]))` (readable) | -
-| Export to Ini | `echo (new Ini([/* ... */]))` (readable) | -
-| Export to PHP Code | `echo (new PHPArray ([/* ... */]))` (readable) | -
-| Pretty JSON | **+** | -
-| Filters | **+** | -
-| Search | **+** | -
-| Flatten Recursive | **+** | -
-
 ## Usage
-#### Methods to create config object
+
+### Comparison with pure PHP
+
+| Action                | JBZoo/Data                                        | Simple PHP Array                             |
+| --------------------- | ------------------------------------------------- | -------------------------------------------- |
+| Create                | `$d = data($someData)`                            | `$ar = [/* ... */];`                         |
+| Supported formats     | Array, Object, ArrayObject, JSON, INI, Yml        | Array                                        |
+| Load form file        | *.php, *.ini, *.yml, *.json, serialized           | -                                            |
+| Get value or default  | `$d->get('key', 42)`                              | `array_key_exists('k', $ar) ? $ar['k'] : 42` |
+| Get undefined #1      | `$d->get('undefined')` (no any notice)            | `$ar['undefined'] ?? null`                   |
+| Get undefined #2      | `$d->find('undefined')`                           | `$ar['und'] ??  null`                        |
+| Get undefined #3      | `$d->undefined === null` (no any notice)          | -                                            |
+| Get undefined #4      | `$d['undefined'] === null` (no any notice)        | -                                            |
+| Get undefined #5      | `$d['undef']['undef'] === null` (no any notice)   | -                                            |
+| Comparing #1          | `$d->get('key') === $someVar`                     | `$ar['key'] === $someVar`                    |
+| Comparing #2          | `$d->is('key', $someVar)`                         | -                                            |
+| Comparing #3          | `$d->is('key', $someVar, true)` (strict)          | -                                            |
+| Like array            | `$d['key']`                                       | `$ar['key']`                                 |
+| Like object #1        | `$d->key`                                         | -                                            |
+| Like object #2        | `$d->get('key')`                                  | -                                            |
+| Like object #3        | `$d->find('key')`                                 | -                                            |
+| Like object #4        | `$d->offsetGet('key')`                            | -                                            |
+| Isset #1              | `isset($d['key'])`                                | `isset($ar['key'])`                          |
+| Isset #2              | `isset($d->key)`                                  | `array_key_exists('key', $ar)`               |
+| Isset #3              | `$d->has('key')`                                  | -                                            |
+| Nested key  #1        | `$d->find('inner.inner.prop', $default)`          | `$ar['inner']['inner']['prop']` (error?)     |
+| Nested key  #2        | `$d->inner['inner']['prop']`                      | -                                            |
+| Nested key  #3        | `$d['inner']['inner']['prop']`                    | -                                            |
+| Export to Serialized  | `echo (new Data([/* ... */]))`                    | `echo serialize([/* ... */])`                |
+| Export to JSON        | `echo (new JSON([/* ... */]))` (readable)         | `echo json_encode([/* ... */])`              |
+| Export to Yml         | `echo (new Yml ([/* ... */]))` (readable)         | -                                            |
+| Export to Ini         | `echo (new Ini([/* ... */]))` (readable)          | -                                            |
+| Export to PHP Code    | `echo (new PHPArray ([/* ... */]))` (readable)    | -                                            |
+| Pretty JSON           | **+**                                             | -                                            |
+| Filters               | **+**                                             | -                                            |
+| Search                | **+**                                             | -                                            |
+| Flatten Recursive     | **+**                                             | -                                            |
+
+
+#### Methods
+
 ```php
-require_once './vendor/autoload.php'; // composer autoload.php
+use function JBZoo\Data\data;
+use function JBZoo\Data\ini;
+use function JBZoo\Data\json;
+use function JBZoo\Data\phpArray;
+use function JBZoo\Data\yml;
 
-// Get needed classes
-namespace JBZoo\Data\Data; // And others
-
-// Create
-$config     = new Data([/* Assoc Array */]);       // Any PHP-array or simple object, serialized data
-$configIni  = new Ini('./configs/some.ini');       // Load config from ini file (or string, or simple array)
-$configYml  = new Yml('./configs/some.yml');       // Yml (or string, or simple array). Parsed with Symfony/Yaml Component.
-$configJSON = new JSON('./configs/some.json');     // JSON File (or string, or simple array)
-$configPHP  = new PHPArray('./configs/some.php');  // PHP-file that must return array
+$config = data([/* Assoc Array */]);       // Any PHP-array or simple object, serialized data
+$config = ini('./configs/some.ini');       // Load configs from ini file (or string, or simple array)
+$config = yml('./configs/some.yml');       // Yml (or string, or simple array). Parsed with Symfony/Yaml Component.
+$config = json('./configs/some.json');     // JSON File (or string, or simple array)
+$config = phpArray('./configs/some.php');  // PHP-file that must return array
 
 // Read
-$config->get('key', 42);                   // Check exists and get parameter by key or return default value
-$config['key'];                            // Like array
-$config->key;                              // Like object
-$config->find('very.deep.config.key', 42); // Check and get $config['very']['deep']['config']['key'] or return default
+$config->get('key', 42);                   // Returns value if it exists oR returns default value
+$config['key'];                            // As regular array
+$config->key;                              // As regular object
+
+// Read nested values without PHP errors
+$config->find('deep.config.key', 42);      // Gets `$config['very']['deep']['config']['key']` OR returns default value
 
 // Write
-$config->set('key', 42);    // Method
-$config['key'] = 42;        // Like array
-$config->key = 42;          // Like object
+$config->set('key', 42);
+$config['key'] = 42;
+$config->key = 42;
 
 // Isset
-$config->has('key');        // Method
-isset($config['key']);      // Like array
-isset($config->key);        // Like object
+$config->has('key');
+isset($config['key']);
+isset($config->key);
 
 // Unset
-$config->remove('key');     // Method
-unset($config['key']);      // Like array
-unset($config->key);        // Like object
+$config->remove('key');
+unset($config['key']);
+unset($config->key);
+
 ```
 
 
@@ -112,6 +119,7 @@ List of filters - [JBZoo/Utils/Filter](https://github.com/JBZoo/Utils/blob/maste
  * `esc` - Escape for UTF-8
  * `function($value) { return $value; }` - Your custom callback function
 
+
 ```php
 $config->get('key', 42, 'int');     // Smart converting to integer
 $config->find('key', 42, 'float');  // To float
@@ -132,12 +140,12 @@ $config->search($needle);       // Find a value also in nested arrays/objects
 $config->flattenRecursive();    // Return flattened array copy. Keys are <b>NOT</b> preserved.
 ```
 
-#### Save to pretty format
+#### Export to pretty-print format
 ```php
 echo $config;
+
 $result = '' . $config;
 $result = (string)$config;
-$result = $config->write();
 $result = $config->__toString();
 ```
 
