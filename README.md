@@ -1,12 +1,12 @@
 # JBZoo / Data
-  
-An extended version of the [ArrayObject](http://php.net/manual/en/class.arrayobject.php) object for working with system settings or just for working with data arrays.
-
-It provides a short syntax for daily routine, eliminates common mistakes. Allows you to work with various line and file formats.
 
 [![Build Status](https://travis-ci.org/JBZoo/Data.svg?branch=master)](https://travis-ci.org/JBZoo/Data)    [![Coverage Status](https://coveralls.io/repos/JBZoo/Data/badge.svg)](https://coveralls.io/github/JBZoo/Data?branch=master)    [![Psalm Coverage](https://shepherd.dev/github/JBZoo/Data/coverage.svg)](https://shepherd.dev/github/JBZoo/Data)    
 [![Latest Stable Version](https://poser.pugx.org/JBZoo/Data/v)](https://packagist.org/packages/JBZoo/Data)    [![Latest Unstable Version](https://poser.pugx.org/JBZoo/Data/v/unstable)](https://packagist.org/packages/JBZoo/Data)    [![Dependents](https://poser.pugx.org/JBZoo/Data/dependents)](https://packagist.org/packages/JBZoo/Data/dependents?order_by=downloads)    [![GitHub Issues](https://img.shields.io/github/issues/JBZoo/Data)](https://github.com/JBZoo/Data/issues)    [![Total Downloads](https://poser.pugx.org/JBZoo/Data/downloads)](https://packagist.org/packages/JBZoo/Data/stats)    [![GitHub License](https://img.shields.io/github/license/JBZoo/Data)](https://github.com/JBZoo/Data/blob/master/LICENSE)
 
+
+An extended version of the [ArrayObject](http://php.net/manual/en/class.arrayobject.php) object for working with system settings or just for working with data arrays.
+
+It provides a short syntax for daily routine, eliminates common mistakes. Allows you to work with various line and file formats - JSON, Yml, Ini, PHP arrays and simple objects.
 
 ## Installation
 ```sh
@@ -98,36 +98,35 @@ unset($config->key);
 
 List of filters - [JBZoo/Utils/Filter](https://github.com/JBZoo/Utils/blob/master/src/Filter.php)
  * `bool` -  Converts many english words that equate to true or false to boolean.
- * `int` - Smart filter for integer
- * `float` - Smart filter for float
- * `digits` - Only 0..9
- * `alpha` - Only a..z
- * `alphanum` - Only 0..9 and a..z
- * `base64` - Return only chars for base64
- * `path` - Some path
+ * `int` - Smart converting to integer
+ * `float` - Smart converting to float
+ * `digits` - Leaves only "0-9"
+ * `alpha` - Leaves only "a-zA-Z"
+ * `alphanum` - Combination of `digits` and `alpha` 
+ * `base64` - Returns only chars which are compatible with base64
+ * `path` - Clean FS path
  * `trim` - Extend trim
- * `arr` - Array filter
- * `cmd` - Cleanup for system command
- * `email` - Email or null
+ * `arr` - Converting to array
+ * `cmd` - Cleanup system command (CLI)
+ * `email` - Returns cleaned up email or null
  * `strip` - Strip tags
  * `alias` - Sluggify
- * `low` - String to lower (check mbstring)
- * `up` - String to upper (check mbstring)
- * `clean` - Safe string
+ * `low` - String to lower (uses mbstring or symfony polyfill)
+ * `up` - String to upper (uses mbstring or symfony polyfill)
+ * `clean` - Returns safe string
  * `html` - HTML escaping
  * `xml` - XML escaping
- * `esc` - Escape for UTF-8
+ * `esc` - Escape chars for UTF-8
  * `function($value) { return $value; }` - Your custom callback function
 
 
 ```php
-$config->get('key', 42, 'int');     // Smart converting to integer
-$config->find('key', 42, 'float');  // To float
-$config->find('no', 'yes', 'bool'); // Smart converting popular word to boolean value
-
+$config->get('key', 42, 'int');         // Smart converting to integer
+$config->find('key', 42, 'float');      // To float
+$config->find('no', 'yes', 'bool');     // Smart converting popular word to boolean value
 $config->get('key', 42, 'strip, trim'); // Chain of filters
 
-// Custom handler
+// Your custom handler
 $config->get('key', 42, function($value) {
     return (float)str_replace(',', '.', $value);
 });
