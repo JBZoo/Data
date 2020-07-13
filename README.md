@@ -1,8 +1,8 @@
 # JBZoo / Data
   
-Extended implementation of [ArrayObject](http://php.net/manual/en/class.arrayobject.php).
+An extended version of the [ArrayObject](http://php.net/manual/en/class.arrayobject.php) object for working with system settings or just for working with data arrays.
 
-Really useful objects for any config in your system (write, read, store, change, validate, convert to other format and etc).
+It provides a short syntax for daily routine, eliminates common mistakes. Allows you to work with various line and file formats.
 
 [![Build Status](https://travis-ci.org/JBZoo/Data.svg?branch=master)](https://travis-ci.org/JBZoo/Data)    [![Coverage Status](https://coveralls.io/repos/JBZoo/Data/badge.svg)](https://coveralls.io/github/JBZoo/Data?branch=master)    [![Psalm Coverage](https://shepherd.dev/github/JBZoo/Data/coverage.svg)](https://shepherd.dev/github/JBZoo/Data)    
 [![Latest Stable Version](https://poser.pugx.org/JBZoo/Data/v)](https://packagist.org/packages/JBZoo/Data)    [![Latest Unstable Version](https://poser.pugx.org/JBZoo/Data/v/unstable)](https://packagist.org/packages/JBZoo/Data)    [![Dependents](https://poser.pugx.org/JBZoo/Data/dependents)](https://packagist.org/packages/JBZoo/Data/dependents?order_by=downloads)    [![GitHub Issues](https://img.shields.io/github/issues/JBZoo/Data)](https://github.com/JBZoo/Data/issues)    [![Total Downloads](https://poser.pugx.org/JBZoo/Data/downloads)](https://packagist.org/packages/JBZoo/Data/stats)    [![GitHub License](https://img.shields.io/github/license/JBZoo/Data)](https://github.com/JBZoo/Data/blob/master/LICENSE)
@@ -17,40 +17,40 @@ composer require jbzoo/data
 
 ### Comparison with pure PHP
 
-| Action                | JBZoo/Data                                        | Simple PHP Array                             |
-| --------------------- | ------------------------------------------------- | -------------------------------------------- |
-| Create                | `$d = data($someData)`                            | `$ar = [/* ... */];`                         |
-| Supported formats     | Array, Object, ArrayObject, JSON, INI, Yml        | Array                                        |
-| Load form file        | *.php, *.ini, *.yml, *.json, serialized           | -                                            |
-| Get value or default  | `$d->get('key', 42)`                              | `array_key_exists('k', $ar) ? $ar['k'] : 42` |
-| Get undefined #1      | `$d->get('undefined')` (no any notice)            | `$ar['undefined'] ?? null`                   |
-| Get undefined #2      | `$d->find('undefined')`                           | `$ar['und'] ??  null`                        |
-| Get undefined #3      | `$d->undefined === null` (no any notice)          | -                                            |
-| Get undefined #4      | `$d['undefined'] === null` (no any notice)        | -                                            |
-| Get undefined #5      | `$d['undef']['undef'] === null` (no any notice)   | -                                            |
-| Comparing #1          | `$d->get('key') === $someVar`                     | `$ar['key'] === $someVar`                    |
-| Comparing #2          | `$d->is('key', $someVar)`                         | -                                            |
-| Comparing #3          | `$d->is('key', $someVar, true)` (strict)          | -                                            |
-| Like array            | `$d['key']`                                       | `$ar['key']`                                 |
-| Like object #1        | `$d->key`                                         | -                                            |
-| Like object #2        | `$d->get('key')`                                  | -                                            |
-| Like object #3        | `$d->find('key')`                                 | -                                            |
-| Like object #4        | `$d->offsetGet('key')`                            | -                                            |
-| Isset #1              | `isset($d['key'])`                                | `isset($ar['key'])`                          |
-| Isset #2              | `isset($d->key)`                                  | `array_key_exists('key', $ar)`               |
-| Isset #3              | `$d->has('key')`                                  | -                                            |
-| Nested key  #1        | `$d->find('inner.inner.prop', $default)`          | `$ar['inner']['inner']['prop']` (error?)     |
-| Nested key  #2        | `$d->inner['inner']['prop']`                      | -                                            |
-| Nested key  #3        | `$d['inner']['inner']['prop']`                    | -                                            |
-| Export to Serialized  | `echo (new Data([/* ... */]))`                    | `echo serialize([/* ... */])`                |
-| Export to JSON        | `echo (new JSON([/* ... */]))` (readable)         | `echo json_encode([/* ... */])`              |
-| Export to Yml         | `echo (new Yml ([/* ... */]))` (readable)         | -                                            |
-| Export to Ini         | `echo (new Ini([/* ... */]))` (readable)          | -                                            |
-| Export to PHP Code    | `echo (new PHPArray ([/* ... */]))` (readable)    | -                                            |
-| Pretty JSON           | **+**                                             | -                                            |
-| Filters               | **+**                                             | -                                            |
-| Search                | **+**                                             | -                                            |
-| Flatten Recursive     | **+**                                             | -                                            |
+Action                | JBZoo/Data                                        | Simple PHP Array                            
+--------------------- | ------------------------------------------------- | --------------------------------------------
+Create                | `$d = data($someData)`                            | `$ar = [/* ... */];`                        
+Supported formats     | Array, Object, ArrayObject, JSON, INI, Yml        | Array                                       
+Load form file        | *.php, *.ini, *.yml, *.json, serialized           | -                                           
+Get value or default  | `$d->get('key', 42)`                              | `array_key_exists('k', $ar) ? $ar['k'] : 42`
+Get undefined #1      | `$d->get('undefined')` (no any notice)            | `$ar['undefined'] ?? null`                  
+Get undefined #2      | `$d->find('undefined')`                           | `$ar['und'] ??  null`                       
+Get undefined #3      | `$d->undefined === null` (no any notice)          | -                                           
+Get undefined #4      | `$d['undefined'] === null` (no any notice)        | -                                           
+Get undefined #5      | `$d['undef']['undef'] === null` (no any notice)   | -                                           
+Comparing #1          | `$d->get('key') === $someVar`                     | `$ar['key'] === $someVar`                   
+Comparing #2          | `$d->is('key', $someVar)`                         | -                                           
+Comparing #3          | `$d->is('key', $someVar, true)` (strict)          | -                                           
+Like array            | `$d['key']`                                       | `$ar['key']`                                
+Like object #1        | `$d->key`                                         | -                                           
+Like object #2        | `$d->get('key')`                                  | -                                           
+Like object #3        | `$d->find('key')`                                 | -                                           
+Like object #4        | `$d->offsetGet('key')`                            | -                                           
+Isset #1              | `isset($d['key'])`                                | `isset($ar['key'])`                         
+Isset #2              | `isset($d->key)`                                  | `array_key_exists('key', $ar)`              
+Isset #3              | `$d->has('key')`                                  | -                                           
+Nested key  #1        | `$d->find('inner.inner.prop', $default)`          | `$ar['inner']['inner']['prop']` (error?)    
+Nested key  #2        | `$d->inner['inner']['prop']`                      | -                                           
+Nested key  #3        | `$d['inner']['inner']['prop']`                    | -                                           
+Export to Serialized  | `echo (new Data([/* ... */]))`                    | `echo serialize([/* ... */])`               
+Export to JSON        | `echo (new JSON([/* ... */]))` (readable)         | `echo json_encode([/* ... */])`             
+Export to Yml         | `echo (new Yml ([/* ... */]))` (readable)         | -                                           
+Export to Ini         | `echo (new Ini([/* ... */]))` (readable)          | -                                           
+Export to PHP Code    | `echo (new PHPArray ([/* ... */]))` (readable)    | -                                           
+JSON                  | **+**                                             | -                                           
+Filters               | **+**                                             | -                                           
+Search                | **+**                                             | -                                           
+Flatten Recursive     | **+**                                             | -                                           
 
 
 #### Methods

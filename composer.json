@@ -1,7 +1,7 @@
 {
     "name"              : "jbzoo/data",
     "type"              : "library",
-    "description"       : "Extended implementation of ArrayObject",
+    "description"       : "An extended version of the ArrayObject object for working with system settings or just for working with data arrays",
     "license"           : "MIT",
     "keywords"          : ["ArrayObject", "Array", "Config", "Data", "ini", "yml", "params", "json"],
     "authors"           : [
@@ -46,7 +46,7 @@
     "config"            : {
         "optimize-autoloader" : true
     },
-    
+
     "extra"             : {
         "branch-alias" : {
             "dev-master" : "4.0.x-dev"
