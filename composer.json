@@ -17,14 +17,14 @@
     },
 
     "require-dev"       : {
-        "jbzoo/toolbox-dev" : "1.1.x-dev",
-        "jbzoo/utils"       : "4.0.x-dev",
+        "jbzoo/toolbox-dev" : "^2.0.0",
+        "jbzoo/utils"       : "^4.0.0",
         "symfony/yaml"      : "^4.4||^5.0"
     },
 
     "suggest"           : {
         "symfony/yaml" : ">=4.4",
-        "jbzoo/utils"  : ">=3.0"
+        "jbzoo/utils"  : ">=4.0"
     },
 
     "autoload"          : {
