@@ -12,13 +12,13 @@
         }
     ],
     "require"           : {
-        "php"      : "^7.2",
+        "php"      : ">=7.2",
         "ext-json" : "*"
     },
 
     "require-dev"       : {
-        "jbzoo/toolbox-dev" : "^2.1.0",
-        "jbzoo/utils"       : "^4.0.0",
+        "jbzoo/toolbox-dev" : "^2.4.0",
+        "jbzoo/utils"       : "^4.2.1",
         "symfony/yaml"      : "^4.4||^5.0"
     },
 
