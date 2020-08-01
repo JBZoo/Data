@@ -373,6 +373,7 @@ class Data extends ArrayObject
             return new static($this->get($key, $default));
         }
 
+        // @phpstan-ignore-next-line
         return new static($default);
     }
 
@@ -438,6 +439,7 @@ class Data extends ArrayObject
             return new static($this->find($key, $default));
         }
 
+        // @phpstan-ignore-next-line
         return new static($default);
     }
 }
