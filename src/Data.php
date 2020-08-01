@@ -354,6 +354,7 @@ class Data extends ArrayObject
      * @param string $key
      * @param bool   $default
      * @return bool
+     * @SuppressWarnings(PHPMD.BooleanGetMethodName)
      */
     public function getBool(string $key, bool $default = false): bool
     {
