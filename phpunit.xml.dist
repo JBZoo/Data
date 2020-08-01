@@ -23,12 +23,12 @@
          stopOnIncomplete="false"
          stopOnSkipped="false"
          stopOnRisky="false"
-         verbose="true"
-         colors="true"
+         verbose="false"
+         colors="false"
 >
 
     <testsuites>
-        <testsuite name="All">
+        <testsuite name="PHPUnit">
             <directory suffix="Test.php">tests</directory>
         </testsuite>
     </testsuites>
@@ -45,5 +45,4 @@
         <log type="junit" target="build/coverage_junit/main.xml"/>
         <log type="coverage-text" target="php://stdout" showUncoveredFiles="true" showOnlySummary="false"/>
     </logging>
-
 </phpunit>

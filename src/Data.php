@@ -21,6 +21,10 @@ use JBZoo\Utils\Filter;
 use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
 
+use function JBZoo\Utils\bool;
+use function JBZoo\Utils\float;
+use function JBZoo\Utils\int;
+
 /**
  * Class Data
  * @package JBZoo\Data
@@ -304,5 +308,105 @@ class Data extends ArrayObject
 
         /** @noinspection TypeUnsafeComparisonInspection */
         return $value == $compareWith;
+    }
+
+    /**
+     * @param string $key
+     * @param int    $default
+     * @return int
+     */
+    public function getInt(string $key, int $default = 0): int
+    {
+        return int($this->get($key, $default));
+    }
+
+    /**
+     * @param string $key
+     * @param float  $default
+     * @return float
+     */
+    public function getFloat(string $key, float $default = 0.0): float
+    {
+        return float($this->get($key, $default));
+    }
+
+    /**
+     * @param string $key
+     * @param string $default
+     * @return string
+     */
+    public function getString(string $key, string $default = ''): string
+    {
+        return (string)$this->get($key, $default);
+    }
+
+    /**
+     * @param string $key
+     * @param array  $default
+     * @return array
+     */
+    public function getArray(string $key, array $default = []): array
+    {
+        return (array)$this->get($key, $default);
+    }
+
+    /**
+     * @param string $key
+     * @param bool   $default
+     * @return bool
+     */
+    public function getBool(string $key, bool $default = false): bool
+    {
+        return bool($this->get($key, $default));
+    }
+
+    /**
+     * @param string $key
+     * @param int    $default
+     * @return int
+     */
+    public function findInt(string $key, int $default = 0): int
+    {
+        return int($this->find($key, $default));
+    }
+
+    /**
+     * @param string $key
+     * @param float  $default
+     * @return float
+     */
+    public function findFloat(string $key, float $default = 0.0): float
+    {
+        return float($this->find($key, $default));
+    }
+
+    /**
+     * @param string $key
+     * @param string $default
+     * @return string
+     */
+    public function findString(string $key, string $default = ''): string
+    {
+        return (string)$this->find($key, $default);
+    }
+
+    /**
+     * @param string $key
+     * @param array  $default
+     * @return array
+     */
+    public function findArray(string $key, array $default = []): array
+    {
+        return (array)$this->find($key, $default);
+    }
+
+    /**
+     * @param string $key
+     * @param bool   $default
+     * @return bool
+     */
+    public function findBool(string $key, bool $default = false): bool
+    {
+        return bool($this->find($key, $default));
     }
 }

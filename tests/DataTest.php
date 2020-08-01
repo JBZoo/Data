@@ -14,7 +14,7 @@
  * @author     Denis Smetannikov <denis@jbzoo.com>
  */
 
-namespace JBZoo\PHPunit;
+namespace JBZoo\PHPUnit;
 
 use JBZoo\Data\Data;
 use JBZoo\Data\Ini;
@@ -149,6 +149,23 @@ class DataTest extends PHPUnit
     {
         $data = new Data(serialize([]));
         isSame(serialize([]), (string)$data);
+    }
+
+    public function testAliases()
+    {
+        $data = new Data($this->test);
+
+        isSame(10, $data->getInt('number'));
+        isSame(10.0, $data->getFloat('number'));
+        isSame('10', $data->getString('number'));
+        isSame([10], $data->getArray('number'));
+        isSame(true, $data->getBool('number'));
+
+        isSame(123321, $data->findInt('array_not_empty.123'));
+        isSame(123321.0, $data->findFloat('array_not_empty.123'));
+        isSame('123321', $data->findString('array_not_empty.123'));
+        isSame(['123321'], $data->findArray('array_not_empty.123'));
+        isSame(true, $data->findBool('array_not_empty.123'));
     }
 
     public function testGet()
