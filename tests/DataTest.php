@@ -154,18 +154,32 @@ class DataTest extends PHPUnit
     public function testAliases()
     {
         $data = new Data($this->test);
+        $json = json($this->test);
 
+        // Get
         isSame(10, $data->getInt('number'));
         isSame(10.0, $data->getFloat('number'));
         isSame('10', $data->getString('number'));
         isSame([10], $data->getArray('number'));
         isSame(true, $data->getBool('number'));
 
+        isClass(Data::class, $data->getSelf('sub'));
+        isSame(['sub' => 'sub-value', 'sub.sub' => 'sub-value-2'], $data->getSelf('sub')->getArrayCopy());
+        isClass(JSON::class, $json->getSelf('sub'));
+        isSame(['sub' => 'sub-value', 'sub.sub' => 'sub-value-2'], $json->getSelf('sub')->getArrayCopy());
+
+        // Find
         isSame(123321, $data->findInt('array_not_empty.123'));
         isSame(123321.0, $data->findFloat('array_not_empty.123'));
         isSame('123321', $data->findString('array_not_empty.123'));
-        isSame(['123321'], $data->findArray('array_not_empty.123'));
+        isSame(['sub-value'], $data->findArray('sub.sub'));
+        isSame(['sub' => 'sub-value', 'sub.sub' => 'sub-value-2'], $data->findArray('sub'));
         isSame(true, $data->findBool('array_not_empty.123'));
+
+        isClass(Data::class, $data->findSelf('sub'));
+        isSame(['sub' => 'sub-value', 'sub.sub' => 'sub-value-2'], $data->findSelf('sub')->getArrayCopy());
+        isClass(JSON::class, $json->findSelf('sub'));
+        isSame(['sub' => 'sub-value', 'sub.sub' => 'sub-value-2'], $json->findSelf('sub')->getArrayCopy());
     }
 
     public function testGet()

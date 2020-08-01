@@ -152,7 +152,7 @@ class Data extends ArrayObject
      * object that's nested under the current data object.
      * Example: $data->find('parent-key.sub-key.sub-sub-key');
      *
-     * @param string $key       The key to search for. Can be composed using $separator as the key/subkey separator
+     * @param string $key       The key to search for. Can be composed using $separator as the key/su-bkey separator
      * @param mixed  $default   The default value
      * @param mixed  $filter    Filter returned value
      * @param string $separator The separator to use when searching for sub keys. Default is '.'
@@ -363,6 +363,17 @@ class Data extends ArrayObject
 
     /**
      * @param string $key
+     * @param array  $default
+     * @return static
+     */
+    public function getSelf(string $key, array $default = []): self
+    {
+        // @phpstan-ignore-next-line
+        return new static($this->get($key, $default));
+    }
+
+    /**
+     * @param string $key
      * @param int    $default
      * @return int
      */
@@ -409,5 +420,16 @@ class Data extends ArrayObject
     public function findBool(string $key, bool $default = false): bool
     {
         return bool($this->find($key, $default));
+    }
+
+    /**
+     * @param string $key
+     * @param array  $default
+     * @return static
+     */
+    public function findSelf(string $key, array $default = []): self
+    {
+        // @phpstan-ignore-next-line
+        return new static($this->find($key, $default));
     }
 }
