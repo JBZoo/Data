@@ -368,8 +368,12 @@ class Data extends ArrayObject
      */
     public function getSelf(string $key, array $default = []): self
     {
-        // @phpstan-ignore-next-line
-        return new static($this->get($key, $default));
+        if ($this->has($key) && null !== $this->get($key)) {
+            // @phpstan-ignore-next-line
+            return new static($this->get($key, $default));
+        }
+
+        return new static($default);
     }
 
     /**
@@ -429,7 +433,11 @@ class Data extends ArrayObject
      */
     public function findSelf(string $key, array $default = []): self
     {
-        // @phpstan-ignore-next-line
-        return new static($this->find($key, $default));
+        if ($this->has($key) && null !== $this->get($key)) {
+            // @phpstan-ignore-next-line
+            return new static($this->find($key, $default));
+        }
+
+        return new static($default);
     }
 }

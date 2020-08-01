@@ -165,8 +165,12 @@ class DataTest extends PHPUnit
 
         isClass(Data::class, $data->getSelf('sub'));
         isSame(['sub' => 'sub-value', 'sub.sub' => 'sub-value-2'], $data->getSelf('sub')->getArrayCopy());
+        isSame(['qwerty'=> 1], (array)$data->getSelf('real-null', ['qwerty'=> 1]));
+        isSame(['qwerty'=> 1], (array)$data->getSelf('null', ['qwerty'=> 1]));
         isClass(JSON::class, $json->getSelf('sub'));
         isSame(['sub' => 'sub-value', 'sub.sub' => 'sub-value-2'], $json->getSelf('sub')->getArrayCopy());
+        isSame(['qwerty'=> 1], (array)$json->getSelf('real-null', ['qwerty'=> 1]));
+        isSame(['qwerty'=> 1], (array)$json->getSelf('null', ['qwerty'=> 1]));
 
         // Find
         isSame(123321, $data->findInt('array_not_empty.123'));
