@@ -17,8 +17,7 @@
 namespace JBZoo\Data;
 
 /**
- * Class PHPArray
- *
+ * Class PhpArray
  * @package JBZoo\Data
  */
 class PhpArray extends Data

@@ -23,8 +23,5 @@ namespace JBZoo\PHPUnit;
  */
 class DataCodeStyleTest extends AbstractCodestyleTest
 {
-    /**
-     * @var string
-     */
-    protected $packageName = 'Data';
+
 }
