@@ -365,6 +365,7 @@ class Data extends ArrayObject
      * @param string $key
      * @param array  $default
      * @return static
+     * @psalm-suppress UnsafeInstantiation
      */
     public function getSelf(string $key, array $default = []): self
     {
@@ -431,6 +432,7 @@ class Data extends ArrayObject
      * @param string $key
      * @param array  $default
      * @return static
+     * @psalm-suppress UnsafeInstantiation
      */
     public function findSelf(string $key, array $default = []): self
     {
