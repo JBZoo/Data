@@ -370,7 +370,7 @@ class Data extends ArrayObject
     {
         if ($this->has($key) && null !== $this->get($key)) {
             // @phpstan-ignore-next-line
-            return new static($this->get($key, $default));
+            return new static((array)$this->get($key, $default));
         }
 
         // @phpstan-ignore-next-line
@@ -436,7 +436,7 @@ class Data extends ArrayObject
     {
         if ($this->has($key) && null !== $this->get($key)) {
             // @phpstan-ignore-next-line
-            return new static($this->find($key, $default));
+            return new static((array)$this->find($key, $default));
         }
 
         // @phpstan-ignore-next-line
