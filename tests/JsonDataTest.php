@@ -19,6 +19,8 @@ namespace JBZoo\PHPUnit;
 use JBZoo\Data\Data;
 use JBZoo\Data\JSON;
 
+use function JBZoo\Data\json;
+
 /**
  * Class JsonDataTest
  *
@@ -116,5 +118,23 @@ class JsonDataTest extends PHPUnit
     {
         $data = new JSON($this->test);
         isTrue(count((array)$data) > 0);
+    }
+
+    public function testBitInt()
+    {
+        $value = 123456789012345678901234567890;
+
+        $bigIntAsString = ['value' => '123456789012345678901234567890'];
+        $bigInt = ['value' => $value];
+        $jsonBigIntAsString = '{"value":"123456789012345678901234567890"}';
+        $jsonBigInt = '{"value":123456789012345678901234567890}';
+
+
+        $expected = json($jsonBigIntAsString);
+        $actual = json($jsonBigInt);
+        isSame($bigIntAsString, $expected->getArrayCopy());
+        isSame($expected->getArrayCopy(), $actual->getArrayCopy());
+
+        //isSame(json($bigIntAsString)->getArrayCopy(), json($bigInt)->getArrayCopy()); // TODO: needs to think
     }
 }
