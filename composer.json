@@ -20,7 +20,7 @@
         "jbzoo/toolbox-dev" : "^2.4.3",
         "jbzoo/utils"       : "^4.2.1",
         "symfony/yaml"      : "^4.4||^5.0",
-        "jbzoo/codestyle"   : "dev-master"
+        "jbzoo/codestyle"   : "^2.7.7"
     },
 
     "suggest"           : {
