@@ -11,8 +11,9 @@
  * @license    MIT
  * @copyright  Copyright (C) JBZoo.com, All rights reserved.
  * @link       https://github.com/JBZoo/Data
- * @author     Denis Smetannikov <denis@jbzoo.com>
  */
+
+declare(strict_types=1);
 
 namespace JBZoo\Data;
 
@@ -68,7 +69,7 @@ class Data extends ArrayObject
      * @param mixed $data The data to serialize
      * @return string The serialized data
      */
-    protected function encode($data)
+    protected function encode($data): string
     {
         return serialize($data);
     }
@@ -272,16 +273,16 @@ class Data extends ArrayObject
     }
 
     /**
-     * @param mixed $index
+     * @param int|string $key
      * @return mixed|null
      */
-    public function offsetGet($index)
+    public function offsetGet($key)
     {
-        if (!property_exists($this, $index)) {
+        if (!property_exists($this, (string)$key)) {
             return null;
         }
 
-        return parent::offsetGet($index);
+        return parent::offsetGet($key);
     }
 
     /**

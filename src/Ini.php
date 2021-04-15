@@ -11,8 +11,9 @@
  * @license    MIT
  * @copyright  Copyright (C) JBZoo.com, All rights reserved.
  * @link       https://github.com/JBZoo/Data
- * @author     Denis Smetannikov <denis@jbzoo.com>
  */
+
+declare(strict_types=1);
 
 namespace JBZoo\Data;
 
@@ -38,7 +39,7 @@ class Ini extends Data
      * @param mixed $data
      * @return string
      */
-    protected function encode($data)
+    protected function encode($data): string
     {
         return $this->render($data, []);
     }
