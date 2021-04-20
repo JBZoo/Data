@@ -17,7 +17,7 @@ declare(strict_types=1);
 
 $default = include __DIR__ . '/../vendor/jbzoo/codestyle/src/phan/default.php';
 
-return array_merge($default, [
+$config = array_merge($default, [
     'file_list' => [
         'src/functions.php'
     ],
@@ -31,3 +31,7 @@ return array_merge($default, [
         'vendor/symfony/yaml',
     ]
 ]);
+
+$config['plugins'][] = 'NotFullyQualifiedUsagePlugin';
+
+return $config;

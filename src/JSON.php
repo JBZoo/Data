@@ -32,7 +32,7 @@ class JSON extends Data
      */
     protected function decode(string $string)
     {
-        return json_decode($string, true, 512, JSON_BIGINT_AS_STRING);
+        return \json_decode($string, true, 512, \JSON_BIGINT_AS_STRING);
     }
 
     /**
@@ -43,6 +43,6 @@ class JSON extends Data
      */
     protected function encode($data): string
     {
-        return (string)json_encode($data, JSON_PRETTY_PRINT | JSON_BIGINT_AS_STRING);
+        return (string)\json_encode($data, \JSON_PRETTY_PRINT | \JSON_BIGINT_AS_STRING);
     }
 }

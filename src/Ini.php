@@ -32,7 +32,7 @@ class Ini extends Data
      */
     protected function decode(string $string)
     {
-        return parse_ini_string($string, true, INI_SCANNER_NORMAL);
+        return \parse_ini_string($string, true, \INI_SCANNER_NORMAL);
     }
 
     /**
@@ -53,22 +53,22 @@ class Ini extends Data
     {
         $result = [];
         foreach ($data as $dataKey => $dataValue) {
-            if (is_array($dataValue)) {
+            if (\is_array($dataValue)) {
                 if (self::isMulti($dataValue)) {
-                    $sections = array_merge($parent, (array)$dataKey);
+                    $sections = \array_merge($parent, (array)$dataKey);
                     $result[] = '';
-                    $result[] = '[' . implode('.', $sections) . ']';
+                    $result[] = '[' . \implode('.', $sections) . ']';
                     $result[] = $this->render($dataValue, $sections);
                 } else {
                     foreach ($dataValue as $key => $value) {
-                        $result[] = $dataKey . '[' . $key . '] = "' . str_replace('"', '\"', $value) . '"';
+                        $result[] = $dataKey . '[' . $key . '] = "' . \str_replace('"', '\"', $value) . '"';
                     }
                 }
             } else {
-                $result[] = $dataKey . ' = "' . str_replace('"', '\"', $dataValue) . '"';
+                $result[] = $dataKey . ' = "' . \str_replace('"', '\"', $dataValue) . '"';
             }
         }
 
-        return implode(Data::LE, $result);
+        return \implode(Data::LE, $result);
     }
 }

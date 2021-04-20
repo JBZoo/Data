@@ -19,8 +19,6 @@ namespace JBZoo\Data;
 
 use ArrayObject;
 use JBZoo\Utils\Filter;
-use RecursiveArrayIterator;
-use RecursiveIteratorIterator;
 
 use function JBZoo\Utils\bool;
 use function JBZoo\Utils\float;
@@ -42,11 +40,11 @@ class Data extends ArrayObject
     {
         $this->setFlags(ArrayObject::ARRAY_AS_PROPS);
 
-        if ($data && is_string($data) && file_exists($data)) {
+        if ($data && \is_string($data) && \file_exists($data)) {
             $data = self::readFile($data);
         }
 
-        if (is_string($data)) {
+        if (\is_string($data)) {
             $data = $this->decode($data);
         }
 
@@ -61,7 +59,7 @@ class Data extends ArrayObject
     protected function decode(string $string)
     {
         /** @noinspection UnserializeExploitsInspection */
-        return unserialize($string, []);
+        return \unserialize($string, []);
     }
 
     /**
@@ -71,7 +69,7 @@ class Data extends ArrayObject
      */
     protected function encode($data): string
     {
-        return serialize($data);
+        return \serialize($data);
     }
 
     /**
@@ -169,18 +167,18 @@ class Data extends ArrayObject
         }
 
         // explode search key and init search data
-        $parts = (array)explode($separator, $key);
+        $parts = (array)\explode($separator, $key);
         $data = $this;
 
         foreach ($parts as $part) {
             // handle ArrayObject and Array
-            if (($data instanceof ArrayObject || is_array($data)) && isset($data[$part])) {
+            if (($data instanceof ArrayObject || \is_array($data)) && isset($data[$part])) {
                 $data = $data[$part];
                 continue;
             }
 
             // handle object
-            if (is_object($data) && isset($data->$part)) {
+            if (\is_object($data) && isset($data->$part)) {
                 $data = &$data->$part;
                 continue;
             }
@@ -215,8 +213,8 @@ class Data extends ArrayObject
      */
     public function search($needle)
     {
-        $aIterator = new RecursiveArrayIterator($this->getArrayCopy());
-        $iterator = new RecursiveIteratorIterator($aIterator);
+        $aIterator = new \RecursiveArrayIterator($this->getArrayCopy());
+        $iterator = new \RecursiveIteratorIterator($aIterator);
 
         while ($iterator->valid()) {
             $iterator->current();
@@ -239,7 +237,7 @@ class Data extends ArrayObject
     {
         $flat = [];
 
-        foreach (new RecursiveIteratorIterator(new RecursiveArrayIterator($this->getArrayCopy())) as $value) {
+        foreach (new \RecursiveIteratorIterator(new \RecursiveArrayIterator($this->getArrayCopy())) as $value) {
             $flat[] = $value;
         }
 
@@ -254,8 +252,8 @@ class Data extends ArrayObject
     {
         $contents = false;
 
-        if ($realPath = realpath($filePath)) {
-            $contents = file_get_contents($realPath);
+        if ($realPath = \realpath($filePath)) {
+            $contents = \file_get_contents($realPath);
         }
 
         return $contents;
@@ -268,8 +266,8 @@ class Data extends ArrayObject
      */
     protected static function isMulti(array $array): bool
     {
-        $arrayCount = array_filter($array, '\is_array');
-        return count($arrayCount) > 0;
+        $arrayCount = \array_filter($array, '\is_array');
+        return \count($arrayCount) > 0;
     }
 
     /**
@@ -278,7 +276,7 @@ class Data extends ArrayObject
      */
     public function offsetGet($key)
     {
-        if (!property_exists($this, (string)$key)) {
+        if (!\property_exists($this, (string)$key)) {
             return null;
         }
 
@@ -297,7 +295,7 @@ class Data extends ArrayObject
      */
     public function is(string $key, $compareWith = true, bool $strictMode = false): bool
     {
-        if (strpos($key, '.') === false) {
+        if (\strpos($key, '.') === false) {
             $value = $this->get($key);
         } else {
             $value = $this->find($key);

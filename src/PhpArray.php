@@ -30,7 +30,7 @@ class PhpArray extends Data
      */
     public function __construct($data = [])
     {
-        if ($data && is_string($data) && file_exists($data)) {
+        if ($data && \is_string($data) && \file_exists($data)) {
             $data = $this->decode($data);
         }
 
@@ -45,7 +45,7 @@ class PhpArray extends Data
      */
     protected function decode(string $string)
     {
-        if (file_exists($string)) {
+        if (\file_exists($string)) {
             return include $string;
         }
     }
@@ -61,9 +61,9 @@ class PhpArray extends Data
         $data = [
             '<?php',
             '',
-            'return ' . var_export($data, true) . ';',
+            'return ' . \var_export($data, true) . ';',
         ];
 
-        return implode(self::LE, $data);
+        return \implode(self::LE, $data);
     }
 }
