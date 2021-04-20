@@ -22,7 +22,7 @@ namespace JBZoo\Data;
  *
  * @package JBZoo\Data
  */
-class JSON extends Data
+final class JSON extends Data
 {
     /**
      * Utility Method to unserialize the given data

@@ -22,7 +22,7 @@ namespace JBZoo\Data;
  *
  * @package JBZoo\Data
  */
-class Ini extends Data
+final class Ini extends Data
 {
     /**
      * Utility Method to unserialize the given data

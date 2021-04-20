@@ -24,7 +24,7 @@ use Symfony\Component\Yaml\Yaml;
  *
  * @package JBZoo\Data
  */
-class Yml extends Data
+final class Yml extends Data
 {
     /**
      * Utility Method to serialize the given data
