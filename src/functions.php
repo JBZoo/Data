@@ -11,8 +11,9 @@
  * @license    MIT
  * @copyright  Copyright (C) JBZoo.com, All rights reserved.
  * @link       https://github.com/JBZoo/Data
- * @author     Denis Smetannikov <denis@jbzoo.com>
  */
+
+declare(strict_types=1);
 
 namespace JBZoo\Data;
 
@@ -26,7 +27,7 @@ function json($data = null): JSON
         return $data;
     }
 
-    if (is_string($data)) {
+    if (\is_string($data)) {
         $result = new JSON($data);
     } else {
         $result = new JSON((array)$data);
@@ -45,7 +46,7 @@ function data($data = null): Data
         return $data;
     }
 
-    if (is_string($data)) {
+    if (\is_string($data)) {
         $result = new Data($data);
     } else {
         $result = new Data((array)$data);
@@ -64,7 +65,7 @@ function phpArray($data = null): PhpArray
         return $data;
     }
 
-    if (is_string($data)) {
+    if (\is_string($data)) {
         $result = new PhpArray($data);
     } else {
         $result = new PhpArray((array)$data);
@@ -83,7 +84,7 @@ function ini($data = null): Ini
         return $data;
     }
 
-    if (is_string($data)) {
+    if (\is_string($data)) {
         $result = new Ini($data);
     } else {
         $result = new Ini((array)$data);
@@ -102,7 +103,7 @@ function yml($data = null): Yml
         return $data;
     }
 
-    if (is_string($data)) {
+    if (\is_string($data)) {
         $result = new Yml($data);
     } else {
         $result = new Yml((array)$data);

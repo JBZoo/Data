@@ -11,8 +11,9 @@
  * @license    MIT
  * @copyright  Copyright (C) JBZoo.com, All rights reserved.
  * @link       https://github.com/JBZoo/Data
- * @author     Denis Smetannikov <denis@jbzoo.com>
  */
+
+declare(strict_types=1);
 
 namespace JBZoo\Data;
 
@@ -21,7 +22,7 @@ namespace JBZoo\Data;
  *
  * @package JBZoo\Data
  */
-class JSON extends Data
+final class JSON extends Data
 {
     /**
      * Utility Method to unserialize the given data
@@ -31,7 +32,7 @@ class JSON extends Data
      */
     protected function decode(string $string)
     {
-        return json_decode($string, true, 512, JSON_BIGINT_AS_STRING);
+        return \json_decode($string, true, 512, \JSON_BIGINT_AS_STRING);
     }
 
     /**
@@ -42,6 +43,6 @@ class JSON extends Data
      */
     protected function encode($data): string
     {
-        return (string)json_encode($data, JSON_PRETTY_PRINT | JSON_BIGINT_AS_STRING);
+        return (string)\json_encode($data, \JSON_PRETTY_PRINT | \JSON_BIGINT_AS_STRING);
     }
 }

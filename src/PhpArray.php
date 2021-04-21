@@ -11,8 +11,9 @@
  * @license    MIT
  * @copyright  Copyright (C) JBZoo.com, All rights reserved.
  * @link       https://github.com/JBZoo/Data
- * @author     Denis Smetannikov <denis@jbzoo.com>
  */
+
+declare(strict_types=1);
 
 namespace JBZoo\Data;
 
@@ -20,7 +21,7 @@ namespace JBZoo\Data;
  * Class PhpArray
  * @package JBZoo\Data
  */
-class PhpArray extends Data
+final class PhpArray extends Data
 {
     /**
      * Class constructor
@@ -29,7 +30,7 @@ class PhpArray extends Data
      */
     public function __construct($data = [])
     {
-        if ($data && is_string($data) && file_exists($data)) {
+        if ($data && \is_string($data) && \file_exists($data)) {
             $data = $this->decode($data);
         }
 
@@ -44,7 +45,7 @@ class PhpArray extends Data
      */
     protected function decode(string $string)
     {
-        if (file_exists($string)) {
+        if (\file_exists($string)) {
             return include $string;
         }
     }
@@ -55,14 +56,14 @@ class PhpArray extends Data
      * @param mixed $data The data to serialize
      * @return string The serialized data
      */
-    protected function encode($data)
+    protected function encode($data): string
     {
         $data = [
             '<?php',
             '',
-            'return ' . var_export($data, true) . ';',
+            'return ' . \var_export($data, true) . ';',
         ];
 
-        return implode(self::LE, $data);
+        return \implode(self::LE, $data);
     }
 }

@@ -11,8 +11,9 @@
  * @license    MIT
  * @copyright  Copyright (C) JBZoo.com, All rights reserved.
  * @link       https://github.com/JBZoo/Data
- * @author     Denis Smetannikov <denis@jbzoo.com>
  */
+
+declare(strict_types=1);
 
 namespace JBZoo\Data;
 
@@ -23,7 +24,7 @@ use Symfony\Component\Yaml\Yaml;
  *
  * @package JBZoo\Data
  */
-class Yml extends Data
+final class Yml extends Data
 {
     /**
      * Utility Method to serialize the given data
@@ -31,7 +32,7 @@ class Yml extends Data
      * @param mixed $data The data to serialize
      * @return string The serialized data
      */
-    protected function encode($data)
+    protected function encode($data): string
     {
         return Yaml::dump($data, 10, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK | Yaml::DUMP_NULL_AS_TILDE);
     }

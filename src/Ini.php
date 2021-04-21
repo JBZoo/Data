@@ -11,8 +11,9 @@
  * @license    MIT
  * @copyright  Copyright (C) JBZoo.com, All rights reserved.
  * @link       https://github.com/JBZoo/Data
- * @author     Denis Smetannikov <denis@jbzoo.com>
  */
+
+declare(strict_types=1);
 
 namespace JBZoo\Data;
 
@@ -21,7 +22,7 @@ namespace JBZoo\Data;
  *
  * @package JBZoo\Data
  */
-class Ini extends Data
+final class Ini extends Data
 {
     /**
      * Utility Method to unserialize the given data
@@ -31,14 +32,14 @@ class Ini extends Data
      */
     protected function decode(string $string)
     {
-        return parse_ini_string($string, true, INI_SCANNER_NORMAL);
+        return \parse_ini_string($string, true, \INI_SCANNER_NORMAL);
     }
 
     /**
      * @param mixed $data
      * @return string
      */
-    protected function encode($data)
+    protected function encode($data): string
     {
         return $this->render($data, []);
     }
@@ -52,22 +53,22 @@ class Ini extends Data
     {
         $result = [];
         foreach ($data as $dataKey => $dataValue) {
-            if (is_array($dataValue)) {
+            if (\is_array($dataValue)) {
                 if (self::isMulti($dataValue)) {
-                    $sections = array_merge($parent, (array)$dataKey);
+                    $sections = \array_merge($parent, (array)$dataKey);
                     $result[] = '';
-                    $result[] = '[' . implode('.', $sections) . ']';
+                    $result[] = '[' . \implode('.', $sections) . ']';
                     $result[] = $this->render($dataValue, $sections);
                 } else {
                     foreach ($dataValue as $key => $value) {
-                        $result[] = $dataKey . '[' . $key . '] = "' . str_replace('"', '\"', $value) . '"';
+                        $result[] = $dataKey . '[' . $key . '] = "' . \str_replace('"', '\"', $value) . '"';
                     }
                 }
             } else {
-                $result[] = $dataKey . ' = "' . str_replace('"', '\"', $dataValue) . '"';
+                $result[] = $dataKey . ' = "' . \str_replace('"', '\"', $dataValue) . '"';
             }
         }
 
-        return implode(Data::LE, $result);
+        return \implode(Data::LE, $result);
     }
 }

@@ -11,8 +11,9 @@
  * @license    MIT
  * @copyright  Copyright (C) JBZoo.com, All rights reserved.
  * @link       https://github.com/JBZoo/Data
- * @author     Denis Smetannikov <denis@jbzoo.com>
  */
+
+declare(strict_types=1);
 
 namespace JBZoo\PHPUnit;
 
@@ -389,7 +390,7 @@ class DataTest extends PHPUnit
             ],
         ]);
 
-        isSame(0, $data->get(0));
+        isSame(0, $data->get('0'));
         isSame(1, $data->find('2.0'));
         isSame('0', $data->find('nested.0'));
         isSame(0, $data['0']);
@@ -416,7 +417,7 @@ class DataTest extends PHPUnit
         isClass(Data::class, json(json()));
 
         isSame('[]', '' . json());
-        //isSame('[false]', '' . json(false));
+        //isSame('[false]', '' . json(false));testNumeric
         isSame('[]', '' . json(null));
         isSame('[]', '' . json(''));
         isSame('[]', '' . json([]));
