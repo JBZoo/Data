@@ -17,9 +17,9 @@
     },
 
     "require-dev"       : {
-        "jbzoo/toolbox-dev" : "^2.9.2",
-        "jbzoo/utils"       : "^4.2.3",
-        "symfony/yaml"      : "^5.2.2"
+        "jbzoo/toolbox-dev" : "^2.13.0",
+        "jbzoo/utils"       : "^4.4.0",
+        "symfony/yaml"      : "^4.4|^5.0"
     },
 
     "suggest"           : {
