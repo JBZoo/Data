@@ -15,7 +15,7 @@
 
 declare(strict_types=1);
 
-$default = include __DIR__ . '/../vendor/jbzoo/codestyle/src/phan/default.php';
+$default = include __DIR__ . '/vendor/jbzoo/codestyle/src/phan/default.php';
 
 $config = array_merge($default, [
     'file_list' => [
@@ -33,5 +33,10 @@ $config = array_merge($default, [
 ]);
 
 $config['plugins'][] = 'NotFullyQualifiedUsagePlugin';
+
+$configIndex = array_search('UnusedSuppressionPlugin', $config['plugins'], true);
+if ($configIndex !== false) {
+    unset($config['plugins'][$configIndex]);
+}
 
 return $config;

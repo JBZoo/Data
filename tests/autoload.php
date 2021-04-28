@@ -20,7 +20,7 @@ namespace JBZoo\PHPUnit;
 // @codingStandardsIgnoreFile
 
 // main autoload
-if ($autoload = realpath('./vendor/autoload.php')) {
+if ($autoload = dirname(__DIR__) . '/vendor/autoload.php') {
     require_once $autoload;
 } else {
     echo 'Please execute "composer update" !' . PHP_EOL;
@@ -28,5 +28,5 @@ if ($autoload = realpath('./vendor/autoload.php')) {
 }
 
 if ($fixturesPath = realpath(PROJECT_TESTS . '/fixtures.php')) {
-    require_once PROJECT_TESTS . '/fixtures.php';
+    require_once $fixturesPath;
 }

@@ -48,6 +48,8 @@ final class PhpArray extends Data
         if (\file_exists($string)) {
             return include $string;
         }
+
+        return null;
     }
 
     /**
