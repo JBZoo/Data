@@ -167,7 +167,8 @@ class Data extends ArrayObject
         }
 
         // explode search key and init search data
-        $parts = \explode($separator, $key);
+        /** @phan-suppress-next-line PhanRedundantCondition */
+        $parts = (array)\explode($separator, $key);
         $data = $this;
 
         foreach ($parts as $part) {

@@ -34,4 +34,9 @@ $config = array_merge($default, [
 
 $config['plugins'][] = 'NotFullyQualifiedUsagePlugin';
 
+$configIndex = array_search('UnusedSuppressionPlugin', $config['plugins'], true);
+if ($configIndex !== false) {
+    unset($config['plugins'][$configIndex]);
+}
+
 return $config;
