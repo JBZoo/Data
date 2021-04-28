@@ -167,7 +167,7 @@ class Data extends ArrayObject
         }
 
         // explode search key and init search data
-        $parts = (array)\explode($separator, $key);
+        $parts = \explode($separator, $key);
         $data = $this;
 
         foreach ($parts as $part) {
