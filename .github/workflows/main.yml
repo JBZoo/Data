@@ -65,6 +65,7 @@ jobs:
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
+        continue-on-error: true
         with:
           name: PHPUnit - ${{ matrix.php-version }} - ${{ matrix.coverage }}
           path: build/
@@ -102,6 +103,7 @@ jobs:
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
+        continue-on-error: true
         with:
           name: Linters - ${{ matrix.php-version }}
           path: build/
@@ -139,6 +141,7 @@ jobs:
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
+        continue-on-error: true
         with:
           name: Reports - ${{ matrix.php-version }}
           path: build/
