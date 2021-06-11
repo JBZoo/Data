@@ -173,7 +173,12 @@ class Data extends ArrayObject
 
         foreach ($parts as $part) {
             // handle ArrayObject and Array
-            if (($data instanceof ArrayObject || \is_array($data)) && isset($data[$part])) {
+            if ($data instanceof ArrayObject && $data[$part] !== null) {
+                $data = $data[$part];
+                continue;
+            }
+
+            if (\is_array($data) && isset($data[$part])) {
                 $data = $data[$part];
                 continue;
             }
