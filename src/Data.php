@@ -167,8 +167,11 @@ class Data extends ArrayObject
         }
 
         // explode search key and init search data
-        /** @phan-suppress-next-line PhanRedundantCondition */
-        $parts = (array)\explode($separator, $key);
+        if ('' === $separator) {
+            throw new Exception("Separator can't be empty");
+        }
+
+        $parts = \explode($separator, $key);
         $data = $this;
 
         foreach ($parts as $part) {

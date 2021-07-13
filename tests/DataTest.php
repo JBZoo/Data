@@ -166,12 +166,12 @@ class DataTest extends PHPUnit
 
         isClass(Data::class, $data->getSelf('sub'));
         isSame(['sub' => 'sub-value', 'sub.sub' => 'sub-value-2'], $data->getSelf('sub')->getArrayCopy());
-        isSame(['qwerty'=> 1], (array)$data->getSelf('real-null', ['qwerty'=> 1]));
-        isSame(['qwerty'=> 1], (array)$data->getSelf('null', ['qwerty'=> 1]));
+        isSame(['qwerty' => 1], (array)$data->getSelf('real-null', ['qwerty' => 1]));
+        isSame(['qwerty' => 1], (array)$data->getSelf('null', ['qwerty' => 1]));
         isClass(JSON::class, $json->getSelf('sub'));
         isSame(['sub' => 'sub-value', 'sub.sub' => 'sub-value-2'], $json->getSelf('sub')->getArrayCopy());
-        isSame(['qwerty'=> 1], (array)$json->getSelf('real-null', ['qwerty'=> 1]));
-        isSame(['qwerty'=> 1], (array)$json->getSelf('null', ['qwerty'=> 1]));
+        isSame(['qwerty' => 1], (array)$json->getSelf('real-null', ['qwerty' => 1]));
+        isSame(['qwerty' => 1], (array)$json->getSelf('null', ['qwerty' => 1]));
 
         // Find
         isSame(123321, $data->findInt('array_not_empty.123'));
@@ -462,5 +462,15 @@ class DataTest extends PHPUnit
         isClass(Yml::class, yml(yml()));
         isClass(Yml::class, yml($stdObj));
         isSame('qwerty', yml($stdObj)->get('string'));
+    }
+
+    public function testEmptySeparator()
+    {
+        $data = new Data($this->test);
+
+        $this->expectException(\JBZoo\Data\Exception::class);
+        $this->expectExceptionMessage("Separator can't be empty");
+
+        $data->find('array_not_empty.123', null, null, '');
     }
 }
