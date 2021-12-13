@@ -23,5 +23,4 @@ namespace JBZoo\Data;
  */
 class Exception extends \RuntimeException
 {
-
 }
