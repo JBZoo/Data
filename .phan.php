@@ -29,6 +29,7 @@ $config = array_merge($default, [
         // Libs
         'vendor/jbzoo/utils',
         'vendor/symfony/yaml',
+        'vendor/symfony/polyfill-php81'
     ]
 ]);
 

@@ -283,6 +283,7 @@ class Data extends ArrayObject
      * @param int|string $key
      * @return mixed|null
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($key)
     {
         if (!\property_exists($this, (string)$key)) {
