@@ -17,9 +17,15 @@
     },
 
     "require-dev"  : {
-        "jbzoo/toolbox-dev" : "^3.1.0",
-        "jbzoo/utils"       : "^4.4.0",
-        "symfony/yaml"      : "^4.4|^5.0"
+        "jbzoo/toolbox-dev"         : "^3.1.0",
+        "jbzoo/utils"               : "^4.4.0",
+        "symfony/yaml"              : ">=4.4",
+
+        "symfony/polyfill-ctype"    : ">=1.23.0",
+        "symfony/polyfill-mbstring" : ">=1.23.0",
+        "symfony/polyfill-php73"    : ">=1.23.0",
+        "symfony/polyfill-php80"    : ">=1.23.0",
+        "symfony/polyfill-php81"    : ">=1.23.0"
     },
 
     "suggest"      : {
@@ -42,8 +48,8 @@
 
     "config"       : {
         "optimize-autoloader" : true,
-        "allow-plugins": {
-            "composer/package-versions-deprecated": true
+        "allow-plugins"       : {
+            "composer/package-versions-deprecated" : true
         }
     },
 
