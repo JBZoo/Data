@@ -32,6 +32,8 @@ class Data extends ArrayObject
 {
     public const LE = "\n";
 
+    private $delimiter = '.';
+
     /**
      * Class constructor
      * @param array|string|false $data The data array
@@ -151,19 +153,24 @@ class Data extends ArrayObject
      * object that's nested under the current data object.
      * Example: $data->find('parent-key.sub-key.sub-sub-key');
      *
-     * @param string $key       The key to search for. Can be composed using $separator as the key/su-bkey separator
-     * @param mixed  $default   The default value
-     * @param mixed  $filter    Filter returned value
-     * @param string $separator The separator to use when searching for sub keys. Default is '.'
+     * @param string      $key       The key to search for. Can be composed using $separator as the key/su-bkey
+     *                               separator
+     * @param mixed       $default   The default value
+     * @param mixed       $filter    Filter returned value
+     * @param string|null $separator The separator to use when searching for sub keys. Default is '$this->delimiter'
      * @return mixed
      */
-    public function find(string $key, $default = null, $filter = null, string $separator = '.')
+    public function find(string $key, $default = null, $filter = null, ?string $separator = null)
     {
         $value = $this->get($key);
 
         // check if key exists in array
         if (null !== $value) {
             return self::filter($value, $filter);
+        }
+
+        if (!$separator) {
+            $separator = $this->delimiter;
         }
 
         // explode search key and init search data
@@ -305,7 +312,7 @@ class Data extends ArrayObject
      */
     public function is(string $key, $compareWith = true, bool $strictMode = false): bool
     {
-        if (\strpos($key, '.') === false) {
+        if (\strpos($key, $this->delimiter) === false) {
             $value = $this->get($key);
         } else {
             $value = $this->find($key);
@@ -452,5 +459,28 @@ class Data extends ArrayObject
 
         // @phpstan-ignore-next-line
         return new static($default);
+    }
+
+    /**
+     * @param string $delimiter
+     * @return \JBZoo\Data\Data
+     */
+    public function setDelimiter(string $delimiter): self
+    {
+        $delimiter = trim($delimiter);
+        if ($delimiter === '') {
+            throw new Exception("Delimiter can't be empty");
+        }
+
+        $this->delimiter = $delimiter;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDelimiter(): string
+    {
+        return $this->delimiter;
     }
 }
