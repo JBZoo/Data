@@ -35,13 +35,10 @@ jobs:
       JBZOO_COMPOSER_UPDATE_FLAGS: ${{ matrix.composer_flags }}
     strategy:
       matrix:
-        php-version: [ 7.2, 7.3, 7.4, 8.0 ]
+        php-version: [ 7.4, 8.0, 8.1 ]
         experimental: [ false ]
         coverage: [ xdebug, none ]
         composer_flags: [ "--prefer-lowest", "" ]
-        include:
-          - php-version: "8.1"
-            experimental: true
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -56,11 +53,9 @@ jobs:
           tools: composer
 
       - name: Build the Project
-        continue-on-error: ${{ matrix.experimental }}
         run: make update --no-print-directory
 
       - name: 🧪 PHPUnit Tests
-        continue-on-error: ${{ matrix.experimental }}
         run: make test --no-print-directory
 
       - name: Uploading coverage to coveralls
@@ -82,11 +77,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-version: [ 7.2, 7.3, 7.4, 8.0 ]
-        experimental: [ false ]
-        include:
-          - php-version: "8.1"
-            experimental: true
+        php-version: [ 7.4, 8.0, 8.1 ]
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -98,13 +89,12 @@ jobs:
         with:
           php-version: ${{ matrix.php-version }}
           tools: composer
+          extentions: ast
 
       - name: Build the Project
-        continue-on-error: ${{ matrix.experimental }}
         run: make update --no-print-directory
 
       - name: 👍 Code Quality
-        continue-on-error: ${{ matrix.experimental }}
         run: make codestyle --no-print-directory
 
       - name: Upload Artifacts
@@ -120,11 +110,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-version: [ 7.2, 7.3, 7.4, 8.0 ]
-        experimental: [ false ]
-        include:
-          - php-version: "8.1"
-            experimental: true
+        php-version: [ 7.4, 8.0, 8.1 ]
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
