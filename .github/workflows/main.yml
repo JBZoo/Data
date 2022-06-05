@@ -36,7 +36,6 @@ jobs:
     strategy:
       matrix:
         php-version: [ 7.4, 8.0, 8.1 ]
-        experimental: [ false ]
         coverage: [ xdebug, none ]
         composer_flags: [ "--prefer-lowest", "" ]
     steps:
@@ -60,6 +59,7 @@ jobs:
 
       - name: Uploading coverage to coveralls
         if: ${{ matrix.coverage == 'xdebug' }}
+        continue-on-error: true
         env:
             COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: make report-coveralls --no-print-directory
@@ -124,11 +124,9 @@ jobs:
           tools: composer
 
       - name: Build the Project
-        continue-on-error: ${{ matrix.experimental }}
         run: make update --no-print-directory
 
       - name: 📝 Build Reports
-        continue-on-error: ${{ matrix.experimental }}
         run: make report-all --no-print-directory
 
       - name: Upload Artifacts
