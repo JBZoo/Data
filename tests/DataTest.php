@@ -98,6 +98,7 @@ class DataTest extends PHPUnit
                 'sub'     => [
                     'qwerty' => 'deep-value',
                 ],
+                'sub.qwerty' => 'ytrewq',
             ],
 
             // pseudo nested
@@ -472,5 +473,18 @@ class DataTest extends PHPUnit
         $this->expectExceptionMessage("Separator can't be empty");
 
         $data->find('array_not_empty.123', null, null, '');
+    }
+
+    public function testCustomDelimiter()
+    {
+        $data = new Data($this->test);
+        $data->setDelimiter(' | ');
+
+        isSame('|', $data->getDelimiter());
+
+        isSame('ytrewq', $data->find('nested.sub.qwerty'));
+        isSame('ytrewq', $data->get('nested.sub.qwerty'));
+        isSame('deep-value', $data->find('nested|sub|qwerty'));
+        isSame('ytrewq', $data->find('nested|sub.qwerty'));
     }
 }
