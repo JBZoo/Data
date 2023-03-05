@@ -3,7 +3,18 @@
     "type"         : "library",
     "description"  : "An extended version of the ArrayObject object for working with system settings or just for working with data arrays",
     "license"      : "MIT",
-    "keywords"     : ["ArrayObject", "Array", "Config", "Data", "ini", "yml", "params", "json"],
+    "minimum-stability" : "dev",
+    "keywords"     : [
+        "ArrayObject",
+        "Array",
+        "Config",
+        "Data",
+        "ini",
+        "yml",
+        "params",
+        "json"
+    ],
+
     "authors"      : [
         {
             "name"  : "Denis Smetannikov",
@@ -11,13 +22,14 @@
             "role"  : "lead"
         }
     ],
+
     "require"      : {
-        "php"      : ">=7.4",
+        "php"      : "^8.1",
         "ext-json" : "*"
     },
 
     "require-dev"  : {
-        "jbzoo/toolbox-dev"         : ">=4.0.1",
+        "jbzoo/toolbox-dev"         : "7.x-dev",
         "jbzoo/utils"               : ">=4.4.0",
         "symfony/yaml"              : ">=4.4",
 
@@ -34,28 +46,25 @@
     },
 
     "autoload"     : {
+        "psr-4" : {"JBZoo\\Data\\" : "src"},
         "files" : [
             "src/functions.php"
-        ],
-        "psr-4" : {
-            "JBZoo\\Data\\" : "src"
-        }
+        ]
+
     },
 
     "autoload-dev" : {
-        "classmap" : ["tests"]
+        "psr-4" : {"JBZoo\\PHPUnit\\" : "tests"}
     },
 
     "config"       : {
         "optimize-autoloader" : true,
-        "allow-plugins"       : {
-            "composer/package-versions-deprecated" : true
-        }
+        "allow-plugins"       : {"composer/package-versions-deprecated" : true}
     },
 
     "extra"        : {
         "branch-alias" : {
-            "dev-master" : "4.x-dev"
+            "dev-master" : "7.x-dev"
         }
     }
 }
