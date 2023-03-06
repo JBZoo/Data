@@ -18,8 +18,7 @@ namespace JBZoo\PHPUnit;
 
 final class DataPackageTest extends \JBZoo\Codestyle\PHPUnit\AbstractPackageTest
 {
-    protected string $packageName      = 'Data';
-    protected string $gaScheduleMinute = '10';
+    protected string $packageName = 'Data';
 
     protected function setUp(): void
     {
