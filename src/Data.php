@@ -1,23 +1,21 @@
 <?php
 
 /**
- * JBZoo Toolbox - Data
+ * JBZoo Toolbox - Data.
  *
  * This file is part of the JBZoo Toolbox project.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @package    Data
  * @license    MIT
  * @copyright  Copyright (C) JBZoo.com, All rights reserved.
- * @link       https://github.com/JBZoo/Data
+ * @see        https://github.com/JBZoo/Data
  */
 
 declare(strict_types=1);
 
 namespace JBZoo\Data;
 
-use ArrayObject;
 use JBZoo\Utils\Filter;
 
 use function JBZoo\Utils\bool;
@@ -25,22 +23,20 @@ use function JBZoo\Utils\float;
 use function JBZoo\Utils\int;
 
 /**
- * Class Data
- * @package JBZoo\Data
+ * @psalm-suppress MissingTemplateParam
  */
-class Data extends ArrayObject
+class Data extends \ArrayObject
 {
     public const LE = "\n";
 
     /**
-     * Class constructor
-     * @param array|string|false $data The data array
+     * @param null|false|string|string[] $data The data array
      */
     public function __construct($data = [])
     {
-        $this->setFlags(ArrayObject::ARRAY_AS_PROPS);
+        $this->setFlags(\ArrayObject::ARRAY_AS_PROPS);
 
-        if ($data && \is_string($data) && \file_exists($data)) {
+        if (\is_string($data) && $data !== '' && \file_exists($data)) {
             $data = self::readFile($data);
         }
 
@@ -48,34 +44,61 @@ class Data extends ArrayObject
             $data = $this->decode($data);
         }
 
-        parent::__construct($data ? (array)$data : []);
+        parent::__construct(($data !== false && $data !== null) && \count($data) > 0 ? (array)$data : []);
     }
 
     /**
-     * Utility Method to unserialize the given data
-     * @param string $string
+     * Magic method to convert the data to a string
+     * Returns a serialized version of the data contained in
+     * the data object using serialize().
+     */
+    public function __toString(): string
+    {
+        return $this->write();
+    }
+
+    /**
+     * Filter value before return.
+     *
      * @return mixed
      */
-    protected function decode(string $string)
+    protected static function filter(mixed $value, mixed $filter)
     {
-        /** @noinspection UnserializeExploitsInspection */
-        return \unserialize($string, []);
+        if ($filter !== null) {
+            $value = Filter::_($value, $filter);
+        }
+
+        return $value;
     }
 
     /**
-     * Utility Method to serialize the given data
-     * @param mixed $data The data to serialize
-     * @return string The serialized data
+     * @return false|string
      */
-    protected function encode($data): string
+    protected static function readFile(string $filePath): bool | string
     {
-        return \serialize($data);
+        $contents = false;
+
+        $realPath = \realpath($filePath);
+        if ($realPath !== false) {
+            $contents = \file_get_contents($realPath);
+        }
+
+        return $contents;
     }
 
     /**
-     * Checks if the given key is present
+     * Check is array is nested.
+     */
+    protected static function isMulti(array $array): bool
+    {
+        $arrayCount = \array_filter($array, '\is_array');
+
+        return \count($arrayCount) > 0;
+    }
+
+    /**
+     * Checks if the given key is present.
      * @param string $name The key to check
-     * @return boolean
      */
     public function has(string $name): bool
     {
@@ -83,10 +106,10 @@ class Data extends ArrayObject
     }
 
     /**
-     * Get a value from the data given its key
-     * @param string $key     The key used to fetch the data
-     * @param mixed  $default The default value
-     * @param mixed  $filter  Filter returned value
+     * Get a value from the data given its key.
+     * @param  string $key     The key used to fetch the data
+     * @param  mixed  $default The default value
+     * @param  mixed  $filter  Filter returned value
      * @return mixed
      */
     public function get(string $key, $default = null, $filter = null)
@@ -100,20 +123,21 @@ class Data extends ArrayObject
     }
 
     /**
-     * Set a value in the data
-     * @param string $name  The key used to set the value
-     * @param mixed  $value The value to set
+     * Set a value in the data.
+     * @param  string $name  The key used to set the value
+     * @param  mixed  $value The value to set
      * @return $this
      */
     public function set(string $name, $value)
     {
         $this->offsetSet($name, $value);
+
         return $this;
     }
 
     /**
-     * Remove a value from the data
-     * @param string $name The key of the data to remove
+     * Remove a value from the data.
+     * @param  string $name The key of the data to remove
      * @return $this
      */
     public function remove(string $name): self
@@ -126,19 +150,7 @@ class Data extends ArrayObject
     }
 
     /**
-     * Magic method to convert the data to a string
-     * Returns a serialized version of the data contained in
-     * the data object using serialize()
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->write();
-    }
-
-    /**
-     * Encode an array or an object in INI format
-     * @return string
+     * Encode an array or an object in INI format.
      */
     public function write(): string
     {
@@ -149,12 +161,12 @@ class Data extends ArrayObject
      * Find a key in the data recursively
      * This method finds the given key, searching also in any array or
      * object that's nested under the current data object.
-     * Example: $data->find('parent-key.sub-key.sub-sub-key');
+     * Example: $data->find('parent-key.sub-key.sub-sub-key');.
      *
-     * @param string $key       The key to search for. Can be composed using $separator as the key/su-bkey separator
-     * @param mixed  $default   The default value
-     * @param mixed  $filter    Filter returned value
-     * @param string $separator The separator to use when searching for sub keys. Default is '.'
+     * @param  string $key       The key to search for. Can be composed using $separator as the key/su-bkey separator
+     * @param  mixed  $default   The default value
+     * @param  mixed  $filter    Filter returned value
+     * @param  string $separator The separator to use when searching for sub keys. Default is '.'
      * @return mixed
      */
     public function find(string $key, $default = null, $filter = null, string $separator = '.')
@@ -162,21 +174,21 @@ class Data extends ArrayObject
         $value = $this->get($key);
 
         // check if key exists in array
-        if (null !== $value) {
+        if ($value !== null) {
             return self::filter($value, $filter);
         }
 
         // explode search key and init search data
-        if ('' === $separator) {
+        if ($separator === '') {
             throw new Exception("Separator can't be empty");
         }
 
         $parts = \explode($separator, $key);
-        $data = $this;
+        $data  = $this;
 
         foreach ($parts as $part) {
             // handle ArrayObject and Array
-            if ($data instanceof ArrayObject && $data[$part] !== null) {
+            if ($data instanceof \ArrayObject && $data[$part] !== null) {
                 $data = $data[$part];
                 continue;
             }
@@ -186,9 +198,10 @@ class Data extends ArrayObject
                 continue;
             }
 
-            // handle object
-            if (\is_object($data) && isset($data->$part)) {
-                $data = &$data->$part;
+            // Handle object
+            if (\is_object($data) && \property_exists($data, $part)) {
+                /** @phpstan-ignore-next-line */
+                $data = $data->{$part};
                 continue;
             }
 
@@ -200,30 +213,14 @@ class Data extends ArrayObject
     }
 
     /**
-     * Filter value before return
-     *
-     * @param mixed $value
-     * @param mixed $filter
-     * @return mixed
-     */
-    protected static function filter($value, $filter)
-    {
-        if (null !== $filter) {
-            $value = Filter::_($value, $filter);
-        }
-
-        return $value;
-    }
-
-    /**
-     * Find a value also in nested arrays/objects
-     * @param mixed $needle The value to search for
-     * @return string|float|int|bool|null
+     * Find a value also in nested arrays/objects.
+     * @param  mixed                      $needle The value to search for
+     * @return null|bool|float|int|string
      */
     public function search($needle)
     {
         $aIterator = new \RecursiveArrayIterator($this->getArrayCopy());
-        $iterator = new \RecursiveIteratorIterator($aIterator);
+        $iterator  = new \RecursiveIteratorIterator($aIterator);
 
         while ($iterator->valid()) {
             $iterator->current();
@@ -240,7 +237,6 @@ class Data extends ArrayObject
 
     /**
      * Return flattened array copy. Keys are <b>NOT</b> preserved.
-     * @return array
      */
     public function flattenRecursive(): array
     {
@@ -254,37 +250,11 @@ class Data extends ArrayObject
     }
 
     /**
-     * @param string $filePath
-     * @return string|false
+     * @param  int|string $key
+     * @return null|mixed
+     * @phpstan-ignore-next-line
      */
-    protected static function readFile(string $filePath)
-    {
-        $contents = false;
-
-        if ($realPath = \realpath($filePath)) {
-            $contents = \file_get_contents($realPath);
-        }
-
-        return $contents;
-    }
-
-    /**
-     * Check is array is nested
-     * @param array $array
-     * @return bool
-     */
-    protected static function isMulti(array $array): bool
-    {
-        $arrayCount = \array_filter($array, '\is_array');
-        return \count($arrayCount) > 0;
-    }
-
-    /**
-     * @param int|string $key
-     * @return mixed|null
-     */
-    #[\ReturnTypeWillChange]
-    public function offsetGet($key)
+    public function offsetGet($key): mixed
     {
         if (!\property_exists($this, (string)$key)) {
             return null;
@@ -294,18 +264,13 @@ class Data extends ArrayObject
     }
 
     /**
-     * Compare value by key with something
-     *
-     * @param string $key
-     * @param mixed  $compareWith
-     * @param bool   $strictMode
-     * @return bool
+     * Compare value by key with something.
      *
      * @SuppressWarnings(PHPMD.ShortMethodName)
      */
-    public function is(string $key, $compareWith = true, bool $strictMode = false): bool
+    public function is(string $key, mixed $compareWith = true, bool $strictMode = false): bool
     {
-        if (\strpos($key, '.') === false) {
+        if (!\str_contains($key, '.')) {
             $value = $this->get($key);
         } else {
             $value = $this->find($key);
@@ -319,50 +284,27 @@ class Data extends ArrayObject
         return $value == $compareWith;
     }
 
-    /**
-     * @param string $key
-     * @param int    $default
-     * @return int
-     */
     public function getInt(string $key, int $default = 0): int
     {
         return int($this->get($key, $default));
     }
 
-    /**
-     * @param string $key
-     * @param float  $default
-     * @return float
-     */
     public function getFloat(string $key, float $default = 0.0): float
     {
         return float($this->get($key, $default));
     }
 
-    /**
-     * @param string $key
-     * @param string $default
-     * @return string
-     */
     public function getString(string $key, string $default = ''): string
     {
         return (string)$this->get($key, $default);
     }
 
-    /**
-     * @param string $key
-     * @param array  $default
-     * @return array
-     */
     public function getArray(string $key, array $default = []): array
     {
         return (array)$this->get($key, $default);
     }
 
     /**
-     * @param string $key
-     * @param bool   $default
-     * @return bool
      * @SuppressWarnings(PHPMD.BooleanGetMethodName)
      */
     public function getBool(string $key, bool $default = false): bool
@@ -371,14 +313,12 @@ class Data extends ArrayObject
     }
 
     /**
-     * @param string $key
-     * @param array  $default
      * @return static
      * @psalm-suppress UnsafeInstantiation
      */
     public function getSelf(string $key, array $default = []): self
     {
-        if ($this->has($key) && null !== $this->get($key)) {
+        if ($this->has($key) && $this->get($key) !== null) {
             // @phpstan-ignore-next-line
             return new static((array)$this->get($key, $default));
         }
@@ -387,70 +327,62 @@ class Data extends ArrayObject
         return new static($default);
     }
 
-    /**
-     * @param string $key
-     * @param int    $default
-     * @return int
-     */
     public function findInt(string $key, int $default = 0): int
     {
         return int($this->find($key, $default));
     }
 
-    /**
-     * @param string $key
-     * @param float  $default
-     * @return float
-     */
     public function findFloat(string $key, float $default = 0.0): float
     {
         return float($this->find($key, $default));
     }
 
-    /**
-     * @param string $key
-     * @param string $default
-     * @return string
-     */
     public function findString(string $key, string $default = ''): string
     {
         return (string)$this->find($key, $default);
     }
 
-    /**
-     * @param string $key
-     * @param array  $default
-     * @return array
-     */
     public function findArray(string $key, array $default = []): array
     {
         return (array)$this->find($key, $default);
     }
 
-    /**
-     * @param string $key
-     * @param bool   $default
-     * @return bool
-     */
     public function findBool(string $key, bool $default = false): bool
     {
         return bool($this->find($key, $default));
     }
 
     /**
-     * @param string $key
-     * @param array  $default
      * @return static
      * @psalm-suppress UnsafeInstantiation
      */
     public function findSelf(string $key, array $default = []): self
     {
-        if ($this->has($key) && null !== $this->get($key)) {
+        if ($this->has($key) && $this->get($key) !== null) {
             // @phpstan-ignore-next-line
             return new static((array)$this->find($key, $default));
         }
 
         // @phpstan-ignore-next-line
         return new static($default);
+    }
+
+    /**
+     * Utility Method to unserialize the given data.
+     */
+    protected function decode(string $string): mixed
+    {
+        /** @noinspection UnserializeExploitsInspection */
+        return \unserialize($string, []);
+    }
+
+    /**
+     * Utility Method to serialize the given data.
+     * @param  string[] $data The data to serialize
+     * @return string   The serialized data
+     */
+    protected function encode(array $data): string
+    {
+        return \serialize($data);
     }
 }

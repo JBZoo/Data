@@ -1,16 +1,15 @@
 <?php
 
 /**
- * JBZoo Toolbox - Data
+ * JBZoo Toolbox - Data.
  *
  * This file is part of the JBZoo Toolbox project.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @package    Data
  * @license    MIT
  * @copyright  Copyright (C) JBZoo.com, All rights reserved.
- * @link       https://github.com/JBZoo/Data
+ * @see        https://github.com/JBZoo/Data
  */
 
 declare(strict_types=1);
@@ -22,27 +21,22 @@ use JBZoo\Data\JSON;
 
 use function JBZoo\Data\json;
 
-/**
- * Class JsonDataTest
- *
- * @package JBZoo\Data
- */
-class JsonDataTest extends PHPUnit
+class DataJsonTest extends PHPUnit
 {
-    protected $test = [];
+    protected array $test = [];
 
     protected function setUp(): void
     {
         $this->test = [
             // simular
-            'string-empty'    => '',
-            'string-zero'     => '0',
-            'string'          => 'qwerty',
-            'number-zero'     => 0,
-            'number'          => 10,
-            'bool-true'       => true,
-            'bool-false'      => false,
-            'null'            => null,
+            'string-empty' => '',
+            'string-zero'  => '0',
+            'string'       => 'qwerty',
+            'number-zero'  => 0,
+            'number'       => 10,
+            'bool-true'    => true,
+            'bool-false'   => false,
+            'null'         => null,
 
             // array
             'array_empty'     => [],
@@ -51,7 +45,7 @@ class JsonDataTest extends PHPUnit
             ],
 
             // objects
-            'objects'         => (object)[
+            'objects' => (object)[
                 'prop-1' => 'prop-value-1',
                 'prop-2' => 'prop-value-2',
                 'sub'    => (object)[
@@ -61,7 +55,7 @@ class JsonDataTest extends PHPUnit
             ],
 
             // real nested
-            'sub'             => [
+            'sub' => [
                 'sub'     => 'sub-value',
                 'sub.sub' => 'sub-value-2',
             ],
@@ -76,13 +70,13 @@ class JsonDataTest extends PHPUnit
                 ],
             ],
 
-            'data'              => new Data([
+            'data' => new Data([
                 'key-1' => 'data-value-1',
                 'key-2' => 'data-value-2',
             ]),
 
             // real nested
-            'nested'            => [
+            'nested' => [
                 'value-1' => 'val-1',
                 'value-2' => 'val-2',
                 'sub'     => [
@@ -97,45 +91,44 @@ class JsonDataTest extends PHPUnit
         ];
     }
 
-    public function testToString()
+    public function testToString(): void
     {
         $data = new JSON($this->test);
 
-        $jsonTest = (string)$data;
+        $jsonTest  = (string)$data;
         $jsonValid = openFile('./tests/resource/data.json');
 
         is($jsonValid, $jsonTest);
     }
 
-    public function testJson()
+    public function testJson(): void
     {
         $dataValid = openFile('./tests/resource/data.json');
-        $data = new JSON($dataValid);
+        $data      = new JSON($dataValid);
 
         is($dataValid, (string)$data);
     }
 
-    public function testPropsVisible()
+    public function testPropsVisible(): void
     {
         $data = new JSON($this->test);
-        isTrue(count((array)$data) > 0);
+        isTrue(\count((array)$data) > 0);
     }
 
-    public function testBitInt()
+    public function testBitInt(): void
     {
         $value = 123456789012345678901234567890;
 
-        $bigIntAsString = ['value' => '123456789012345678901234567890'];
-        $bigInt = ['value' => $value];
+        $bigIntAsString     = ['value' => '123456789012345678901234567890'];
+        $bigInt             = ['value' => $value];
         $jsonBigIntAsString = '{"value":"123456789012345678901234567890"}';
-        $jsonBigInt = '{"value":123456789012345678901234567890}';
-
+        $jsonBigInt         = '{"value":123456789012345678901234567890}';
 
         $expected = json($jsonBigIntAsString);
-        $actual = json($jsonBigInt);
+        $actual   = json($jsonBigInt);
         isSame($bigIntAsString, $expected->getArrayCopy());
         isSame($expected->getArrayCopy(), $actual->getArrayCopy());
 
-        //isSame(json($bigIntAsString)->getArrayCopy(), json($bigInt)->getArrayCopy()); // TODO: needs to think
+        // isSame(json($bigIntAsString)->getArrayCopy(), json($bigInt)->getArrayCopy()); // TODO: needs to think
     }
 }

@@ -1,16 +1,15 @@
 <?php
 
 /**
- * JBZoo Toolbox - Data
+ * JBZoo Toolbox - Data.
  *
  * This file is part of the JBZoo Toolbox project.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @package    Data
  * @license    MIT
  * @copyright  Copyright (C) JBZoo.com, All rights reserved.
- * @link       https://github.com/JBZoo/Data
+ * @see        https://github.com/JBZoo/Data
  */
 
 declare(strict_types=1);
@@ -19,35 +18,32 @@ namespace JBZoo\PHPUnit;
 
 use JBZoo\Data\PhpArray;
 
-/**
- * Class PhpArrayDataTest
- *
- * @package JBZoo\Data
- */
-class PhpArrayDataTest extends PHPUnit
+class DataPhpArrayTest extends PHPUnit
 {
-    protected $testFile = './tests/resource/data.inc';
+    protected string $testFile = './tests/resource/data.inc';
 
-    public function testFile()
+    public function testFile(): void
     {
-        $data = new PhpArray($this->testFile);
+        $data      = new PhpArray($this->testFile);
         $dataValid = include $this->testFile;
 
         is($dataValid, $data->getArrayCopy());
     }
 
-    public function testPropsVisible()
+    public function testPropsVisible(): void
     {
         $data = new PhpArray($this->testFile);
-        isTrue(count((array)$data) > 0);
+        isTrue(\count((array)$data) > 0);
     }
 
-    public function testToString()
+    public function testToString(): void
     {
         $data = new PhpArray($this->testFile);
 
-        isSame(implode(PHP_EOL, [
+        isSame(\implode(\PHP_EOL, [
             '<?php',
+            '',
+            'declare(strict_types=1);',
             '',
             'return array (',
             "  'host' => 'localhost',",

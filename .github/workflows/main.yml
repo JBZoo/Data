@@ -1,14 +1,13 @@
 #
-# JBZoo Toolbox - Data
+# JBZoo Toolbox - Data.
 #
 # This file is part of the JBZoo Toolbox project.
 # For the full copyright and license information, please view the LICENSE
 # file that was distributed with this source code.
 #
-# @package    Data
 # @license    MIT
 # @copyright  Copyright (C) JBZoo.com, All rights reserved.
-# @link       https://github.com/JBZoo/Data
+# @see        https://github.com/JBZoo/Data
 #
 
 name: CI
@@ -21,7 +20,7 @@ on:
     branches:
       - 'master'
   schedule:
-    - cron: '55 */8 * * *'
+    - cron: '10 */8 * * *'
 
 env:
   COLUMNS: 120
@@ -35,12 +34,12 @@ jobs:
       JBZOO_COMPOSER_UPDATE_FLAGS: ${{ matrix.composer_flags }}
     strategy:
       matrix:
-        php-version: [ 7.4, 8.0, 8.1 ]
+        php-version: [ 8.1, 8.2 ]
         coverage: [ xdebug, none ]
         composer_flags: [ "--prefer-lowest", "" ]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
@@ -50,6 +49,7 @@ jobs:
           php-version: ${{ matrix.php-version }}
           coverage: ${{ matrix.coverage }}
           tools: composer
+          extensions: ast
 
       - name: Build the Project
         run: make update --no-print-directory
@@ -62,10 +62,10 @@ jobs:
         continue-on-error: true
         env:
             COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: make report-coveralls --no-print-directory
+        run: make report-coveralls --no-print-directory || true
 
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         continue-on-error: true
         with:
           name: PHPUnit - ${{ matrix.php-version }} - ${{ matrix.coverage }}
@@ -77,10 +77,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-version: [ 7.4, 8.0, 8.1 ]
+        php-version: [ 8.1, 8.2 ]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
@@ -88,8 +88,9 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
+          coverage: none
           tools: composer
-          extentions: ast
+          extensions: ast
 
       - name: Build the Project
         run: make update --no-print-directory
@@ -98,7 +99,7 @@ jobs:
         run: make codestyle --no-print-directory
 
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         continue-on-error: true
         with:
           name: Linters - ${{ matrix.php-version }}
@@ -110,10 +111,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-version: [ 7.4, 8.0, 8.1 ]
+        php-version: [ 8.1, 8.2 ]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
@@ -121,7 +122,9 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
+          coverage: xdebug
           tools: composer
+          extensions: ast
 
       - name: Build the Project
         run: make update --no-print-directory
@@ -130,7 +133,7 @@ jobs:
         run: make report-all --no-print-directory
 
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         continue-on-error: true
         with:
           name: Reports - ${{ matrix.php-version }}
