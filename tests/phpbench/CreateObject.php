@@ -1,16 +1,15 @@
 <?php
 
 /**
- * JBZoo Toolbox - Data
+ * JBZoo Toolbox - Data.
  *
  * This file is part of the JBZoo Toolbox project.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @package    Data
  * @license    MIT
  * @copyright  Copyright (C) JBZoo.com, All rights reserved.
- * @link       https://github.com/JBZoo/Data
+ * @see        https://github.com/JBZoo/Data
  */
 
 declare(strict_types=1);
@@ -28,27 +27,23 @@ use function JBZoo\Data\phpArray;
 use function JBZoo\Data\yml;
 
 /**
- * Class CreateObject
  * @BeforeMethods({"init"})
  * @Revs(100000)
  * @Iterations(3)
  */
 class CreateObject
 {
-    /**
-     * @var array
-     */
-    protected $data = [];
+    protected array $data = [];
 
     public function init(): void
     {
-        $this->data = Fixture::createRandomArray();
+        $this->data = DataFixture::createRandomArray();
     }
 
     /**
      * @Groups({"Native", "ArrayObject"})
      */
-    public function benchArrayObjectOrig()
+    public function benchArrayObjectOrig(): void
     {
         new \ArrayObject($this->data);
     }
@@ -56,7 +51,7 @@ class CreateObject
     /**
      * @Groups({"Native", "ArrayObject", "Extended"})
      */
-    public function benchArrayObjectExtOrig()
+    public function benchArrayObjectExtOrig(): void
     {
         new \ArrayObjectExt($this->data);
     }
@@ -64,7 +59,7 @@ class CreateObject
     /**
      * @Groups({"Data"})
      */
-    public function benchData()
+    public function benchData(): void
     {
         new Data($this->data);
     }
@@ -72,7 +67,7 @@ class CreateObject
     /**
      * @Groups({"PhpArray"})
      */
-    public function benchPhpArray()
+    public function benchPhpArray(): void
     {
         new PhpArray($this->data);
     }
@@ -80,7 +75,7 @@ class CreateObject
     /**
      * @Groups({"Ini"})
      */
-    public function benchIni()
+    public function benchIni(): void
     {
         new Ini($this->data);
     }
@@ -88,7 +83,7 @@ class CreateObject
     /**
      * @Groups({"JSON"})
      */
-    public function benchJson()
+    public function benchJson(): void
     {
         new JSON($this->data);
     }
@@ -96,7 +91,7 @@ class CreateObject
     /**
      * @Groups({"Yml"})
      */
-    public function benchYml()
+    public function benchYml(): void
     {
         new Yml($this->data);
     }
@@ -104,7 +99,7 @@ class CreateObject
     /**
      * @Groups({"Data", "Func"})
      */
-    public function benchDataFunc()
+    public function benchDataFunc(): void
     {
         data($this->data);
     }
@@ -112,7 +107,7 @@ class CreateObject
     /**
      * @Groups({"PhpArray", "Func"})
      */
-    public function benchPhpArrayFunc()
+    public function benchPhpArrayFunc(): void
     {
         phpArray($this->data);
     }
@@ -120,7 +115,7 @@ class CreateObject
     /**
      * @Groups({"Ini", "Func"})
      */
-    public function benchIniFunc()
+    public function benchIniFunc(): void
     {
         ini($this->data);
     }
@@ -128,7 +123,7 @@ class CreateObject
     /**
      * @Groups({"JSON", "Func"})
      */
-    public function benchJsonFunc()
+    public function benchJsonFunc(): void
     {
         json($this->data);
     }
@@ -136,7 +131,7 @@ class CreateObject
     /**
      * @Groups({"Yml", "Func"})
      */
-    public function benchYmlFunc()
+    public function benchYmlFunc(): void
     {
         yml($this->data);
     }

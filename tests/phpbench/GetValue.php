@@ -1,16 +1,15 @@
 <?php
 
 /**
- * JBZoo Toolbox - Data
+ * JBZoo Toolbox - Data.
  *
  * This file is part of the JBZoo Toolbox project.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @package    Data
  * @license    MIT
  * @copyright  Copyright (C) JBZoo.com, All rights reserved.
- * @link       https://github.com/JBZoo/Data
+ * @see        https://github.com/JBZoo/Data
  */
 
 declare(strict_types=1);
@@ -18,38 +17,29 @@ declare(strict_types=1);
 use JBZoo\Data\Data;
 
 /**
- * Class GetValue
  * @BeforeMethods({"init"})
  * @Revs(1000000)
  * @Iterations(3)
  */
 class GetValue
 {
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $array = [];
 
-    /**
-     * @var Data
-     */
+    /** @var Data */
     protected $data = [];
 
-    /**
-     * @var ArrayObject|null
-     */
+    /** @var null|ArrayObject */
     protected $arrObj;
 
-    /**
-     * @var ArrayObjectExt|null
-     */
+    /** @var null|ArrayObjectExt */
     protected $arrObjExt;
 
     public function init(): void
     {
-        $this->array = Fixture::createRandomArray();
-        $this->data = new Data($this->array);
-        $this->arrObj = new \ArrayObject($this->array);
+        $this->array     = Fixture::createRandomArray();
+        $this->data      = new Data($this->array);
+        $this->arrObj    = new \ArrayObject($this->array);
         $this->arrObjExt = new \ArrayObjectExt($this->array);
     }
 

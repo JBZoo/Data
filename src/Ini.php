@@ -1,57 +1,37 @@
 <?php
 
 /**
- * JBZoo Toolbox - Data
+ * JBZoo Toolbox - Data.
  *
  * This file is part of the JBZoo Toolbox project.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @package    Data
  * @license    MIT
  * @copyright  Copyright (C) JBZoo.com, All rights reserved.
- * @link       https://github.com/JBZoo/Data
+ * @see        https://github.com/JBZoo/Data
  */
 
 declare(strict_types=1);
 
 namespace JBZoo\Data;
 
-/**
- * Class Ini
- *
- * @package JBZoo\Data
- */
 final class Ini extends Data
 {
-    /**
-     * Utility Method to unserialize the given data
-     *
-     * @param string $string
-     * @return mixed
-     */
-    protected function decode(string $string)
+    protected function decode(string $string): mixed
     {
         return \parse_ini_string($string, true, \INI_SCANNER_NORMAL);
     }
 
-    /**
-     * @param mixed $data
-     * @return string
-     */
-    protected function encode($data): string
+    protected function encode(array $data): string
     {
-        return $this->render($data, []);
+        return $this->render($data);
     }
 
-    /**
-     * @param array $data
-     * @param array $parent
-     * @return string
-     */
     protected function render(array $data = [], array $parent = []): string
     {
         $result = [];
+
         foreach ($data as $dataKey => $dataValue) {
             if (\is_array($dataValue)) {
                 if (self::isMulti($dataValue)) {

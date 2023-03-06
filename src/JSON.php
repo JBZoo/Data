@@ -1,48 +1,31 @@
 <?php
 
 /**
- * JBZoo Toolbox - Data
+ * JBZoo Toolbox - Data.
  *
  * This file is part of the JBZoo Toolbox project.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @package    Data
  * @license    MIT
  * @copyright  Copyright (C) JBZoo.com, All rights reserved.
- * @link       https://github.com/JBZoo/Data
+ * @see        https://github.com/JBZoo/Data
  */
 
 declare(strict_types=1);
 
 namespace JBZoo\Data;
 
-/**
- * Class JSON
- *
- * @package JBZoo\Data
- */
 final class JSON extends Data
 {
-    /**
-     * Utility Method to unserialize the given data
-     *
-     * @param string $string
-     * @return mixed
-     */
-    protected function decode(string $string)
+    protected function decode(string $string): mixed
     {
+        /** @noinspection JsonEncodingApiUsageInspection */
         return \json_decode($string, true, 512, \JSON_BIGINT_AS_STRING);
     }
 
-    /**
-     * Does the real json encoding adding human readability. Supports automatic indenting with tabs
-     *
-     * @param mixed $data
-     * @return string
-     */
-    protected function encode($data): string
+    protected function encode(array $data): string
     {
-        return (string)\json_encode($data, \JSON_PRETTY_PRINT | \JSON_BIGINT_AS_STRING);
+        return \json_encode($data, \JSON_THROW_ON_ERROR | \JSON_PRETTY_PRINT | \JSON_BIGINT_AS_STRING);
     }
 }
