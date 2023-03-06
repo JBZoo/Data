@@ -176,6 +176,8 @@ class DataTest extends PHPUnit
         isSame(['sub' => 'sub-value', 'sub.sub' => 'sub-value-2'], $data->findSelf('sub')->getArrayCopy());
         isClass(JSON::class, $json->findSelf('sub'));
         isSame(['sub' => 'sub-value', 'sub.sub' => 'sub-value-2'], $json->findSelf('sub')->getArrayCopy());
+
+        isClass(JSON::class, $json->findSelf('invalid-key-name'));
     }
 
     public function testGet(): void
@@ -310,9 +312,7 @@ class DataTest extends PHPUnit
             'string' => 'qwerty',
             'sub'    => [
                 'sub'     => 'sub-value',
-                'sub-sub' => [
-                    'sub-key' => 'sub-sub-value',
-                ],
+                'sub-sub' => ['sub-key' => 'sub-sub-value'],
             ],
         ]);
 
@@ -321,11 +321,7 @@ class DataTest extends PHPUnit
 
     public function testFindBug(): void
     {
-        $array = [
-            'response' => [
-                'code' => '404',
-            ],
-        ];
+        $array = ['response' => ['code' => '404']];
 
         $data = new Data($array);
 
@@ -349,9 +345,7 @@ class DataTest extends PHPUnit
     {
         $data = new Data([
             'key'    => 1,
-            'nested' => [
-                'key' => null,
-            ],
+            'nested' => ['key' => null],
         ]);
 
         isTrue($data->is('key'));
@@ -374,13 +368,8 @@ class DataTest extends PHPUnit
             0        => 0,
             1        => 1,
             'string' => 'test',
-            2        => [
-                1,
-            ],
-            'nested' => [
-                '0',
-                1,
-            ],
+            2        => [1],
+            'nested' => ['0', 1],
         ]);
 
         isSame(0, $data->get('0'));
@@ -441,19 +430,28 @@ class DataTest extends PHPUnit
         isClass(PhpArray::class, phpArray(phpArray()));
         isClass(PhpArray::class, phpArray($stdObj));
         isSame('qwerty', phpArray($stdObj)->get('string'));
+        isSame('localhost', phpArray(__DIR__ . '/resource/data.inc')->get('host'));
         isSame('localhost', phpArray('./tests/resource/data.inc')->get('host'));
+        isSame('localhost', phpArray('tests/resource/data.inc')->get('host'));
+        isSame(null, phpArray('tests/resource/undefined-file')->get('host'));
 
         isSame('qwerty', ini($this->test)->get('string'));
         isSame('test = "123"', (string)ini(['test' => '123']));
         isClass(Ini::class, ini(ini()));
         isClass(Ini::class, ini($stdObj));
         isSame('qwerty', ini($stdObj)->get('string'));
+        isSame(' ', ini(__DIR__ . '/resource/data.ini')->get('string'));
+        isSame(' ', ini('./tests/resource/data.ini')->get('string'));
+        isSame(' ', ini('tests/resource/data.ini')->get('string'));
 
         isSame('qwerty', yml($this->test)->get('string'));
         isSame("test: '123'\n", (string)yml(['test' => '123']));
         isClass(Yml::class, yml(yml()));
         isClass(Yml::class, yml($stdObj));
         isSame('qwerty', yml($stdObj)->get('string'));
+        isSame('2001-01-23', yml(__DIR__ . '/resource/data.yml')->get('date'));
+        isSame('2001-01-23', yml('./tests/resource/data.yml')->get('date'));
+        isSame('2001-01-23', yml('tests/resource/data.yml')->get('date'));
     }
 
     public function testEmptySeparator(): void
