@@ -30,7 +30,7 @@ class Data extends \ArrayObject
     public const LE = "\n";
 
     /**
-     * @param null|false|string|string[] $data The data array
+     * @param null|array|false|string $data The data array
      */
     public function __construct($data = [])
     {
@@ -55,45 +55,6 @@ class Data extends \ArrayObject
     public function __toString(): string
     {
         return $this->write();
-    }
-
-    /**
-     * Filter value before return.
-     *
-     * @return mixed
-     */
-    protected static function filter(mixed $value, mixed $filter)
-    {
-        if ($filter !== null) {
-            $value = Filter::_($value, $filter);
-        }
-
-        return $value;
-    }
-
-    /**
-     * @return false|string
-     */
-    protected static function readFile(string $filePath): bool|string
-    {
-        $contents = false;
-
-        $realPath = \realpath($filePath);
-        if ($realPath !== false) {
-            $contents = \file_get_contents($realPath);
-        }
-
-        return $contents;
-    }
-
-    /**
-     * Check is array is nested.
-     */
-    protected static function isMulti(array $array): bool
-    {
-        $arrayCount = \array_filter($array, '\is_array');
-
-        return \count($arrayCount) > 0;
     }
 
     /**
@@ -384,5 +345,44 @@ class Data extends \ArrayObject
     protected function encode(array $data): string
     {
         return \serialize($data);
+    }
+
+    /**
+     * Filter value before return.
+     *
+     * @return mixed
+     */
+    protected static function filter(mixed $value, mixed $filter)
+    {
+        if ($filter !== null) {
+            $value = Filter::_($value, $filter);
+        }
+
+        return $value;
+    }
+
+    /**
+     * @return false|string
+     */
+    protected static function readFile(string $filePath): bool|string
+    {
+        $contents = false;
+
+        $realPath = \realpath($filePath);
+        if ($realPath !== false) {
+            $contents = \file_get_contents($realPath);
+        }
+
+        return $contents;
+    }
+
+    /**
+     * Check is array is nested.
+     */
+    protected static function isMulti(array $array): bool
+    {
+        $arrayCount = \array_filter($array, '\is_array');
+
+        return \count($arrayCount) > 0;
     }
 }
