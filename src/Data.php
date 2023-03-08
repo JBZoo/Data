@@ -74,7 +74,7 @@ class Data extends \ArrayObject
     /**
      * @return false|string
      */
-    protected static function readFile(string $filePath): bool | string
+    protected static function readFile(string $filePath): bool|string
     {
         $contents = false;
 
