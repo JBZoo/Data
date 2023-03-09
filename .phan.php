@@ -9,14 +9,14 @@
  *
  * @license    MIT
  * @copyright  Copyright (C) JBZoo.com, All rights reserved.
- * @see       https://github.com/JBZoo/Data
+ * @see        https://github.com/JBZoo/Data
  */
 
 declare(strict_types=1);
 
-$default = include __DIR__ . '/vendor/jbzoo/codestyle/src/phan/default.php';
+$default = include __DIR__ . '/vendor/jbzoo/codestyle/src/phan.php';
 
-$config = \array_merge($default, [
+return \array_merge($default, [
     'file_list' => [
         'src/functions.php',
     ],
@@ -31,12 +31,3 @@ $config = \array_merge($default, [
         'vendor/symfony/polyfill-php81',
     ],
 ]);
-
-$config['plugins'][] = 'NotFullyQualifiedUsagePlugin';
-
-$configIndex = \array_search('UnusedSuppressionPlugin', $config['plugins'], true);
-if ($configIndex !== false) {
-    unset($config['plugins'][$configIndex]);
-}
-
-return $config;
