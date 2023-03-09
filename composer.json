@@ -1,10 +1,10 @@
 {
-    "name"         : "jbzoo/data",
-    "type"         : "library",
-    "description"  : "An extended version of the ArrayObject object for working with system settings or just for working with data arrays",
-    "license"      : "MIT",
-    "minimum-stability" : "dev",
-    "keywords"     : [
+    "name"              : "jbzoo/data",
+    "type"              : "library",
+    "description"       : "An extended version of the ArrayObject object for working with system settings or just for working with data arrays",
+    "license"           : "MIT",
+
+    "keywords"          : [
         "ArrayObject",
         "Array",
         "Config",
@@ -15,7 +15,7 @@
         "json"
     ],
 
-    "authors"      : [
+    "authors"           : [
         {
             "name"  : "Denis Smetannikov",
             "email" : "admin@jbzoo.com",
@@ -23,29 +23,32 @@
         }
     ],
 
-    "require"      : {
+    "minimum-stability" : "dev",
+    "prefer-stable"     : true,
+
+    "require"           : {
         "php"      : "^8.1",
         "ext-json" : "*"
     },
 
-    "require-dev"  : {
+    "require-dev"       : {
         "jbzoo/toolbox-dev"         : "7.x-dev",
-        "jbzoo/utils"               : ">=4.4.0",
+        "jbzoo/utils"               : "7.x-dev",
         "symfony/yaml"              : ">=4.4",
 
-        "symfony/polyfill-ctype"    : ">=1.26.0",
-        "symfony/polyfill-mbstring" : ">=1.26.0",
-        "symfony/polyfill-php73"    : ">=1.26.0",
-        "symfony/polyfill-php80"    : ">=1.26.0",
-        "symfony/polyfill-php81"    : ">=1.26.0"
+        "symfony/polyfill-ctype"    : ">=1.27.0",
+        "symfony/polyfill-mbstring" : ">=1.27.0",
+        "symfony/polyfill-php73"    : ">=1.27.0",
+        "symfony/polyfill-php80"    : ">=1.27.0",
+        "symfony/polyfill-php81"    : ">=1.27.0"
     },
 
-    "suggest"      : {
+    "suggest"           : {
         "symfony/yaml" : ">=4.4",
-        "jbzoo/utils"  : ">=4.2.2"
+        "jbzoo/utils"  : ">=7.0"
     },
 
-    "autoload"     : {
+    "autoload"          : {
         "psr-4" : {"JBZoo\\Data\\" : "src"},
         "files" : [
             "src/functions.php"
@@ -53,16 +56,16 @@
 
     },
 
-    "autoload-dev" : {
+    "autoload-dev"      : {
         "psr-4" : {"JBZoo\\PHPUnit\\" : "tests"}
     },
 
-    "config"       : {
+    "config"            : {
         "optimize-autoloader" : true,
         "allow-plugins"       : {"composer/package-versions-deprecated" : true}
     },
 
-    "extra"        : {
+    "extra"             : {
         "branch-alias" : {
             "dev-master" : "7.x-dev"
         }
