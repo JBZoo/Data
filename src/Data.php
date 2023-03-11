@@ -68,13 +68,14 @@ class Data extends \ArrayObject
 
     /**
      * Get a value from the data given its key.
-     * @param  string $key     The key used to fetch the data
-     * @param  mixed  $default The default value
-     * @param  mixed  $filter  Filter returned value
-     * @return mixed
+     * @param string     $key     The key used to fetch the data
+     * @param null|mixed $default The default value
+     * @param null|mixed $filter  Filter returned value
      */
-    public function get(string $key, $default = null, $filter = null)
+    public function get(string $key, mixed $default = null, mixed $filter = null): mixed
     {
+        self::checkDeprecatedFilter('get', $filter);
+
         $result = $default;
         if ($this->has($key)) {
             $result = $this->offsetGet($key);
@@ -85,11 +86,10 @@ class Data extends \ArrayObject
 
     /**
      * Set a value in the data.
-     * @param  string $name  The key used to set the value
-     * @param  mixed  $value The value to set
-     * @return $this
+     * @param string $name  The key used to set the value
+     * @param mixed  $value The value to set
      */
-    public function set(string $name, $value)
+    public function set(string $name, mixed $value): static
     {
         $this->offsetSet($name, $value);
 
@@ -98,10 +98,9 @@ class Data extends \ArrayObject
 
     /**
      * Remove a value from the data.
-     * @param  string $name The key of the data to remove
-     * @return $this
+     * @param string $name The key of the data to remove
      */
-    public function remove(string $name): self
+    public function remove(string $name): static
     {
         if ($this->has($name)) {
             $this->offsetUnset($name);
@@ -123,15 +122,15 @@ class Data extends \ArrayObject
      * This method finds the given key, searching also in any array or
      * object that's nested under the current data object.
      * Example: $data->find('parent-key.sub-key.sub-sub-key');.
-     *
-     * @param  string $key       The key to search for. Can be composed using $separator as the key/su-bkey separator
-     * @param  mixed  $default   The default value
-     * @param  mixed  $filter    Filter returned value
-     * @param  string $separator The separator to use when searching for sub keys. Default is '.'
-     * @return mixed
+     * @param string     $key       The key to search for. Can be composed using $separator as the key/su-bkey separator
+     * @param null|mixed $default   The default value
+     * @param null|mixed $filter    Filter returned value
+     * @param string     $separator The separator to use when searching for sub keys. Default is '.'
      */
-    public function find(string $key, $default = null, $filter = null, string $separator = '.')
+    public function find(string $key, mixed $default = null, mixed $filter = null, string $separator = '.'): mixed
     {
+        self::checkDeprecatedFilter('find', $filter);
+
         $value = $this->get($key);
 
         // check if key exists in array
@@ -175,10 +174,9 @@ class Data extends \ArrayObject
 
     /**
      * Find a value also in nested arrays/objects.
-     * @param  mixed                      $needle The value to search for
-     * @return null|bool|float|int|string
+     * @param mixed $needle The value to search for
      */
-    public function search($needle)
+    public function search(mixed $needle): float|bool|int|string|null
     {
         $aIterator = new \RecursiveArrayIterator($this->getArrayCopy());
         $iterator  = new \RecursiveIteratorIterator($aIterator);
@@ -226,7 +224,6 @@ class Data extends \ArrayObject
 
     /**
      * Compare value by key with something.
-     *
      * @SuppressWarnings(PHPMD.ShortMethodName)
      */
     public function is(string $key, mixed $compareWith = true, bool $strictMode = false): bool
@@ -274,7 +271,6 @@ class Data extends \ArrayObject
     }
 
     /**
-     * @return static
      * @psalm-suppress UnsafeInstantiation
      */
     public function getSelf(string $key, array $default = []): self
@@ -314,7 +310,6 @@ class Data extends \ArrayObject
     }
 
     /**
-     * @return static
      * @psalm-suppress UnsafeInstantiation
      */
     public function findSelf(string $key, array $default = []): self
@@ -349,10 +344,8 @@ class Data extends \ArrayObject
 
     /**
      * Filter value before return.
-     *
-     * @return mixed
      */
-    protected static function filter(mixed $value, mixed $filter)
+    protected static function filter(mixed $value, mixed $filter): mixed
     {
         if ($filter !== null) {
             $value = Filter::_($value, $filter);
@@ -384,5 +377,25 @@ class Data extends \ArrayObject
         $arrayCount = \array_filter($array, '\is_array');
 
         return \count($arrayCount) > 0;
+    }
+
+    private static function checkDeprecatedFilter(string $prefix, mixed $filter): void
+    {
+        if (!\is_string($filter)) {
+            return;
+        }
+
+        if (\in_array($filter, ['bool', 'int', 'float', 'string', 'array', 'arr'], true)) {
+            if ($filter === 'arr') {
+                $filter = 'array';
+            }
+
+            /** @psalm-suppress RedundantFunctionCall */
+            $methodName = $prefix . \ucfirst(\strtolower($filter));
+            @\trigger_error(
+                "Instead of filter=\"{$filter}\", please use `\$data->{$methodName}(\$key, \$default)` method",
+                \E_USER_DEPRECATED,
+            );
+        }
     }
 }
