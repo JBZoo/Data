@@ -16,10 +16,7 @@ declare(strict_types=1);
 
 namespace JBZoo\Data;
 
-/**
- * @param mixed $data
- */
-function json($data = null): JSON
+function json(mixed $data = null): JSON
 {
     if ($data instanceof JSON) {
         return $data;
@@ -34,10 +31,7 @@ function json($data = null): JSON
     return $result;
 }
 
-/**
- * @param mixed $data
- */
-function data($data = null): Data
+function data(mixed $data = null): Data
 {
     if ($data instanceof Data) {
         return $data;
@@ -52,10 +46,7 @@ function data($data = null): Data
     return $result;
 }
 
-/**
- * @param mixed $data
- */
-function phpArray($data = null): PhpArray
+function phpArray(mixed $data = null): PhpArray
 {
     if ($data instanceof PhpArray) {
         return $data;
@@ -70,10 +61,7 @@ function phpArray($data = null): PhpArray
     return $result;
 }
 
-/**
- * @param mixed $data
- */
-function ini($data = null): Ini
+function ini(mixed $data = null): Ini
 {
     if ($data instanceof Ini) {
         return $data;
@@ -88,10 +76,7 @@ function ini($data = null): Ini
     return $result;
 }
 
-/**
- * @param mixed $data
- */
-function yml($data = null): Yml
+function yml(mixed $data = null): Yml
 {
     if ($data instanceof Yml) {
         return $data;
