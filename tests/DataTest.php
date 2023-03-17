@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace JBZoo\PHPUnit;
 
+use JBZoo\Data\AbstractData;
 use JBZoo\Data\Data;
 use JBZoo\Data\Ini;
 use JBZoo\Data\JSON;
@@ -178,6 +179,44 @@ class DataTest extends PHPUnit
         isSame(['sub' => 'sub-value', 'sub.sub' => 'sub-value-2'], $json->findSelf('sub')->getArrayCopy());
 
         isClass(JSON::class, $json->findSelf('invalid-key-name'));
+    }
+
+    public function testAliasesWithNull(): void
+    {
+        $data = new Data($this->test);
+
+        isSame([10], $data->getArrayNull('number'));
+        isSame(null, $data->getArrayNull('undefined'));
+        isSame([], $data->getArrayNull('undefined', []));
+        isSame([1], $data->getArrayNull('undefined', [1]));
+
+        isSame(10, $data->getIntNull('number'));
+        isSame(null, $data->getIntNull('undefined'));
+        isSame(null, $data->getIntNull('undefined', null));
+        isSame(100, $data->getIntNull('undefined', 100));
+
+        isSame(10.0, $data->getFloatNull('number'));
+        isSame(null, $data->getFloatNull('undefined'));
+        isSame(null, $data->getFloatNull('undefined', null));
+        isSame(100.0, $data->getFloatNull('undefined', 100));
+        isSame(100.0, $data->getFloatNull('undefined', 100.0));
+        isSame(100.1, $data->getFloatNull('undefined', 100.1));
+
+        isSame('10', $data->getStringNull('number'));
+        isSame(null, $data->getStringNull('undefined'));
+        isSame(null, $data->getStringNull('undefined', null));
+        isSame('', $data->getStringNull('undefined', ''));
+        isSame('100', $data->getStringNull('undefined', '100'));
+
+        isSame(true, $data->getBoolNull('number'));
+        isSame(null, $data->getBoolNull('undefined'));
+        isSame(true, $data->getBoolNull('undefined', true));
+        isSame(false, $data->getBoolNull('undefined', false));
+
+        isSame('val-1', $data->getSelfNull('nested')->get('value-1'));
+        isSame(null, $data->getSelfNull('undefined'));
+        isSame('value', $data->getSelfNull('undefined', ['key' => 'value'])->get('key'));
+        isSame(10, $data->getSelfNull('undefined', json($this->test))->get('number'));
     }
 
     public function testGet(): void
@@ -388,15 +427,15 @@ class DataTest extends PHPUnit
     public function testFunctions(): void
     {
         // General cases
-        isClass(Data::class, json());
-        isClass(Data::class, json(false));
-        isClass(Data::class, json(null));
-        isClass(Data::class, json(''));
-        isClass(Data::class, json([]));
-        isClass(Data::class, json('{}'));
-        isClass(Data::class, json('{"test":42}'));
-        isClass(Data::class, json($this->test));
-        isClass(Data::class, json(json()));
+        isClass(AbstractData::class, json());
+        isClass(AbstractData::class, json(false));
+        isClass(AbstractData::class, json(null));
+        isClass(AbstractData::class, json(''));
+        isClass(AbstractData::class, json([]));
+        isClass(AbstractData::class, json('{}'));
+        isClass(AbstractData::class, json('{"test":42}'));
+        isClass(AbstractData::class, json($this->test));
+        isClass(AbstractData::class, json(json()));
 
         isSame('[]', '' . json());
         // isSame('[false]', '' . json(false));testNumeric

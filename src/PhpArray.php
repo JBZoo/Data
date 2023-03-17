@@ -16,7 +16,7 @@ declare(strict_types=1);
 
 namespace JBZoo\Data;
 
-final class PhpArray extends Data
+final class PhpArray extends AbstractData
 {
     /**
      * @param null|false|string|string[] $data The data array

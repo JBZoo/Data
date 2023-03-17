@@ -16,7 +16,7 @@ declare(strict_types=1);
 
 namespace JBZoo\Data;
 
-final class JSON extends Data
+final class JSON extends AbstractData
 {
     protected function decode(string $string): mixed
     {

@@ -16,7 +16,7 @@ declare(strict_types=1);
 
 namespace JBZoo\Data;
 
-final class Ini extends Data
+final class Ini extends AbstractData
 {
     protected function decode(string $string): mixed
     {

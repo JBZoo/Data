@@ -18,7 +18,7 @@ namespace JBZoo\Data;
 
 use Symfony\Component\Yaml\Yaml;
 
-final class Yml extends Data
+final class Yml extends AbstractData
 {
     protected function encode(array $data): string
     {
