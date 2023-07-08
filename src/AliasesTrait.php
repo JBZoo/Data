@@ -120,7 +120,7 @@ trait AliasesTrait
      * @psalm-suppress UnsafeInstantiation
      * @psalm-suppress ImplicitToStringCast
      */
-    public function getSelfNull(string $key, array|self $default = null): ?self
+    public function getSelfNull(string $key, array|self|null $default = null): ?self
     {
         if (!$this->has($key)) {
             // @phpstan-ignore-next-line
