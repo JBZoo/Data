@@ -32,8 +32,8 @@
     },
 
     "require-dev"       : {
-        "jbzoo/toolbox-dev"         : "7.x-dev",
-        "jbzoo/utils"               : "7.x-dev",
+        "jbzoo/toolbox-dev"         : "^7.0",
+        "jbzoo/utils"               : "^7.0",
         "symfony/yaml"              : ">=4.4",
 
         "symfony/polyfill-ctype"    : ">=1.27.0",
