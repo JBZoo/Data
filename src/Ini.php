@@ -41,11 +41,11 @@ final class Ini extends AbstractData
                     $result[] = $this->render($dataValue, $sections);
                 } else {
                     foreach ($dataValue as $key => $value) {
-                        $result[] = $dataKey . '[' . $key . '] = "' . \str_replace('"', '\"', $value) . '"';
+                        $result[] = $dataKey . '[' . $key . '] = "' . \str_replace('"', '\"', (string)$value) . '"';
                     }
                 }
             } else {
-                $result[] = $dataKey . ' = "' . \str_replace('"', '\"', $dataValue) . '"';
+                $result[] = $dataKey . ' = "' . \str_replace('"', '\"', (string)$dataValue) . '"';
             }
         }
 
