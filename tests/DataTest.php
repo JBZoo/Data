@@ -566,6 +566,50 @@ class DataTest extends PHPUnit
         $newData = $data->set('q..q', 111);
         isSame(['original' => 123, 'q' => ['' => ['q' => 111]]], $newData->getArrayCopy());
 
+        $newData = $data->set('', 111);
+        isSame(['original' => 123, '' => 111], $newData->getArrayCopy());
+
         isTrue(true);
+    }
+
+    public function testGetSchema(): void
+    {
+        $data = new Data($this->test);
+        isSame(
+            [
+                'string-zero'     => 'string',
+                'string-empty'    => 'string',
+                'string'          => 'string',
+                'number-zero'     => 'int',
+                'number'          => 'int',
+                'bool-true'       => 'bool',
+                'bool-false'      => 'bool',
+                'null'            => 'null',
+                'array_empty'     => [],
+                'array_not_empty' => [123 => 'string'],
+                'objects'         => '\\stdClass',
+                'sub'             => [
+                    'sub'     => 'string',
+                    'sub.sub' => 'string',
+                ],
+                'array' => [
+                    'sub'     => 'string',
+                    'sub-sub' => [
+                        'key-1' => 'string',
+                        'sub'   => ['key-sub' => 'string'],
+                    ],
+                ],
+                'data'   => '\\JBZoo\\Data\\Data',
+                'nested' => [
+                    'value-1' => 'string',
+                    'value-2' => 'string',
+                    'sub'     => ['qwerty' => 'string'],
+                ],
+                'nested.value-1'    => 'string',
+                'nested.value-2'    => 'string',
+                'nested.sub.qwerty' => 'string',
+            ],
+            $data->getSchema(),
+        );
     }
 }

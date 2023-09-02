@@ -18,22 +18,6 @@ namespace JBZoo\Data;
 
 final class Data extends AbstractData
 {
-    /**
-     * Recursively replaces the values in the given array with their corresponding data types.
-     */
-    public static function getSchema(self $json): array
-    {
-        foreach ($array as &$value) {
-            if (\is_array($value)) {
-                self::parseArray($value);
-            } else {
-                $value = \gettype($value);
-            }
-        }
-
-        return $array;
-    }
-
     protected function decode(string $string): mixed
     {
         /** @noinspection UnserializeExploitsInspection */

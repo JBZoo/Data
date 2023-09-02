@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace JBZoo\Data;
 
+use JBZoo\Utils\Arr;
 use JBZoo\Utils\Filter;
 
 /**
@@ -98,20 +99,24 @@ abstract class AbstractData extends \ArrayObject
 
     /**
      * Set a value in the data.
-     * @param string $pathname The key used to set the value
-     * @param mixed  $value    The value to set
+     * @param string $pathKey   The key used to set the value
+     * @param mixed  $value     The value to set
+     * @param string $separator The separator to use when searching for sub keys. Default is '.'
+     *
+     * @psalm-suppress UnsafeInstantiation
      */
-    public function set(string $pathname, mixed $value, string $separator = '.'): static
+    public function set(string $pathKey, mixed $value, string $separator = '.'): self
     {
-        if (\str_contains($pathname, $separator)) {
-            $keys = \explode($separator, $pathname);
+        if (\str_contains($pathKey, $separator) && $separator !== '') {
+            $keys = \explode($separator, $pathKey);
         } else {
-            $keys = [$pathname];
+            $keys = [$pathKey];
         }
 
         $arrayCopy = $this->getArrayCopy();
         self::setNestedValue($arrayCopy, $keys, $value);
 
+        // @phpstan-ignore-next-line
         return new static($arrayCopy);
     }
 
@@ -261,6 +266,11 @@ abstract class AbstractData extends \ArrayObject
         return $value == $compareWith;
     }
 
+    public function getSchema(): array
+    {
+        return Arr::getSchema($this->getArrayCopy());
+    }
+
     /**
      * Filter value before return.
      */
@@ -295,11 +305,11 @@ abstract class AbstractData extends \ArrayObject
         return \count($arrayCount) > 0;
     }
 
-    private static function setNestedValue(&$array, $keys, $value): void
+    private static function setNestedValue(array &$array, array $keys, mixed $value): void
     {
         $key = \array_shift($keys);
 
-        if (empty($keys)) {
+        if (\count($keys) === 0) {
             $array[$key] = $value;
         } else {
             if (!isset($array[$key]) || !\is_array($array[$key])) {

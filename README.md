@@ -56,6 +56,8 @@ composer require jbzoo/data
 | Set Nested Value                     | `$d->set('q.w.e.r.t.y') = 42`                   | $ar['q']['w']['e']['r']['t']['y'] = 42   |
 | Set Nested Value (if it's undefined) | `$d->set('q.w.e.r.t.y') = 42`                   | PHP Notice errors...                     |
 
+### Know your data
+
 
 
 
