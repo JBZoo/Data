@@ -43,11 +43,11 @@ composer require jbzoo/data
 | Nested key  #1                       | `$d->find('inner.inner.prop', $default)`        | `$ar['inner']['inner']['prop']` (error?) |
 | Nested key  #2                       | `$d->inner['inner']['prop']`                    | -                                        |
 | Nested key  #3                       | `$d['inner']['inner']['prop']`                  | -                                        |
-| Export to Serialized                 | `echo (new Data([/* ... */]))`                  | `echo serialize([/* ... */])`            |
-| Export to JSON                       | `echo (new JSON([/* ... */]))` (readable)       | `echo json_encode([/* ... */])`          |
-| Export to Yml                        | `echo (new Yml ([/* ... */]))` (readable)       | -                                        |
-| Export to Ini                        | `echo (new Ini([/* ... */]))` (readable)        | -                                        |
-| Export to PHP Code                   | `echo (new PHPArray ([/* ... */]))` (readable)  | -                                        |
+| Export to Serialized                 | `echo data([/* ... */])`                        | `echo serialize([/* ... */])`            |
+| Export to JSON                       | `echo (json([/* ... */]))` (readable)           | `echo json_encode([/* ... */])`          |
+| Export to Yml                        | `echo yml([/* ... */])` (readable)              | -                                        |
+| Export to Ini                        | `echo ini([/* ... */])` (readable)              | -                                        |
+| Export to PHP Code                   | `echo phpArray([/* ... */])` (readable)         | -                                        |
 | JSON                                 | **+**                                           | -                                        |
 | Filters                              | **+**                                           | -                                        |
 | Search                               | **+**                                           | -                                        |
@@ -55,6 +55,19 @@ composer require jbzoo/data
 | Set Value                            | `$d['value'] = 42`                              | $ar['value'] = 42                        |
 | Set Nested Value                     | `$d->set('q.w.e.r.t.y') = 42`                   | $ar['q']['w']['e']['r']['t']['y'] = 42   |
 | Set Nested Value (if it's undefined) | `$d->set('q.w.e.r.t.y') = 42`                   | PHP Notice errors...                     |
+
+
+### Know your data
+
+```php
+$json = json('{ "some": "thing", "number": 42 }');
+dump($json->getSchema();
+// [
+//     "some" => "string",
+//     "number" => "int"
+// ]
+
+```
 
 
 #### Methods

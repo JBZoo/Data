@@ -18,6 +18,8 @@ namespace JBZoo\PHPUnit;
 
 use JBZoo\Markdown\Table;
 
+use function JBZoo\Data\json;
+
 final class DataPackageTest extends \JBZoo\Codestyle\PHPUnit\AbstractPackageTest
 {
     protected string $packageName = 'Data';
@@ -148,27 +150,27 @@ final class DataPackageTest extends \JBZoo\Codestyle\PHPUnit\AbstractPackageTest
             ],
             [
                 'Export to Serialized',
-                '`echo (new Data([/* ... */]))`',
+                '`echo data([/* ... */])`',
                 '`echo serialize([/* ... */])`',
             ],
             [
                 'Export to JSON',
-                '`echo (new JSON([/* ... */]))` (readable)',
+                '`echo (json([/* ... */]))` (readable)',
                 '`echo json_encode([/* ... */])`',
             ],
             [
                 'Export to Yml',
-                '`echo (new Yml ([/* ... */]))` (readable)',
+                '`echo yml([/* ... */])` (readable)',
                 '-',
             ],
             [
                 'Export to Ini',
-                '`echo (new Ini([/* ... */]))` (readable)',
+                '`echo ini([/* ... */])` (readable)',
                 '-',
             ],
             [
                 'Export to PHP Code',
-                '`echo (new PHPArray ([/* ... */]))` (readable)',
+                '`echo phpArray([/* ... */])` (readable)',
                 '-',
             ],
             [
