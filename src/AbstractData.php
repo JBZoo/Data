@@ -98,14 +98,21 @@ abstract class AbstractData extends \ArrayObject
 
     /**
      * Set a value in the data.
-     * @param string $name  The key used to set the value
-     * @param mixed  $value The value to set
+     * @param string $pathname The key used to set the value
+     * @param mixed  $value    The value to set
      */
-    public function set(string $name, mixed $value): static
+    public function set(string $pathname, mixed $value, string $separator = '.'): static
     {
-        $this->offsetSet($name, $value);
+        if (\str_contains($pathname, $separator)) {
+            $keys = \explode($separator, $pathname);
+        } else {
+            $keys = [$pathname];
+        }
 
-        return $this;
+        $arrayCopy = $this->getArrayCopy();
+        self::setNestedValue($arrayCopy, $keys, $value);
+
+        return new static($arrayCopy);
     }
 
     /**
@@ -286,6 +293,21 @@ abstract class AbstractData extends \ArrayObject
         $arrayCount = \array_filter($array, '\is_array');
 
         return \count($arrayCount) > 0;
+    }
+
+    private static function setNestedValue(&$array, $keys, $value): void
+    {
+        $key = \array_shift($keys);
+
+        if (empty($keys)) {
+            $array[$key] = $value;
+        } else {
+            if (!isset($array[$key]) || !\is_array($array[$key])) {
+                $array[$key] = [];
+            }
+
+            self::setNestedValue($array[$key], $keys, $value);
+        }
     }
 
     private static function checkDeprecatedFilter(string $prefix, mixed $filter): void
