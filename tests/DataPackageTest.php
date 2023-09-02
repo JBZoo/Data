@@ -18,8 +18,6 @@ namespace JBZoo\PHPUnit;
 
 use JBZoo\Markdown\Table;
 
-use function JBZoo\Data\json;
-
 final class DataPackageTest extends \JBZoo\Codestyle\PHPUnit\AbstractPackageTest
 {
     protected string $packageName = 'Data';
