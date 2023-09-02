@@ -237,27 +237,6 @@ class DataTest extends PHPUnit
         isNull($data->get('undefined', null));
     }
 
-    public function testSet(): void
-    {
-        // methods
-        $data = new Data($this->test);
-        is(10, $data->get('number'));
-        $data->set('number', 'qqq');
-        is('qqq', $data->get('number'));
-
-        // like array
-        $data = new Data($this->test);
-        is(10, $data['number']);
-        $data['number'] = 'qqq';
-        is('qqq', $data['number']);
-
-        // like object
-        $data = new Data($this->test);
-        is(10, $data->number);
-        $data->number = 'qqq';
-        is('qqq', $data->number);
-    }
-
     public function testFind(): void
     {
         $data = new Data($this->test);
@@ -501,5 +480,136 @@ class DataTest extends PHPUnit
         $this->expectExceptionMessage("Separator can't be empty");
 
         $data->find('array_not_empty.123', null, null, '');
+    }
+
+    public function testSetDirectly(): void
+    {
+        // methods
+        $data = new Data($this->test);
+        is(10, $data->get('number'));
+        $newData = $data->set('number', 'qqq');
+        is('qqq', $newData->get('number'));
+
+        // like array
+        $data = new Data($this->test);
+        is(10, $data['number']);
+        $data['number'] = 'qqq';
+        is('qqq', $data['number']);
+
+        // like object
+        $data = new Data($this->test);
+        is(10, $data->number);
+        $data->number = 'qqq';
+        is('qqq', $data->number);
+    }
+
+    public function testSetNestedWithClonning(): void
+    {
+        $data = new Data(['original' => 123]);
+        isSame(['original' => 123], $data->getArrayCopy());
+
+        $newData = $data->set('value', 42);
+        isSame(['original' => 123, 'value' => 42], $newData->getArrayCopy());
+
+        $newData = $data->set('nested.value', 'qwerty');
+        isSame(['original' => 123, 'nested' => ['value' => 'qwerty']], $newData->getArrayCopy());
+
+        $newData = $data->set('nested|value', 'qwerty', '|');
+        isSame(['original' => 123, 'nested' => ['value' => 'qwerty']], $newData->getArrayCopy());
+
+        $newData = $data->set('nested|value', 'qwerty');
+        isSame(['original' => 123, 'nested|value' => 'qwerty'], $newData->getArrayCopy());
+
+        $newData = $data
+            ->set('value', 43)
+            ->set('nested.value', 'Qqqq');
+        isSame(['original' => 123, 'value' => 43, 'nested' => ['value' => 'Qqqq']], $newData->getArrayCopy());
+
+        $newData = $data->set('nested.value', []);
+        isSame(['original' => 123, 'nested' => ['value' => []]], $newData->getArrayCopy());
+
+        $newData = $data
+            ->set('nested.value', [])
+            ->set('nested.value', 'Qqqq');
+        isSame(['original' => 123, 'nested' => ['value' => 'Qqqq']], $newData->getArrayCopy());
+
+        $newData = $data
+            ->set('nested.value', [])
+            ->set('nested', 42);
+        isSame(['original' => 123, 'nested' => 42], $newData->getArrayCopy());
+
+        $newData = $data
+            ->set('nested', 42)
+            ->set('nested.value', []);
+        isSame(['original' => 123, 'nested' => ['value' => []]], $newData->getArrayCopy());
+
+        $newData = $data
+            ->set('nested.value', [])
+            ->set('nested.value', 42);
+        isSame(['original' => 123, 'nested' => ['value' => 42]], $newData->getArrayCopy());
+
+        $newData = $data->set('a.b.c.d.e', 111);
+        isSame(['original' => 123, 'a' => ['b' => ['c' => ['d' => ['e' => 111]]]]], $newData->getArrayCopy());
+
+        $newData = $data->set('.', 111);
+        isSame(['original' => 123, '' => ['' => 111]], $newData->getArrayCopy());
+
+        $newData = $data->set('..', 111);
+        isSame(['original' => 123, '' => ['' => ['' => 111]]], $newData->getArrayCopy());
+
+        $newData = $data->set('.qwerty', 111);
+        isSame(['original' => 123, '' => ['qwerty' => 111]], $newData->getArrayCopy());
+
+        $newData = $data->set('qwerty.', 111);
+        isSame(['original' => 123, 'qwerty' => ['' => 111]], $newData->getArrayCopy());
+
+        $newData = $data->set('q..q', 111);
+        isSame(['original' => 123, 'q' => ['' => ['q' => 111]]], $newData->getArrayCopy());
+
+        $newData = $data->set('', 111);
+        isSame(['original' => 123, '' => 111], $newData->getArrayCopy());
+
+        isTrue(true);
+    }
+
+    public function testGetSchema(): void
+    {
+        $data = new Data($this->test);
+        isSame(
+            [
+                'string-zero'     => 'string',
+                'string-empty'    => 'string',
+                'string'          => 'string',
+                'number-zero'     => 'int',
+                'number'          => 'int',
+                'bool-true'       => 'bool',
+                'bool-false'      => 'bool',
+                'null'            => 'null',
+                'array_empty'     => [],
+                'array_not_empty' => [123 => 'string'],
+                'objects'         => '\\stdClass',
+                'sub'             => [
+                    'sub'     => 'string',
+                    'sub.sub' => 'string',
+                ],
+                'array' => [
+                    'sub'     => 'string',
+                    'sub-sub' => [
+                        'key-1' => 'string',
+                        'sub'   => ['key-sub' => 'string'],
+                    ],
+                ],
+                'data'   => '\\JBZoo\\Data\\Data',
+                'nested' => [
+                    'value-1' => 'string',
+                    'value-2' => 'string',
+                    'sub'     => ['qwerty' => 'string'],
+                ],
+                'nested.value-1'    => 'string',
+                'nested.value-2'    => 'string',
+                'nested.sub.qwerty' => 'string',
+            ],
+            $data->getSchema(),
+        );
     }
 }

@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace JBZoo\Data;
 
+use JBZoo\Utils\Arr;
 use JBZoo\Utils\Filter;
 
 /**
@@ -98,14 +99,25 @@ abstract class AbstractData extends \ArrayObject
 
     /**
      * Set a value in the data.
-     * @param string $name  The key used to set the value
-     * @param mixed  $value The value to set
+     * @param string $pathKey   The key used to set the value
+     * @param mixed  $value     The value to set
+     * @param string $separator The separator to use when searching for sub keys. Default is '.'
+     *
+     * @psalm-suppress UnsafeInstantiation
      */
-    public function set(string $name, mixed $value): static
+    public function set(string $pathKey, mixed $value, string $separator = '.'): self
     {
-        $this->offsetSet($name, $value);
+        if (\str_contains($pathKey, $separator) && $separator !== '') {
+            $keys = \explode($separator, $pathKey);
+        } else {
+            $keys = [$pathKey];
+        }
 
-        return $this;
+        $arrayCopy = $this->getArrayCopy();
+        self::setNestedValue($arrayCopy, $keys, $value);
+
+        // @phpstan-ignore-next-line
+        return new static($arrayCopy);
     }
 
     /**
@@ -254,6 +266,11 @@ abstract class AbstractData extends \ArrayObject
         return $value == $compareWith;
     }
 
+    public function getSchema(): array
+    {
+        return Arr::getSchema($this->getArrayCopy());
+    }
+
     /**
      * Filter value before return.
      */
@@ -286,6 +303,21 @@ abstract class AbstractData extends \ArrayObject
         $arrayCount = \array_filter($array, '\is_array');
 
         return \count($arrayCount) > 0;
+    }
+
+    private static function setNestedValue(array &$array, array $keys, mixed $value): void
+    {
+        $key = \array_shift($keys);
+
+        if (\count($keys) === 0) {
+            $array[$key] = $value;
+        } else {
+            if (!isset($array[$key]) || !\is_array($array[$key])) {
+                $array[$key] = [];
+            }
+
+            self::setNestedValue($array[$key], $keys, $value);
+        }
     }
 
     private static function checkDeprecatedFilter(string $prefix, mixed $filter): void
