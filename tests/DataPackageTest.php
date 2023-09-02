@@ -204,7 +204,7 @@ final class DataPackageTest extends \JBZoo\Codestyle\PHPUnit\AbstractPackageTest
             [
                 "Set Nested Value (if it's undefined)",
                 "`\$d->set('q.w.e.r.t.y') = 42`",
-                "PHP Notice errors...",
+                'PHP Notice errors...',
             ],
         ];
 

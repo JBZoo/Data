@@ -18,17 +18,6 @@ namespace JBZoo\Data;
 
 final class Data extends AbstractData
 {
-    protected function decode(string $string): mixed
-    {
-        /** @noinspection UnserializeExploitsInspection */
-        return \unserialize($string, []);
-    }
-
-    protected function encode(array $data): string
-    {
-        return \serialize($data);
-    }
-
     /**
      * Recursively replaces the values in the given array with their corresponding data types.
      */
@@ -43,5 +32,16 @@ final class Data extends AbstractData
         }
 
         return $array;
+    }
+
+    protected function decode(string $string): mixed
+    {
+        /** @noinspection UnserializeExploitsInspection */
+        return \unserialize($string, []);
+    }
+
+    protected function encode(array $data): string
+    {
+        return \serialize($data);
     }
 }
