@@ -200,7 +200,7 @@ abstract class AbstractData extends \ArrayObject
      * Find a value also in nested arrays/objects.
      * @param mixed $needle The value to search for
      */
-    public function search(mixed $needle): float|bool|int|string|null
+    public function search(mixed $needle): null|bool|float|int|string
     {
         $aIterator = new \RecursiveArrayIterator($this->getArrayCopy());
         $iterator  = new \RecursiveIteratorIterator($aIterator);
