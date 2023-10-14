@@ -8,6 +8,22 @@ An extended version of the [ArrayObject](http://php.net/manual/en/class.arrayobj
 
 It provides a short syntax for daily routine, eliminates common mistakes. Allows you to work with various line and file formats - JSON, Yml, Ini, PHP arrays and simple objects.
 
+<!--ts-->
+   * [Installation](#installation)
+   * [Usage](#usage)
+      * [Comparison with pure PHP](#comparison-with-pure-php)
+      * [Know your data](#know-your-data)
+         * [Methods](#methods)
+         * [Filter values (required JBZoo/Utils)](#filter-values-required-jbzooutils)
+         * [Utility methods](#utility-methods)
+         * [Export to pretty-print format](#export-to-pretty-print-format)
+   * [Summary benchmark info (execution time) PHP v7.4](#summary-benchmark-info-execution-time-php-v74)
+   * [Unit tests and check code style](#unit-tests-and-check-code-style)
+   * [License](#license)
+   * [See Also](#see-also)
+<!--te-->
+
+
 ## Installation
 ```sh
 composer require jbzoo/data
