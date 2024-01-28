@@ -38,8 +38,8 @@ class GetUndefinedValue
     {
         $this->array     = DataFixture::createRandomArray();
         $this->data      = new Data($this->array);
-        $this->arrObj    = new \ArrayObject($this->array);
-        $this->arrObjExt = new \ArrayObjectExt($this->array);
+        $this->arrObj    = new ArrayObject($this->array);
+        $this->arrObjExt = new ArrayObjectExt($this->array);
     }
 
     /**

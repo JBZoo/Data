@@ -45,7 +45,7 @@ class CreateObject
      */
     public function benchArrayObjectOrig(): void
     {
-        new \ArrayObject($this->data);
+        new ArrayObject($this->data);
     }
 
     /**
@@ -53,7 +53,7 @@ class CreateObject
      */
     public function benchArrayObjectExtOrig(): void
     {
-        new \ArrayObjectExt($this->data);
+        new ArrayObjectExt($this->data);
     }
 
     /**
