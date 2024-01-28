@@ -14,6 +14,6 @@
 
 declare(strict_types=1);
 
-class Fixtures extends \ArrayObject
+class Fixtures extends ArrayObject
 {
 }
