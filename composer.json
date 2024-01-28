@@ -32,20 +32,20 @@
     },
 
     "require-dev"       : {
-        "jbzoo/toolbox-dev"         : "^7.0",
+        "jbzoo/toolbox-dev"         : "^7.1",
         "jbzoo/utils"               : "^7.1.1",
-        "symfony/yaml"              : ">=4.4",
+        "symfony/yaml"              : ">=6.4",
 
-        "symfony/polyfill-ctype"    : ">=1.27.0",
-        "symfony/polyfill-mbstring" : ">=1.27.0",
-        "symfony/polyfill-php73"    : ">=1.27.0",
-        "symfony/polyfill-php80"    : ">=1.27.0",
-        "symfony/polyfill-php81"    : ">=1.27.0"
+        "symfony/polyfill-ctype"    : ">=1.28.0",
+        "symfony/polyfill-mbstring" : ">=1.28.0",
+        "symfony/polyfill-php73"    : ">=1.28.0",
+        "symfony/polyfill-php80"    : ">=1.28.0",
+        "symfony/polyfill-php81"    : ">=1.28.0"
     },
 
     "suggest"           : {
-        "symfony/yaml" : ">=4.4",
-        "jbzoo/utils"  : ">=7.0"
+        "symfony/yaml" : ">=6.4",
+        "jbzoo/utils"  : ">=7.1"
     },
 
     "autoload"          : {
