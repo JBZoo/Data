@@ -17,7 +17,7 @@ It provides a short syntax for daily routine, eliminates common mistakes. Allows
          * [Filter values (required JBZoo/Utils)](#filter-values-required-jbzooutils)
          * [Utility methods](#utility-methods)
          * [Export to pretty-print format](#export-to-pretty-print-format)
-   * [Summary benchmark info (execution time) PHP v7.4](#summary-benchmark-info-execution-time-php-v74)
+   * [Summary benchmark info (execution time) PHP v8.2+](#summary-benchmark-info-execution-time-php-v82)
    * [Unit tests and check code style](#unit-tests-and-check-code-style)
    * [License](#license)
    * [See Also](#see-also)
@@ -276,7 +276,7 @@ Example of serializing the `Data` object
 a:7:{s:5:"empty";s:0:"";s:4:"zero";s:1:"0";s:6:"string";s:1:" ";s:3:"tag";s:42:"<a href="http://google.com">Google.com</a>";s:6:"array1";a:2:{i:0;s:1:"1";i:1;s:1:"2";}s:7:"section";a:1:{s:6:"array2";a:3:{i:0;s:1:"1";i:12;s:1:"2";i:3;s:1:"3";}}s:14:"section.nested";a:1:{s:6:"array3";a:2:{s:2:"00";s:1:"0";s:2:"01";s:1:"1";}}}
 ```
 
-## Summary benchmark info (execution time) PHP v7.4
+## Summary benchmark info (execution time) PHP v8.2+
 All benchmark tests are executing without xdebug and with a huge random array and 100.000 iterations.
 
 Benchmark tests based on the tool [phpbench/phpbench](https://github.com/phpbench/phpbench). See details [here](tests/phpbench).
