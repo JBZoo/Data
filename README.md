@@ -1,6 +1,6 @@
 # JBZoo / Data
 
-[![CI](https://github.com/JBZoo/Data/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/JBZoo/Data/actions/workflows/main.yml?query=branch%3Amaster)    [![Coverage Status](https://coveralls.io/repos/github/JBZoo/Data/badge.svg?branch=master)](https://coveralls.io/github/JBZoo/Data?branch=master)    [![Psalm Coverage](https://shepherd.dev/github/JBZoo/Data/coverage.svg)](https://shepherd.dev/github/JBZoo/Data)    [![Psalm Level](https://shepherd.dev/github/JBZoo/Data/level.svg)](https://shepherd.dev/github/JBZoo/Data)    [![CodeFactor](https://www.codefactor.io/repository/github/jbzoo/data/badge)](https://www.codefactor.io/repository/github/jbzoo/data/issues)    
+[![CI](https://github.com/JBZoo/Data/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/JBZoo/Data/actions/workflows/main.yml?query=branch%3Amaster)    [![Coverage Status](https://coveralls.io/repos/github/JBZoo/Data/badge.svg?branch=master)](https://coveralls.io/github/JBZoo/Data?branch=master)    [![Psalm Coverage](https://shepherd.dev/github/JBZoo/Data/coverage.svg)](https://shepherd.dev/github/JBZoo/Data)    [![Psalm Level](https://shepherd.dev/github/JBZoo/Data/level.svg)](https://shepherd.dev/github/JBZoo/Data)    [![CodeFactor](https://www.codefactor.io/repository/github/jbzoo/data/badge)](https://www.codefactor.io/repository/github/jbzoo/data/issues)
 [![Stable Version](https://poser.pugx.org/jbzoo/data/version)](https://packagist.org/packages/jbzoo/data/)    [![Total Downloads](https://poser.pugx.org/jbzoo/data/downloads)](https://packagist.org/packages/jbzoo/data/stats)    [![Dependents](https://poser.pugx.org/jbzoo/data/dependents)](https://packagist.org/packages/jbzoo/data/dependents?order_by=downloads)    [![GitHub License](https://img.shields.io/github/license/jbzoo/data)](https://github.com/JBZoo/Data/blob/master/LICENSE)
 
 
@@ -135,7 +135,7 @@ List of filters - [JBZoo/Utils/Filter](https://github.com/JBZoo/Utils/blob/maste
  * `float` - Smart converting to float
  * `digits` - Leaves only "0-9"
  * `alpha` - Leaves only "a-zA-Z"
- * `alphanum` - Combination of `digits` and `alpha` 
+ * `alphanum` - Combination of `digits` and `alpha`
  * `base64` - Returns only chars which are compatible with base64
  * `path` - Clean FS path
  * `trim` - Extend trim
@@ -279,13 +279,13 @@ a:7:{s:5:"empty";s:0:"";s:4:"zero";s:1:"0";s:6:"string";s:1:" ";s:3:"tag";s:42:"
 ## Summary benchmark info (execution time) PHP v7.4
 All benchmark tests are executing without xdebug and with a huge random array and 100.000 iterations.
 
-Benchmark tests based on the tool [phpbench/phpbench](https://github.com/phpbench/phpbench). See details [here](tests/phpbench).   
+Benchmark tests based on the tool [phpbench/phpbench](https://github.com/phpbench/phpbench). See details [here](tests/phpbench).
 
 Please, pay attention - `1μs = 1/1.000.000 of second!`
 
 **benchmark: CreateObject**
 subject | groups | its | revs | mean | stdev | rstdev | mem_real | diff
- --- | --- | --- | --- | --- | --- | --- | --- | --- 
+ --- | --- | --- | --- | --- | --- | --- | --- | ---
 benchArrayObjectOrig | Native,ArrayObject | 3 | 100000 | 7.30μs | 0.01μs | 0.18% | 8,388,608b | 1.00x
 benchArrayObjectExtOrig | Native,ArrayObject,Extended | 3 | 100000 | 7.43μs | 0.05μs | 0.66% | 8,388,608b | 1.02x
 benchJson | JSON | 3 | 100000 | 7.55μs | 0.01μs | 0.15% | 8,388,608b | 1.03x
@@ -302,7 +302,7 @@ benchPhpArrayFunc | PhpArray,Func | 3 | 100000 | 7.75μs | 0.06μs | 0.72% | 8,3
 
 **benchmark: GetUndefinedValue**
 subject | groups | its | revs | mean | stdev | rstdev | mem_real | diff
- --- | --- | --- | --- | --- | --- | --- | --- | --- 
+ --- | --- | --- | --- | --- | --- | --- | --- | ---
 benchArrayIsset | Native,Array,Undefined | 3 | 1000000 | 0.04μs | 0.00μs | 1.48% | 8,388,608b | 1.00x
 benchDataOffsetGet | Data,Undefined | 3 | 1000000 | 0.11μs | 0.00μs | 0.41% | 8,388,608b | 2.88x
 benchDataGet | Data,Undefined | 3 | 1000000 | 0.14μs | 0.00μs | 0.39% | 8,388,608b | 3.56x
@@ -315,7 +315,7 @@ benchDataFindInner | Data,Undefined | 3 | 1000000 | 0.41μs | 0.00μs | 0.14% | 
 
 **benchmark: GetValue**
 subject | groups | its | revs | mean | stdev | rstdev | mem_real | diff
- --- | --- | --- | --- | --- | --- | --- | --- | --- 
+ --- | --- | --- | --- | --- | --- | --- | --- | ---
 benchArrayRegular | Native,Array | 3 | 1000000 | 0.04μs | 0.00μs | 5.02% | 8,388,608b | 1.00x
 benchArrayRegularMuted | Native,Array | 3 | 1000000 | 0.04μs | 0.00μs | 1.40% | 8,388,608b | 1.06x
 benchArrayIsset | Native,Array | 3 | 1000000 | 0.04μs | 0.00μs | 2.04% | 8,388,608b | 1.07x
@@ -331,7 +331,7 @@ benchDataFind | Data | 3 | 1000000 | 0.35μs | 0.00μs | 0.65% | 8,388,608b | 8.
 
 **benchmark: GetValueInner**
 subject | groups | its | revs | mean | stdev | rstdev | mem_real | diff
- --- | --- | --- | --- | --- | --- | --- | --- | --- 
+ --- | --- | --- | --- | --- | --- | --- | --- | ---
 benchArrayRegular | Native,Array | 3 | 1000000 | 0.05μs | 0.00μs | 0.23% | 8,388,608b | 1.00x
 benchArrayRegularMuted | Native,Array | 3 | 1000000 | 0.06μs | 0.00μs | 0.86% | 8,388,608b | 1.06x
 benchArrayIsset | Native,Array | 3 | 1000000 | 0.06μs | 0.00μs | 0.27% | 8,388,608b | 1.08x

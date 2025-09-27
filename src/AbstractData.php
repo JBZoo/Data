@@ -21,6 +21,7 @@ use JBZoo\Utils\Filter;
 
 /**
  * @psalm-suppress MissingTemplateParam
+ * @phpstan-ignore missingType.generics
  */
 abstract class AbstractData extends \ArrayObject
 {
@@ -200,7 +201,7 @@ abstract class AbstractData extends \ArrayObject
      * Find a value also in nested arrays/objects.
      * @param mixed $needle The value to search for
      */
-    public function search(mixed $needle): null|bool|float|int|string
+    public function search(mixed $needle): bool|float|int|string|null
     {
         $aIterator = new \RecursiveArrayIterator($this->getArrayCopy());
         $iterator  = new \RecursiveIteratorIterator($aIterator);
@@ -263,6 +264,7 @@ abstract class AbstractData extends \ArrayObject
         }
 
         /** @noinspection TypeUnsafeComparisonInspection */
+        /** @phpstan-ignore equal.notAllowed */
         return $value == $compareWith;
     }
 
@@ -305,6 +307,9 @@ abstract class AbstractData extends \ArrayObject
         return \count($arrayCount) > 0;
     }
 
+    /**
+     * @psalm-suppress PossiblyNullArrayOffset
+     */
     private static function setNestedValue(array &$array, array $keys, mixed $value): void
     {
         $key = \array_shift($keys);

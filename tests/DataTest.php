@@ -587,7 +587,7 @@ class DataTest extends PHPUnit
                 'null'            => 'null',
                 'array_empty'     => [],
                 'array_not_empty' => [123 => 'string'],
-                'objects'         => '\\stdClass',
+                'objects'         => '\stdClass',
                 'sub'             => [
                     'sub'     => 'string',
                     'sub.sub' => 'string',
@@ -599,7 +599,7 @@ class DataTest extends PHPUnit
                         'sub'   => ['key-sub' => 'string'],
                     ],
                 ],
-                'data'   => '\\JBZoo\\Data\\Data',
+                'data'   => '\JBZoo\Data\Data',
                 'nested' => [
                     'value-1' => 'string',
                     'value-2' => 'string',

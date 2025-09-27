@@ -27,25 +27,25 @@
     "prefer-stable"     : true,
 
     "require"           : {
-        "php"      : "^8.1",
+        "php"      : "^8.2",
         "ext-json" : "*"
     },
 
     "require-dev"       : {
-        "jbzoo/toolbox-dev"         : "^7.1",
-        "jbzoo/utils"               : "^7.1.1",
-        "symfony/yaml"              : ">=6.4",
+        "jbzoo/toolbox-dev"         : "^7.2",
+        "jbzoo/utils"               : "^7.2.2",
+        "symfony/yaml"              : ">=7.3.3",
 
-        "symfony/polyfill-ctype"    : ">=1.28.0",
-        "symfony/polyfill-mbstring" : ">=1.28.0",
-        "symfony/polyfill-php73"    : ">=1.28.0",
-        "symfony/polyfill-php80"    : ">=1.28.0",
-        "symfony/polyfill-php81"    : ">=1.28.0"
+        "symfony/polyfill-ctype"    : ">=1.33.0",
+        "symfony/polyfill-mbstring" : ">=1.33.0",
+        "symfony/polyfill-php73"    : ">=1.33.0",
+        "symfony/polyfill-php80"    : ">=1.33.0",
+        "symfony/polyfill-php81"    : ">=1.33.0"
     },
 
     "suggest"           : {
-        "symfony/yaml" : ">=6.4",
-        "jbzoo/utils"  : ">=7.1"
+        "symfony/yaml" : ">=7.3",
+        "jbzoo/utils"  : ">=7.2"
     },
 
     "autoload"          : {
