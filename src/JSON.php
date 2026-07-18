@@ -26,7 +26,7 @@ final class JSON extends AbstractData
 
     protected function encode(array $data): string
     {
-        $result = \json_encode($data, \JSON_THROW_ON_ERROR | \JSON_PRETTY_PRINT | \JSON_BIGINT_AS_STRING);
+        $result = \json_encode($data, \JSON_THROW_ON_ERROR | \JSON_PRETTY_PRINT);
 
         // @phpstan-ignore-next-line
         return $result ?: '';
