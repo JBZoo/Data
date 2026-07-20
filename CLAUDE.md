@@ -74,7 +74,7 @@ make report-phploc      # Lines of code statistics
 ## Development Standards
 
 ### PHP Requirements
-- PHP 8.2+ required
+- PHP 8.3+ required
 - Strict types enabled (`declare(strict_types=1)`)
 - PSR-12 coding standard
 - Full type hints required
@@ -105,8 +105,8 @@ The library includes comprehensive benchmarks comparing:
 - `ext-json: *`
 
 ### Development/Optional
-- `jbzoo/toolbox-dev: ^7.2` - Development tooling
-- `jbzoo/utils: ^7.2.2` - Utility functions for filtering
+- `jbzoo/toolbox-dev: ^8.0` - Development tooling
+- `jbzoo/utils: ^8.0` - Utility functions for filtering
 - `symfony/yaml: >=7.3.3` - YAML parsing support
 
 ## Test Data and Fixtures
