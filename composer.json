@@ -27,13 +27,13 @@
     "prefer-stable"     : true,
 
     "require"           : {
-        "php"      : "^8.2",
+        "php"      : "^8.3",
         "ext-json" : "*"
     },
 
     "require-dev"       : {
-        "jbzoo/toolbox-dev"         : "^7.2",
-        "jbzoo/utils"               : "^7.2.2",
+        "jbzoo/toolbox-dev"         : "^8.0",
+        "jbzoo/utils"               : "^8.0",
         "symfony/yaml"              : ">=7.3.3",
 
         "symfony/polyfill-ctype"    : ">=1.33.0",
@@ -67,7 +67,7 @@
 
     "extra"             : {
         "branch-alias" : {
-            "dev-master" : "7.x-dev"
+            "dev-master" : "8.x-dev"
         }
     }
 }

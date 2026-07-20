@@ -27,7 +27,7 @@ abstract class AbstractData extends \ArrayObject
 {
     use AliasesTrait;
 
-    public const LE = "\n";
+    public const string LE = "\n";
 
     /**
      * Utility Method to unserialize the given data.

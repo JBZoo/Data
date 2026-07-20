@@ -24,18 +24,27 @@ class DataYmlTest extends PHPUnit
 
     public function testFile(): void
     {
-        $data      = new Yml($this->testFile);
-        $dataValid = openFile($this->testFile);
+        $data     = new Yml($this->testFile);
+        $reParsed = new Yml((string)$data);
 
-        is($dataValid, (string)$data);
+        // symfony/yaml's dump formatting changed across majors (7.x block vs 8.x inline sequences),
+        // so assert the DATA survives a dump -> parse round-trip instead of matching the source file
+        // byte-for-byte (which is brittle across the PHP/symfony matrix).
+        isSame($data->getArrayCopy(), $reParsed->getArrayCopy());
+
+        // Concrete fixture values (tests/resource/data.yml) guard against a SYMMETRIC parse/dump loss
+        // that a pure round-trip cannot see — a bug dropping the same field on both sides still
+        // compares equal. Assert both the loaded and the reparsed value.
+        isSame(34843, $data->get('invoice'));
+        isSame('BL4438H', $reParsed->find('product.1.sku'));
     }
 
     public function testString(): void
     {
-        $data      = new Yml(openFile($this->testFile));
-        $dataValid = openFile($this->testFile);
+        $data     = new Yml(openFile($this->testFile));
+        $reParsed = new Yml((string)$data);
 
-        is($dataValid, (string)$data);
+        isSame($data->getArrayCopy(), $reParsed->getArrayCopy());
     }
 
     public function testPropsVisible(): void

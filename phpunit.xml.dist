@@ -10,12 +10,7 @@
     @copyright  Copyright (C) JBZoo.com, All rights reserved.
     @see        https://github.com/JBZoo/Data
 -->
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         bootstrap="tests/autoload.php"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true"
-         convertDeprecationsToExceptions="true"
+<phpunit bootstrap="tests/autoload.php"
          executionOrder="random"
          processIsolation="false"
          stopOnError="false"
@@ -23,14 +18,8 @@
          stopOnIncomplete="false"
          stopOnSkipped="false"
          stopOnRisky="false"
-         verbose="false"
-         colors="false"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
->
-    <coverage processUncoveredFiles="true">
-        <include>
-            <directory suffix=".php">src</directory>
-        </include>
+         colors="false">
+    <coverage>
         <report>
             <clover outputFile="build/coverage_xml/main.xml"/>
             <php outputFile="build/coverage_cov/main.cov"/>
@@ -47,4 +36,10 @@
     <logging>
         <junit outputFile="build/coverage_junit/main.xml"/>
     </logging>
+
+    <source>
+        <include>
+            <directory suffix=".php">src</directory>
+        </include>
+    </source>
 </phpunit>
